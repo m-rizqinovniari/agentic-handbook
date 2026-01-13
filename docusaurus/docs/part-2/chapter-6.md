@@ -1,22 +1,23 @@
 ---
-title: Planning, Reasoning, and Decision-Making
+title: Multi-Agent Systems and Coordination
 sidebar_position: 6
 part: 2
 part_title: Designing and Building Agentic Systems
 ---
-# Designing and Building Agentic Systems: Planning, Reasoning, and Decision-Making
+# Designing and Building Agentic Systems: Multi-Agent Systems and Coordination
 
 ## Learning Objectives
 
-- Implement planning and reasoning strategies in agentic systems
-- Analyze trade-offs between reactive and deliberative approaches
-- Evaluate planning performance under uncertainty
+- Explain core principles of multi-agent systems
+- Design coordination mechanisms for multiple agents
+- Analyze emergent behaviors in agent populations
+- Evaluate trade-offs in centralized vs decentralized control
 
 ---
 
 ## Introduction
 
-This chapter dives into the mechanisms agents use to decide what to do, covering planning algorithms, reasoning strategies, and decision policies.
+This chapter introduces systems composed of multiple interacting agents and explores coordination, cooperation, and competition mechanisms.
 
 ---
 
@@ -24,233 +25,246 @@ This chapter dives into the mechanisms agents use to decide what to do, covering
 ---
 
 
-Modern agentic systems—such as autonomous robots, intelligent assistants, and AI-driven decision platforms—are no longer passive tools that simply react to user input. Instead, they are expected to **decide what to do**, **plan how to do it**, and **adapt when things go wrong**. This ability to act autonomously and intelligently lies at the heart of *planning, reasoning, and decision-making*.
+As artificial intelligence systems grow more capable and are deployed in increasingly complex environments, a single autonomous agent is often no longer sufficient. Many real-world problems—such as coordinating fleets of delivery robots, managing financial trading strategies, optimizing traffic flow in smart cities, or simulating social and economic systems—require **multiple autonomous entities** that interact with one another. These entities, known as *agents*, must perceive their environment, make decisions, and act, all while accounting for the presence and behavior of other agents.
 
-At a high level, designing agentic systems means answering questions like: *What actions are available to the agent?* *How should it choose between them?* *How far into the future should it plan?* and *What happens when the environment changes unexpectedly?* These questions are not only technical but also deeply conceptual, drawing from symbolic AI, probabilistic reasoning, control theory, and cognitive science.
+This chapter introduces **multi-agent systems (MAS)**, a foundational paradigm for designing agentic systems composed of multiple interacting agents. Unlike single-agent systems, where intelligence is centralized and decisions are made in isolation, multi-agent systems emphasize **interaction, coordination, cooperation, and sometimes competition**. The behavior of the overall system emerges from the collective actions of individual agents, often in ways that are difficult to predict or fully control.
 
-This chapter explores the core mechanisms agents use to decide what to do. We move progressively from foundational planning approaches to advanced topics like long-horizon reasoning and failure recovery. Along the way, we will compare different strategies, analyze trade-offs, and ground abstract ideas in concrete examples. By the end, you should have a clear mental model of how intelligent agents plan, reason, and make decisions in uncertain, dynamic environments.
+Understanding how to design and build such systems is essential for anyone working with advanced AI, robotics, distributed systems, or complex adaptive systems. In this chapter, we will move progressively from core concepts to advanced design considerations, exploring how agents communicate, coordinate, and make decisions collectively. We will also examine how large-scale behaviors emerge from simple local rules, and how designers can analyze and guide these behaviors toward desired outcomes.
 
 ---
 
 
 By the end of this chapter, you will be able to:
 
-- Implement planning and reasoning strategies in agentic systems  
-- Analyze trade-offs between reactive and deliberative approaches  
-- Evaluate planning performance under uncertainty and changing conditions  
+- Explain the core principles and defining characteristics of multi-agent systems  
+- Design communication and coordination mechanisms for interacting agents  
+- Distinguish between cooperative and competitive agent dynamics and understand when each is appropriate  
+- Evaluate centralized versus decentralized approaches to distributed decision-making  
+- Analyze emergent behaviors in large populations of agents and assess system-level outcomes  
 
 ---
 
-## Symbolic and Hybrid Planning Approaches
+## Foundations of Multi-Agent Systems
 
-Planning is the process by which an agent decides **a sequence of actions** to move from its current state to a desired goal state. Historically, planning in AI began with *symbolic approaches*, where the world is represented using logical symbols, rules, and explicit state transitions. In these systems, planning is treated almost like solving a puzzle: given a formal description of the world, the agent searches for a sequence of valid moves that achieves its goal.
+Multi-agent systems (MAS) are systems composed of **multiple autonomous agents** that interact within a shared environment. Each agent is typically capable of perceiving its surroundings, making decisions based on internal logic or learned policies, and acting to achieve certain goals. What distinguishes MAS from traditional distributed software systems is not just the presence of multiple components, but the **autonomy, adaptability, and intentionality** of those components.
 
-Symbolic planning approaches, such as STRIPS or PDDL-based planners, rely on three core elements:  
-1. A symbolic representation of the world (states and objects)  
-2. Actions defined by preconditions and effects  
-3. A goal condition that defines success  
+Historically, the concept of multi-agent systems emerged at the intersection of artificial intelligence, distributed computing, and social sciences in the late 20th century. Early inspirations came from observing social insects such as ants and bees, whose colonies exhibit sophisticated collective behaviors without any central controller. Researchers realized that similar principles could be applied to computational systems, allowing complex problem-solving to emerge from simple interacting units.
 
-For example, a warehouse robot might have symbolic actions like *pick(box)* or *move(robot, locationA, locationB)*. The planner searches through possible action sequences to find one that leads to the goal state, such as “all boxes are on the correct shelf.” This explicit reasoning makes symbolic planners interpretable and reliable—but also brittle when the real world does not match the model perfectly.
+A key reason MAS are important is that many real-world problems are **inherently decentralized**. There may be no single point of control, or centralized control may be impractical due to scale, latency, robustness, or organizational constraints. For example, internet routing protocols, peer-to-peer networks, and autonomous vehicle fleets all require local decision-making combined with global coordination.
 
-To overcome these limitations, **hybrid planning approaches** combine symbolic reasoning with data-driven or probabilistic methods. Instead of relying solely on predefined rules, hybrid planners integrate machine learning, perception models, or continuous control. A self-driving car, for instance, may use symbolic planning to decide *when to change lanes*, while using learned models to control *how* to steer smoothly.
+At the heart of any multi-agent system are several defining characteristics:
 
-Hybrid approaches are especially valuable in real-world environments where uncertainty, noise, and partial observability are unavoidable. They allow agents to reason abstractly at a high level while still adapting to sensory data and learned patterns at a low level.
+- **Autonomy**: Each agent operates without direct intervention from others  
+- **Local perception**: Agents typically have limited, partial views of the environment  
+- **Decentralized control**: No single agent has complete authority or knowledge  
+- **Interaction**: Agents influence each other through communication or shared environments  
+- **Adaptation**: Agents may learn or adjust behavior over time  
 
-### Symbolic vs Hybrid Planning Comparison
+To better understand how MAS differ from related paradigms, consider the comparison below.
 
-| Aspect | Symbolic Planning | Hybrid Planning |
-|------|------------------|----------------|
-| World representation | Discrete, symbolic states | Mixed symbolic + continuous |
-| Interpretability | Very high | Medium |
-| Robustness to noise | Low | High |
-| Adaptability | Limited | Strong |
-| Typical use cases | Puzzles, games, formal tasks | Robotics, autonomous systems |
+### Table: Single-Agent vs Multi-Agent Systems
 
-### Planning Workflow Overview
+| Aspect | Single-Agent Systems | Multi-Agent Systems |
+|------|----------------------|---------------------|
+| Control | Centralized | Distributed |
+| Complexity | Lower system interaction | High interaction complexity |
+| Scalability | Limited | Often highly scalable |
+| Robustness | Single point of failure | Failure-tolerant |
+| Behavior | Predictable | Often emergent and non-linear |
 
-```mermaid
-flowchart TD
-    A[Initial State] --> B[Symbolic World Model]
-    B --> C[Planner Search]
-    C --> D[Action Sequence]
-    D --> E[Execution in Environment]
-```
+Another foundational concept is the **environment** in which agents operate. Environments can be static or dynamic, fully observable or partially observable, deterministic or stochastic. The nature of the environment heavily influences agent design. For instance, in a dynamic and partially observable environment, agents must continuously update their beliefs and adapt to changes caused by other agents.
 
-### Hybrid Planning Architecture
+### Example Analogy: A Classroom Project
 
-```mermaid
-flowchart LR
-    P[Perception / ML Models] --> H[Hybrid Planner]
-    S[Symbolic Knowledge Base] --> H
-    H --> A[Action Execution]
-```
+Imagine a group of students working on a group project without a designated leader. Each student has their own skills, preferences, and understanding of the task. They communicate, divide responsibilities, sometimes disagree, and adjust their plans as the project evolves. The final outcome—the quality of the project—depends not just on individual abilities, but on how well the group coordinates. This is a classic real-world analogy of a multi-agent system.
 
-**Why this matters:** Choosing between symbolic and hybrid planning affects scalability, robustness, and real-world usability. Symbolic planning offers clarity and guarantees, while hybrid planning offers flexibility and realism. Most modern agentic systems combine both to get the best of each world.
-
----
-
-## Decision-Theoretic Models and Utilities
-
-While planning focuses on *how* to achieve a goal, decision-theoretic models focus on *which action is best* when outcomes are uncertain. In many environments, actions do not have guaranteed results. An agent might succeed, fail, or produce side effects, each with different probabilities. Decision theory provides a formal framework to handle such uncertainty.
-
-At the core of decision-theoretic reasoning is the concept of **utility**—a numerical measure of how desirable an outcome is. Instead of simply asking “Did I reach the goal?”, agents ask “How good is this outcome compared to others?” Utilities allow agents to trade off competing objectives, such as speed vs safety or cost vs accuracy.
-
-A classic example is route planning in navigation apps. The agent must choose between routes that differ in travel time, toll cost, and reliability. By assigning utilities to each outcome and probabilities to uncertainties (like traffic jams), the agent can compute the **expected utility** of each option and select the best one.
-
-Decision-theoretic models are often formalized using structures like **Markov Decision Processes (MDPs)** or **Partially Observable MDPs (POMDPs)**. These models define states, actions, transition probabilities, and reward (utility) functions. They provide a principled way to plan under uncertainty—but they can be computationally expensive for large state spaces.
-
-### Deterministic vs Decision-Theoretic Planning
-
-| Feature | Deterministic Planning | Decision-Theoretic Planning |
-|-------|-----------------------|-----------------------------|
-| Outcome uncertainty | None | Explicitly modeled |
-| Objective | Goal satisfaction | Utility maximization |
-| Environment | Fully predictable | Stochastic |
-| Typical models | STRIPS, classical planners | MDPs, POMDPs |
-
-### Utility Trade-Off Example
-
-| Option | Time (min) | Cost ($) | Risk | Utility Score |
-|------|------------|----------|------|---------------|
-| Route A | 30 | 5 | Low | 80 |
-| Route B | 20 | 10 | Medium | 75 |
-| Route C | 40 | 0 | Very Low | 70 |
-
-### Expected Utility Decision Flow
-
-```mermaid
-flowchart TD
-    S[Current State] --> A1[Action 1]
-    S --> A2[Action 2]
-    A1 --> O1[Possible Outcomes]
-    A2 --> O2[Possible Outcomes]
-    O1 --> U1[Expected Utility]
-    O2 --> U2[Expected Utility]
-    U1 --> D[Select Best Action]
-    U2 --> D
-```
-
-**Why this matters:** Decision-theoretic models allow agents to behave rationally in uncertain environments. They are essential for systems where outcomes matter more than simply achieving a predefined goal, such as finance, healthcare, and autonomous navigation.
-
----
-
-## Reactive vs Deliberative Reasoning
-
-Not all agents reason in the same way or on the same timescale. A key distinction in agent design is between **reactive** and **deliberative** reasoning. Understanding this trade-off is crucial for building systems that are both responsive and intelligent.
-
-Reactive reasoning focuses on *immediate response*. The agent maps perceptions directly to actions using rules or policies, without explicit planning. For example, a thermostat reacts to temperature changes by turning heating on or off. This approach is fast, robust, and simple—but it lacks foresight.
-
-Deliberative reasoning, on the other hand, involves constructing internal models, simulating future states, and choosing actions based on predicted outcomes. A chess-playing AI deliberates by exploring future move sequences before acting. This enables sophisticated behavior but requires more computation and time.
-
-In practice, most real-world agents use a **hybrid approach**, combining reactive layers for fast responses and deliberative layers for strategic planning. A robot may reflexively avoid obstacles (reactive) while planning a long-term path to its destination (deliberative).
-
-### Reactive vs Deliberative Comparison
-
-| Dimension | Reactive | Deliberative |
-|--------|----------|--------------|
-| Response time | Very fast | Slower |
-| Planning horizon | None | Medium to long |
-| Computational cost | Low | High |
-| Flexibility | Limited | High |
-| Example | Obstacle avoidance | Route planning |
-
-### Layered Agent Architecture
-
-```mermaid
-flowchart TD
-    P[Perception] --> R[Reactive Layer]
-    R --> A[Action Execution]
-    P --> D[Deliberative Layer]
-    D --> R
-```
-
-**Why this matters:** Overly reactive agents may act shortsightedly, while purely deliberative agents may be too slow. Balancing the two allows agents to operate effectively in real-time environments while still pursuing long-term goals.
-
----
-
-## Long-Horizon and Hierarchical Planning
-
-Many agentic tasks cannot be solved by short-term reasoning alone. **Long-horizon planning** addresses problems where actions taken now affect outcomes far in the future. Examples include project management, multi-stage games, or lifelong learning agents.
-
-However, planning far into the future dramatically increases complexity. To manage this, agents often use **hierarchical planning**, where decisions are made at multiple levels of abstraction. High-level plans define *what* to do, while low-level plans define *how* to do it.
-
-Consider a household robot tasked with “prepare dinner.” At a high level, this goal is broken into subgoals like “cook main dish” and “set table.” Each subgoal is then further decomposed into concrete actions. This hierarchy allows the agent to reason efficiently without being overwhelmed by detail.
-
-Hierarchical planning also improves robustness. If a low-level action fails, the agent can re-plan locally without abandoning the entire high-level plan.
-
-### Flat vs Hierarchical Planning
-
-| Aspect | Flat Planning | Hierarchical Planning |
-|------|--------------|----------------------|
-| Planning depth | Single level | Multiple levels |
-| Scalability | Poor | Good |
-| Reusability | Low | High |
-| Interpretability | Medium | High |
-
-### Hierarchical Plan Structure
+### Visualizing a Basic Multi-Agent System
 
 ```mermaid
 graph TD
-    G[Goal: Prepare Dinner]
-    G --> S1[Cook Meal]
-    G --> S2[Set Table]
-    S1 --> A1[Chop Ingredients]
-    S1 --> A2[Cook Food]
-    S2 --> A3[Place Plates]
-    S2 --> A4[Arrange Cutlery]
+    Environment --> Agent1
+    Environment --> Agent2
+    Environment --> Agent3
+    Agent1 --> Environment
+    Agent2 --> Environment
+    Agent3 --> Environment
+    Agent1 <--> Agent2
+    Agent2 <--> Agent3
 ```
 
-**Why this matters:** Long-horizon and hierarchical planning enable agents to tackle complex, real-world tasks by structuring decisions in a manageable and meaningful way.
+This diagram highlights a fundamental idea: agents interact both **with the environment** and **with each other**, creating feedback loops that drive system behavior.
 
 ---
 
-## Failure Handling and Re-Planning
+## Communication and Coordination Protocols
 
-No matter how well an agent plans, **failures are inevitable**. Sensors may be noisy, actions may not have the intended effect, and the environment may change unexpectedly. Effective agentic systems are defined not by avoiding failure, but by how well they respond to it.
+For a multi-agent system to function effectively, agents must be able to **communicate and coordinate**. Communication allows agents to share information, intentions, or requests, while coordination ensures that their actions are aligned in a way that avoids conflict and inefficiency. Without these mechanisms, agents may work at cross purposes, leading to redundant actions or even system failure.
 
-Failure handling starts with **monitoring**. The agent continuously compares expected outcomes with actual outcomes. When a discrepancy is detected—such as an action failing or a goal becoming unreachable—the agent must decide how to respond.
+Communication in MAS can take many forms, ranging from explicit message passing to implicit signaling through environmental changes. Explicit communication might involve structured messages with well-defined semantics, such as “task completed” or “resource unavailable.” Implicit communication, often called **stigmergy**, occurs when agents modify the environment in a way that other agents can observe, such as ants leaving pheromone trails.
 
-One common response is **re-planning**, where the agent updates its world model and generates a new plan. In simple cases, this might involve choosing an alternative action. In more complex scenarios, the agent may need to revise its goals or adopt a fallback strategy.
+Historically, early MAS research focused on defining **agent communication languages (ACLs)**, such as KQML and FIPA-ACL. These languages aimed to standardize how agents express beliefs, desires, and intentions. While modern systems often use simpler or more pragmatic protocols, the underlying idea remains: communication must be interpretable and reliable.
 
-Advanced agents may also use **contingency planning**, where alternative plans are prepared in advance, or **learning-based adaptation**, where repeated failures lead to improved future behavior.
+Coordination mechanisms answer the question: *How do agents align their actions over time?* Common approaches include:
 
-### Failure Types and Responses
+- **Centralized coordination**: A coordinator assigns tasks and resolves conflicts  
+- **Decentralized coordination**: Agents negotiate or self-organize  
+- **Market-based mechanisms**: Agents bid for tasks or resources  
+- **Consensus protocols**: Agents agree on shared values or plans  
 
-| Failure Type | Example | Typical Response |
-|-------------|---------|------------------|
-| Action failure | Robot drops object | Retry or choose alternative |
-| Model mismatch | Unexpected obstacle | Update model and re-plan |
-| Goal infeasible | Resource unavailable | Revise goal |
+### Table: Coordination Mechanisms and Trade-offs
 
-### Failure Detection and Re-Planning Loop
+| Mechanism | Advantages | Limitations | Typical Use Cases |
+|---------|------------|-------------|------------------|
+| Centralized | Simple, globally optimal | Single point of failure | Small teams, stable environments |
+| Decentralized | Robust, scalable | Harder to design | Robot swarms, IoT |
+| Market-based | Efficient resource allocation | Requires pricing model | Cloud computing |
+| Consensus | Strong consistency | Communication overhead | Distributed databases |
+
+Coordination protocols often rely on **interaction patterns**, such as request–response, broadcast, or publish–subscribe. Choosing the right pattern depends on factors like system scale, latency tolerance, and reliability requirements.
+
+### Example: Warehouse Robots
+
+In an automated warehouse, hundreds of robots move goods between shelves and packing stations. Each robot must communicate its location and intentions to avoid collisions. Some systems use centralized traffic control, while others rely on local negotiation between robots. The latter approach scales better and continues functioning even if some robots fail.
+
+### Sequence Diagram: Task Allocation via Bidding
 
 ```mermaid
-flowchart TD
-    A[Execute Action] --> M[Monitor Outcome]
-    M -->|Expected| C[Continue Plan]
-    M -->|Unexpected| F[Detect Failure]
-    F --> R[Re-Plan]
-    R --> A
+sequenceDiagram
+    AgentA->>Coordinator: Bid for Task
+    AgentB->>Coordinator: Bid for Task
+    Coordinator->>AgentB: Assign Task
+    AgentB->>Coordinator: Acknowledge
 ```
 
-**Why this matters:** Robust failure handling transforms agents from brittle systems into adaptive ones. It is essential for long-term autonomy in real-world environments.
+This illustrates a simple market-based coordination protocol where agents compete for tasks through bidding.
+
+---
+
+## Cooperative vs Competitive Agent Dynamics
+
+Not all multi-agent systems are designed around harmony. Some agents are meant to **cooperate**, sharing goals and rewards, while others **compete**, pursuing individual objectives that may conflict. Understanding this spectrum is crucial for designing effective agentic systems.
+
+In cooperative systems, agents share a common goal or utility function. Success is measured at the system level rather than the individual level. Examples include swarm robotics, distributed sensor networks, and collaborative filtering systems. Cooperation allows agents to divide labor, share information, and achieve outcomes that would be impossible individually.
+
+Competitive systems, on the other hand, involve agents with opposing or partially aligned goals. Classic examples include trading agents in financial markets, game-playing AI, and security simulations. Competition can drive efficiency and innovation but also introduces risks such as instability or adversarial behavior.
+
+Between these extremes lie **mixed-motive systems**, where agents cooperate in some contexts and compete in others. Human societies are a prime example: individuals cooperate within organizations while competing in markets.
+
+### Table: Cooperative vs Competitive Dynamics
+
+| Dimension | Cooperative | Competitive |
+|---------|-------------|-------------|
+| Goals | Shared | Conflicting |
+| Information Sharing | High | Limited or strategic |
+| Stability | Generally stable | Can be volatile |
+| Examples | Swarm robots | Trading bots |
+
+Designing for cooperation often involves mechanisms like shared rewards, reputation systems, and trust modeling. Competitive systems, by contrast, require robust strategies to handle deception, exploitation, and strategic behavior.
+
+### Analogy: Team Sports vs Individual Sports
+
+A soccer team succeeds only if players cooperate—passing, positioning, and coordinating. In contrast, a tennis tournament pits players against one another, and success depends on outperforming opponents. Both involve skillful agents, but the dynamics are fundamentally different.
+
+---
+
+## Distributed Decision-Making
+
+Distributed decision-making refers to situations where **no single agent has complete control or information**, yet the system must still arrive at coherent actions. This is one of the most challenging aspects of multi-agent system design.
+
+In centralized systems, decision-making is straightforward: gather information, compute an optimal plan, and execute it. In distributed systems, agents must make decisions based on partial information and local interactions. This often leads to suboptimal individual decisions that nonetheless produce good global outcomes.
+
+Key approaches to distributed decision-making include:
+
+- **Local policies**: Simple rules based on local observations  
+- **Consensus algorithms**: Agreement on shared variables  
+- **Voting mechanisms**: Collective choice among alternatives  
+
+### Table: Centralized vs Distributed Decision-Making
+
+| Aspect | Centralized | Distributed |
+|------|-------------|-------------|
+| Information | Global | Local |
+| Scalability | Limited | High |
+| Robustness | Low | High |
+| Complexity | Lower design | Higher design effort |
+
+### State Diagram: Agent Decision Loop
+
+```mermaid
+stateDiagram-v2
+    [*] --> Observe
+    Observe --> Decide
+    Decide --> Act
+    Act --> Observe
+```
+
+Each agent continuously cycles through observing, deciding, and acting, with decisions influenced by other agents’ actions.
+
+---
+
+## Emergent Behavior and System-Level Analysis
+
+One of the most fascinating—and challenging—features of multi-agent systems is **emergent behavior**. Emergence occurs when complex, system-level patterns arise from simple local interactions among agents, without being explicitly programmed.
+
+Classic examples include flocking behavior in birds, traffic jams without accidents, and market bubbles. In MAS, emergence can be beneficial or harmful. Desired emergence might include efficient resource allocation or robust collective exploration. Undesired emergence might include deadlocks, oscillations, or unfair outcomes.
+
+Analyzing emergent behavior requires shifting perspective from individual agents to the system as a whole. Tools such as simulation, statistical analysis, and visualization are commonly used. Designers often run many simulations with varied parameters to observe patterns and identify tipping points.
+
+### Graph: Emergence from Local Rules
+
+```mermaid
+graph LR
+    LocalRules --> Interactions
+    Interactions --> Patterns
+    Patterns --> EmergentBehavior
+```
+
+### Example: Traffic Flow
+
+Each driver follows simple rules—maintain distance, adjust speed—but traffic jams can still emerge spontaneously. Similarly, in MAS, even well-intentioned agent rules can lead to unintended global outcomes.
+
+---
+
+## Case Study: Coordinating Autonomous Delivery Drones in a Smart City
+
+### Context
+
+In the late 2020s, a major metropolitan city partnered with a logistics company to deploy a fleet of autonomous delivery drones. The goal was to reduce road congestion and speed up last-mile delivery. Hundreds of drones operated simultaneously, sharing airspace, weather conditions, and delivery deadlines.
+
+The city environment was dynamic and unpredictable. Weather changed rapidly, temporary no-fly zones appeared due to emergencies, and demand fluctuated throughout the day. A traditional centralized control system quickly became a bottleneck, struggling to process real-time data for every drone.
+
+### Problem
+
+The core challenge was coordination. Drones needed to avoid collisions, respect airspace regulations, and optimize delivery routes—all while operating autonomously. Early prototypes suffered from inefficiencies: drones clustered in popular areas, some deliveries were delayed, and system-wide performance degraded during peak hours.
+
+A purely competitive approach led drones to prioritize their own deliveries, causing congestion. A purely cooperative approach, on the other hand, reduced responsiveness to local conditions.
+
+### Solution
+
+The designers implemented a **multi-agent system with mixed-motive dynamics**. Each drone acted as an autonomous agent with local decision-making capabilities. Communication protocols allowed drones to broadcast position and intent within a limited radius.
+
+Coordination was achieved using a market-based mechanism. Delivery tasks were auctioned, and drones bid based on current location, battery level, and workload. A lightweight consensus protocol ensured agreement on temporary airspace usage.
+
+### Results
+
+After deployment, delivery times decreased by 25%, and collision incidents dropped to near zero. The system scaled effectively as more drones were added. Importantly, the system remained operational even when individual drones failed.
+
+### Lessons Learned
+
+The project demonstrated the power of decentralized coordination and emergent behavior. Designers learned that simplicity in local rules often leads to robustness at scale. However, extensive simulation was essential to identify and mitigate undesirable emergent patterns.
 
 ---
 
 ## Summary
 
-In this chapter, we explored how agentic systems decide what to do through planning, reasoning, and decision-making mechanisms. We began with symbolic and hybrid planning approaches, highlighting the balance between interpretability and adaptability. We then examined decision-theoretic models, showing how utilities and probabilities guide rational choices under uncertainty.
-
-We compared reactive and deliberative reasoning, emphasizing the importance of combining fast responses with thoughtful planning. Next, we explored long-horizon and hierarchical planning as tools for managing complexity and achieving long-term goals. Finally, we addressed failure handling and re-planning, underscoring the importance of adaptability in dynamic environments.
-
-Together, these concepts form the backbone of intelligent, autonomous agents capable of operating effectively in the real world.
+In this chapter, we explored the foundations and design principles of multi-agent systems. We examined how agents communicate, coordinate, cooperate, and compete, and how decisions can be made in a distributed manner. Perhaps most importantly, we saw how complex system-level behaviors can emerge from simple local interactions. Designing effective agentic systems requires not only technical skill, but also a systems-level mindset that anticipates interaction effects and embraces emergence.
 
 ---
 
 ## Reflection Questions
 
-1. In what types of environments would symbolic planning fail, and how could hybrid planning address those failures?  
-2. How would you design a utility function for an agent that must balance safety, speed, and cost?  
-3. Can you think of a real-world system that relies heavily on reactive reasoning? What are its limitations?  
-4. How does hierarchical planning reduce computational complexity in long-horizon tasks?  
-5. What strategies would you use to ensure safe and reliable re-planning in safety-critical systems?
+1. When would you prefer a centralized approach over a decentralized one in a multi-agent system?  
+2. How can designers encourage beneficial emergent behavior while minimizing harmful outcomes?  
+3. What trade-offs arise when agents are allowed to compete rather than cooperate?  
+4. How might communication constraints shape the design of coordination protocols?  
+5. Can you think of a real-world system that could be improved using a multi-agent approach?

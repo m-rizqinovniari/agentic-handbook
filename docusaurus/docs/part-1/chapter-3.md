@@ -1,22 +1,23 @@
 ---
-title: Core Principles of Agentic Behavior
+title: Decision-Making and Goal Orientation
 sidebar_position: 3
 part: 1
 part_title: Foundations of Agentic AI
 ---
-# Foundations of Agentic AI: Core Principles of Agentic Behavior
+# Foundations of Agentic AI: Decision-Making and Goal Orientation
 
 ## Learning Objectives
 
-- Describe the core principles that define agentic behavior
-- Analyze how goals and plans are represented and managed in agents
-- Assess trade-offs between autonomy, control, and robustness
+- Formulate agent goals using utility-based representations
+- Compare different decision-making frameworks for agents
+- Analyze the impact of uncertainty on agent decisions
+- Assess trade-offs in real-world agent implementations
 
 ---
 
 ## Introduction
 
-This chapter focuses on the essential principles that enable agency, such as autonomy, goal orientation, and adaptability. These principles form the conceptual backbone for all agentic systems.
+This chapter focuses on how agents define goals, make decisions, and select actions. It introduces foundational decision-making models that underpin agentic behavior.
 
 ---
 
@@ -24,275 +25,404 @@ This chapter focuses on the essential principles that enable agency, such as aut
 ---
 
 
-Agentic AI represents a shift from passive, reactive systems toward **active entities that pursue objectives, make decisions, and adapt over time**. Instead of merely responding to user commands, agentic systems exhibit behaviors that resemble purposeful action: they decide *what* to do, *how* to do it, and *when* to change course. This capability is essential for modern applications such as autonomous robots, digital assistants, automated scientific discovery, and self-managing software systems.
+Agentic AI refers to artificial systems that can **act autonomously in pursuit of goals**, making decisions over time rather than responding passively to inputs. Unlike traditional software systems that follow predefined scripts, agentic systems continuously evaluate their environment, decide what to do next, and adapt their behavior based on outcomes. This capability is at the heart of modern AI applications such as autonomous vehicles, recommender systems, trading bots, robotics, personal assistants, and increasingly, large language model–based agents.
 
-At the heart of these systems lie a set of **foundational principles** that make agency possible. Concepts like autonomy, goal orientation, planning, learning, and robustness form the conceptual backbone of all agentic behavior. Without these principles, an AI system remains a tool; with them, it becomes an agent.
+At the core of agentic AI lies **decision-making**: how an agent decides *what it wants*, *what it believes*, and *what it should do next*. These decisions are rarely trivial. Agents must balance competing objectives, operate with incomplete or uncertain information, and act under real-world constraints such as time, cost, and limited computational resources. A navigation agent must choose between speed and safety. A customer service agent must balance user satisfaction with operational cost. A robotic arm must decide whether to replan or continue executing a potentially flawed plan.
 
-This chapter builds a deep understanding of these core principles. We begin with the idea of autonomy and independent decision-making, then explore how agents represent and organize goals. We examine how agents plan, act, and monitor their behavior in continuous loops, how they learn and adapt over time, and finally how they remain robust in the face of failure and uncertainty. Together, these principles explain *why agentic systems behave the way they do* and *how designers can balance autonomy, control, and reliability*.
+This chapter focuses on the **foundational models and concepts that underpin agentic decision-making**. We explore how agents define goals using utilities and preferences, how different decision models shape behavior, how planning enables goal-directed action, how uncertainty complicates decisions, and why real-world systems often trade optimality for efficiency. Rather than treating these topics in isolation, we will emphasize how they interconnect to form a coherent framework for agentic behavior.
 
----
-
-
-By the end of this chapter, you will be able to:
-
-- Describe the core principles that define agentic behavior  
-- Analyze how goals and plans are represented and managed in agentic systems  
-- Explain how planning, acting, monitoring, and learning interact over time  
-- Assess trade-offs between autonomy, control, and robustness in real-world agents  
-- Apply these principles to practical examples and design scenarios  
+By the end of this chapter, you should not only understand *what* these concepts are, but also *why* they matter, *how* they are implemented in practice, and *when* certain approaches are more appropriate than others.
 
 ---
 
-## Autonomy and Independent Decision-Making
 
-Autonomy is the defining characteristic that separates agentic systems from traditional software. An autonomous agent can make decisions **without constant external intervention**, using its own internal state, goals, and perceptions. This does not mean the agent acts randomly or uncontrollably; rather, it means the agent has **delegated authority** to choose actions within defined boundaries.
+By completing this chapter, you will be able to:
 
-At a basic level, autonomy answers the question: *Who decides what to do next?* In non-agentic systems, this decision is made by a human or a fixed script. In agentic systems, the decision is made by the system itself, based on its internal reasoning. For example, a thermostat that simply turns heating on or off based on temperature thresholds has limited autonomy. In contrast, a smart energy-management agent that decides when to heat, cool, or store energy based on forecasts, costs, and user habits demonstrates higher autonomy.
+- Formulate agent goals using utility-based representations  
+- Compare deterministic and probabilistic decision-making frameworks  
+- Explain how planning supports goal-directed behavior in agents  
+- Analyze how uncertainty and partial observability affect decisions  
+- Assess real-world trade-offs between optimality and computational efficiency  
 
-Autonomy exists on a **spectrum**, not as a binary property. Some agents are tightly constrained, while others operate with broad freedom. Understanding this spectrum is crucial because higher autonomy often brings greater flexibility—but also greater risk.
+---
 
-### Degrees of Autonomy
+## Goals, Utilities, and Preferences
 
-| Level of Autonomy | Description | Example |
-|------------------|------------|---------|
-| Reactive | Responds directly to stimuli | Simple game NPC |
-| Rule-based | Chooses actions from predefined rules | Workflow automation |
-| Goal-directed | Selects actions to achieve goals | Delivery route optimizer |
-| Self-directed | Sets and revises its own goals | Research assistant agent |
+### Understanding Goals in Agentic Systems
 
-This table highlights that autonomy grows as agents gain control over *decision-making*, not just *execution*.
+A **goal** is a desired state of the world that an agent aims to achieve. In agentic AI, goals provide *direction* and *purpose* to behavior. Without goals, an agent has no principled way to choose one action over another. Even reactive systems implicitly encode goals through their design, but agentic systems make goals explicit and reason about them directly.
 
-### How Autonomous Decisions Are Made
+Historically, the idea of goal-directed agents comes from early work in artificial intelligence and control theory. Researchers observed that intelligent behavior could often be explained as the pursuit of objectives under constraints. For example, classical planning systems in the 1970s treated intelligence as the ability to transform an initial state into a goal state using available actions.
 
-Autonomous decision-making typically involves three internal components:
+Goals can take many forms:
 
-- **Perception**: Understanding the current state of the environment  
-- **Reasoning**: Evaluating possible actions and their consequences  
-- **Action selection**: Choosing the best action according to goals and constraints  
+- **Achievement goals**: Reach a specific state (e.g., “deliver the package”)
+- **Maintenance goals**: Keep a condition true (e.g., “avoid collisions”)
+- **Optimization goals**: Maximize or minimize some quantity (e.g., “maximize profit”)
 
-The following diagram illustrates this internal decision loop:
+In real-world systems, agents often pursue *multiple goals simultaneously*, which introduces complexity. For instance, a ride-sharing agent must balance minimizing wait time, maximizing driver utilization, and ensuring fairness across regions.
+
+---
+
+### Utilities as Quantitative Goal Representations
+
+While goals describe *what* an agent wants, **utility functions** describe *how much* the agent prefers different outcomes. A utility function maps states (or state-action trajectories) to numerical values, allowing the agent to compare alternatives quantitatively.
+
+The use of utilities originates from economics and decision theory, where rational agents are assumed to choose actions that maximize expected utility. This framework was adopted by AI because it provides a mathematically precise way to formalize preferences and trade-offs.
+
+Why utilities are so important:
+
+- They enable **comparison** between otherwise incomparable outcomes  
+- They support **optimization** and algorithmic decision-making  
+- They make trade-offs explicit (e.g., speed vs. safety)
+
+For example, consider a delivery drone:
+
+- Deliver package on time: +100 utility  
+- Deliver late: +40 utility  
+- Crash drone: −1000 utility  
+
+The drone’s decision-making process becomes a matter of choosing actions that maximize expected utility, considering risks and probabilities.
+
+---
+
+### Preferences and Their Role in Decision-Making
+
+Preferences describe how an agent ranks outcomes relative to one another. Utilities are one way to encode preferences, but not the only one. Preferences can also be ordinal (“A is preferred to B”) or conditional (“prefer A when condition C holds”).
+
+Preferences are especially important when:
+
+- Utilities are hard to quantify precisely  
+- Human values or subjective judgments are involved  
+- Multiple stakeholders influence decisions  
+
+For example, a personal assistant might learn that a user prefers:
+
+- Fewer notifications during work hours  
+- Cheaper travel options over faster ones  
+- Explanations over terse answers  
+
+These preferences may evolve over time and may even conflict, requiring the agent to reason about priorities.
+
+---
+
+### Goals, Utilities, and Preferences Compared
+
+| Concept      | Purpose                         | Representation              | Strengths                         | Limitations |
+|-------------|----------------------------------|-----------------------------|-----------------------------------|-------------|
+| Goals        | Define desired outcomes          | Symbolic or logical states  | Intuitive, human-readable         | Hard to compare alternatives |
+| Utilities    | Quantify desirability            | Numeric function            | Enables optimization              | Hard to design correctly |
+| Preferences  | Rank outcomes                    | Orders or rules             | Flexible, user-aligned             | Less precise |
+
+---
+
+### Visualizing Goal-Driven Decision Flow
 
 ```mermaid
 flowchart TD
-    A[Environment] --> B[Perception]
-    B --> C[Internal State]
-    C --> D[Decision Reasoning]
-    D --> E[Action Selection]
+    A[Environment State] --> B[Goal Evaluation]
+    B --> C[Utility Computation]
+    C --> D[Action Selection]
+    D --> E[Action Execution]
     E --> A
 ```
 
-This loop runs continuously, allowing the agent to remain responsive while acting independently.
-
-### Trade-offs: Autonomy vs. Control
-
-While autonomy enables flexibility and scalability, it introduces challenges:
-
-- Highly autonomous agents may behave in **unexpected ways**
-- Reduced human oversight can increase **risk and responsibility**
-- Designers must carefully define **constraints and safety boundaries**
-
-Consider autonomous vehicles: granting full autonomy allows faster reactions and scalability, but requires robust safeguards to ensure safety. As a result, many real-world systems use **shared autonomy**, where humans and agents jointly control decisions.
+This loop illustrates how goals and utilities continuously shape agent behavior.
 
 ---
 
-## Goal Representation and Goal Hierarchies
+## Deterministic vs Probabilistic Decision Models
 
-Goals give agentic behavior its *direction*. Without goals, autonomy has no purpose. A goal defines a desired future state that the agent seeks to bring about through its actions. Effective goal representation allows agents to reason, prioritize, and adapt when circumstances change.
+### Deterministic Decision-Making
 
-Simple systems may have a single fixed goal, such as “keep the room temperature at 22°C.” However, most real-world agents must manage **multiple goals**, often with competing priorities. For example, a delivery drone must balance speed, energy efficiency, safety, and regulatory compliance.
+In **deterministic models**, the agent assumes that the outcome of each action is fully predictable. Given a state and an action, the next state is known with certainty. Early AI planning systems relied heavily on this assumption because it simplified reasoning and computation.
 
-### What Makes a Good Goal Representation?
+Deterministic models work well when:
 
-A goal must be represented in a way that supports reasoning and evaluation. Common properties include:
+- The environment is fully observable  
+- The dynamics are stable and predictable  
+- Actions have reliable outcomes  
 
-- **Explicitness**: The goal is clearly defined and machine-readable  
-- **Measurability**: Progress toward the goal can be evaluated  
-- **Flexibility**: The goal can be adjusted or refined  
+A chess-playing agent is a classic example. When it moves a piece, the result is precisely known. This allows the agent to search deeply through possible futures using algorithms like minimax.
 
-Different systems use different representations, as shown below.
-
-| Goal Representation | Description | Example |
-|--------------------|------------|---------|
-| State-based | Desired world state | “Package delivered” |
-| Utility-based | Maximization of a score | Maximize delivery profit |
-| Constraint-based | Conditions to satisfy | Stay within safety limits |
-
-### Goal Hierarchies: From Abstract to Concrete
-
-Most agents organize goals into **hierarchies**, where high-level goals are decomposed into smaller sub-goals. This mirrors human behavior: “stay healthy” becomes “exercise regularly,” which becomes “go for a run today.”
-
-```mermaid
-graph TD
-    G1[High-Level Goal: Customer Satisfaction]
-    G2[Timely Delivery]
-    G3[Package Safety]
-    G4[Optimize Route]
-    G5[Monitor Weather]
-
-    G1 --> G2
-    G1 --> G3
-    G2 --> G4
-    G3 --> G5
-```
-
-Hierarchies allow agents to reason at multiple levels of abstraction, making complex behavior manageable.
-
-### Why Goal Hierarchies Matter
-
-Goal hierarchies enable:
-
-- **Scalability**: Complex objectives broken into manageable pieces  
-- **Adaptability**: Sub-goals can change without redefining the top-level goal  
-- **Conflict resolution**: Trade-offs can be handled at appropriate levels  
-
-For instance, if weather conditions worsen, a drone may deprioritize speed (a sub-goal) while preserving safety (a higher-priority goal). This flexibility is essential for robust agentic behavior.
+However, determinism breaks down quickly in real-world settings. Sensors are noisy, actuators fail, and other agents behave unpredictably.
 
 ---
 
-## Planning, Acting, and Monitoring Loops
+### Probabilistic Decision-Making
 
-Agentic behavior is not a one-time decision—it is a **continuous cycle** of planning, acting, and monitoring. This loop allows agents to respond to changes, detect errors, and adjust strategies in real time.
+Probabilistic models acknowledge uncertainty by representing outcomes as probability distributions. Instead of assuming a single next state, the agent considers multiple possible outcomes, each with an associated likelihood.
 
-Planning involves selecting a sequence of actions expected to achieve a goal. Acting executes those actions in the environment. Monitoring observes outcomes and compares them against expectations. If discrepancies arise, the agent revises its plan.
+This approach emerged from decision theory, statistics, and control systems, and it underpins modern frameworks such as Markov Decision Processes (MDPs) and Partially Observable Markov Decision Processes (POMDPs).
 
-### The Continuous Control Loop
+Why probabilistic models matter:
 
-```mermaid
-flowchart LR
-    A[Goal] --> B[Planning]
-    B --> C[Action Execution]
-    C --> D[Monitoring]
-    D --> B
-```
+- They model real-world uncertainty realistically  
+- They enable risk-sensitive decision-making  
+- They support learning from experience  
 
-This loop is fundamental to agentic systems, from robotics to software agents.
+For example, a self-driving car may estimate:
 
-### Types of Planning
+- 90% chance the pedestrian stops  
+- 10% chance the pedestrian crosses  
 
-Agents can use different planning strategies depending on complexity and uncertainty:
-
-| Planning Type | Characteristics | Example |
-|--------------|----------------|---------|
-| Reactive | No explicit plan | Obstacle avoidance |
-| Deliberative | Full plan before acting | Chess AI |
-| Hybrid | Combine both approaches | Autonomous navigation |
-
-Hybrid approaches are common because they balance foresight with responsiveness.
-
-### Monitoring and Feedback
-
-Monitoring allows agents to answer critical questions:
-
-- Did the action have the intended effect?
-- Is the environment changing?
-- Is the plan still valid?
-
-For example, a warehouse robot may plan a route, but if an aisle becomes blocked, monitoring detects the issue and triggers replanning.
-
-```mermaid
-sequenceDiagram
-    participant Agent
-    participant Environment
-    Agent->>Environment: Execute action
-    Environment-->>Agent: New state
-    Agent->>Agent: Evaluate outcome
-    Agent->>Agent: Adjust plan if needed
-```
-
-Without monitoring, agents would blindly execute plans—even when those plans are no longer appropriate.
+The agent must choose actions that maximize *expected utility*, not guaranteed outcomes.
 
 ---
 
-## Learning and Adaptation Over Time
+### Comparing Deterministic and Probabilistic Models
 
-Learning enables agents to improve performance based on experience. While planning handles immediate decisions, learning shapes **long-term behavior**. An agent that does not learn remains static; an agent that learns becomes progressively more effective and resilient.
+| Aspect                  | Deterministic Models        | Probabilistic Models |
+|-------------------------|-----------------------------|---------------------|
+| Outcome certainty       | Guaranteed                  | Uncertain |
+| Computational cost      | Lower                        | Higher |
+| Realism                 | Limited                      | High |
+| Risk handling           | Implicit or absent           | Explicit |
+| Typical use cases       | Games, puzzles               | Robotics, finance |
 
-Learning can modify different aspects of the agent:
+---
 
-- Models of the environment  
-- Action-selection policies  
-- Goal priorities or preferences  
-
-For example, a recommendation agent may learn which suggestions users are more likely to accept, refining its strategy over time.
-
-### Forms of Learning in Agentic Systems
-
-| Learning Type | What Changes | Example |
-|--------------|-------------|---------|
-| Supervised | Prediction models | Image recognition |
-| Reinforcement | Action policies | Game-playing agents |
-| Online learning | Real-time updates | Adaptive pricing |
-
-Reinforcement learning is particularly relevant for agentic behavior because it directly links actions to long-term outcomes.
-
-### Adaptation vs. Stability
-
-Learning introduces a key tension: **adaptation versus stability**. Too little learning makes the agent rigid; too much learning can make behavior erratic.
+### Decision Process Visualization
 
 ```mermaid
 graph LR
-    A[Experience] --> B[Learning Update]
-    B --> C[Policy Change]
-    C --> D[New Behavior]
-    D --> A
+    S[State] -->|Action| S1[Next State]
+    S -->|Action| S2[Possible State]
+    S -->|Action| S3[Possible State]
 ```
 
-Designers often impose constraints, such as learning rates or safety checks, to ensure that adaptation remains controlled and beneficial.
-
-### Real-World Example
-
-A customer support agent might initially follow scripted responses. Over time, it learns which responses resolve issues faster, gradually adapting its strategies while still adhering to company policies. This balance between learning and constraints is a hallmark of effective agentic systems.
+This graph highlights how probabilistic models branch into multiple futures.
 
 ---
 
-## Robustness and Failure Recovery
+## Planning and Action Selection
 
-No agent operates in a perfect world. Sensors fail, environments change, and assumptions break. Robustness is the ability of an agent to **continue functioning despite errors, uncertainty, and failures**.
+### What Is Planning?
 
-Robust agentic systems are designed with the expectation that things will go wrong. Instead of aiming for flawless execution, they focus on **graceful degradation** and recovery.
+Planning is the process by which an agent **constructs a sequence of actions** to achieve its goals. Unlike reactive decision-making, planning involves foresight—reasoning about future states before acting.
 
-### Common Failure Modes
+Planning emerged as a core AI discipline in the mid-20th century, with early systems such as STRIPS formalizing actions in terms of preconditions and effects. These ideas still influence modern planners.
 
-| Failure Type | Description | Example |
-|-------------|------------|---------|
-| Perception error | Incorrect state estimation | Sensor noise |
-| Action failure | Action does not execute | Motor malfunction |
-| Planning failure | No valid plan found | Dead-end state |
+Planning is essential when:
 
-Understanding these failure modes helps designers build recovery strategies.
+- Goals require multiple coordinated steps  
+- Actions have delayed consequences  
+- Resources are limited  
 
-### Failure Detection and Recovery
+For example, a warehouse robot must plan a path that avoids obstacles, respects battery constraints, and minimizes travel time.
+
+---
+
+### Action Selection in Practice
+
+Action selection is the moment-to-moment choice of what the agent does next. While planning may generate a long-term strategy, action selection often adapts plans based on current observations.
+
+Common approaches include:
+
+- **Policy-based selection**: Precomputed mapping from states to actions  
+- **Plan-based selection**: Execute the next step of a plan  
+- **Reactive overrides**: Interrupt plans when safety is at risk  
+
+An autonomous vehicle, for instance, may follow a route plan but immediately brake if a hazard appears.
+
+---
+
+### Planning vs Reactive Behavior
+
+| Dimension        | Planning-Based Agents | Reactive Agents |
+|------------------|----------------------|-----------------|
+| Foresight        | Long-term             | Short-term |
+| Flexibility      | Moderate              | High |
+| Computational cost | High                | Low |
+| Robustness       | Sensitive to model errors | Good in dynamic environments |
+
+---
+
+### Planning Loop Visualization
 
 ```mermaid
-flowchart TD
-    A[Normal Operation] --> B[Failure Detection]
-    B --> C[Diagnosis]
-    C --> D[Recovery Action]
-    D --> A
+stateDiagram-v2
+    [*] --> Plan
+    Plan --> Execute
+    Execute --> Observe
+    Observe --> Plan
 ```
 
-Recovery actions may include replanning, switching strategies, or requesting human assistance.
+This diagram shows how planning and execution continuously interact.
 
-### Why Robustness Matters
+---
 
-Robustness directly affects trust and usability. An agent that fails catastrophically erodes confidence, while one that recovers gracefully feels reliable—even if it occasionally makes mistakes.
+## Case Study: Autonomous Warehouse Robot Optimization
 
-Consider a navigation app: users tolerate occasional wrong turns because the app quickly recalculates and recovers. This principle applies equally to physical and digital agents.
+## Context
+
+In the late 2010s, a large e-commerce company faced growing challenges in its fulfillment centers. These warehouses handled millions of items daily, with tight delivery deadlines and increasing labor costs. To remain competitive, the company invested heavily in autonomous mobile robots designed to transport shelves of products to human pickers.
+
+Initially, these robots followed relatively simple rules: move along predefined paths, avoid collisions, and respond to central commands. As warehouse complexity grew, these rules proved insufficient. Congestion increased, robots blocked each other, and small delays cascaded into significant productivity losses.
+
+The company decided to redesign the robot control system using agentic AI principles, focusing on goal-oriented decision-making and planning under uncertainty.
+
+---
+
+## Problem
+
+The core problem was **coordination under uncertainty**. Each robot had local goals—such as delivering a shelf quickly—but global objectives like minimizing congestion and energy use were not explicitly encoded.
+
+Traditional deterministic planning failed because:
+
+- Human workers introduced unpredictability  
+- Network delays caused outdated information  
+- Mechanical wear changed robot performance over time  
+
+Robots often committed to plans that were optimal locally but harmful globally. For example, multiple robots would choose the same “shortest” route, causing traffic jams.
+
+---
+
+## Solution
+
+The engineering team redefined robot behavior around **utility-based decision-making**. Each robot was modeled as an agent with a utility function combining:
+
+- Task completion speed  
+- Energy consumption  
+- Collision risk  
+- Congestion penalties  
+
+Probabilistic models estimated travel times and collision likelihoods. Robots planned routes using these estimates, constantly updating their beliefs based on sensor data.
+
+A hierarchical planning approach was adopted:
+
+1. High-level planner assigned tasks and priorities  
+2. Mid-level planner generated routes  
+3. Low-level controller handled real-time obstacle avoidance  
+
+---
+
+## Results
+
+After deployment, the warehouse observed measurable improvements:
+
+- Average task completion time dropped by 18%  
+- Energy consumption per robot decreased by 12%  
+- Traffic congestion incidents were reduced by over 30%  
+
+Importantly, the system proved robust. When robots failed or conditions changed, others adapted their plans without central intervention.
+
+---
+
+## Lessons Learned
+
+The case demonstrated that **explicit goal and utility modeling** enables better coordination in complex environments. It also highlighted the importance of probabilistic reasoning: uncertainty was not an obstacle but a fundamental part of effective decision-making.
+
+However, the team also learned that perfectly optimal planning was impractical. Approximations and heuristics were essential to keep computation tractable, reinforcing the trade-offs discussed later in this chapter.
+
+---
+
+## Handling Uncertainty and Partial Observability
+
+### Nature of Uncertainty
+
+Uncertainty arises when agents lack complete or accurate information about the environment. This can stem from noisy sensors, hidden variables, or unpredictable external actors.
+
+Partial observability means the agent never sees the full state directly. Instead, it maintains a **belief state**, a probability distribution over possible states.
+
+---
+
+### Belief Updates and Reasoning
+
+Agents update beliefs using observations and models of how the world evolves. This process is central to frameworks like POMDPs.
+
+Key steps include:
+
+- Predicting how states evolve  
+- Incorporating new observations  
+- Revising action choices accordingly  
+
+---
+
+### Uncertainty Handling Strategies
+
+| Strategy           | Description | Trade-offs |
+|-------------------|-------------|------------|
+| Ignore uncertainty | Assume certainty | Fast but brittle |
+| Worst-case planning | Plan for worst | Safe but conservative |
+| Probabilistic planning | Optimize expected utility | Computationally heavy |
+
+---
+
+### Belief Update Visualization
+
+```mermaid
+sequenceDiagram
+    Agent->>Environment: Take Action
+    Environment-->>Agent: Observation
+    Agent->>Agent: Update Belief State
+```
+
+---
+
+## Trade-offs Between Optimality and Efficiency
+
+### Why Optimality Is Hard
+
+In theory, agents should always choose actions that maximize expected utility. In practice, computing the optimal policy is often infeasible due to:
+
+- Large state spaces  
+- Long planning horizons  
+- Real-time constraints  
+
+This is known as the **computational complexity barrier**.
+
+---
+
+### Approximation and Heuristics
+
+To cope, agents rely on approximations:
+
+- Heuristic search  
+- Limited lookahead  
+- Simplified models  
+
+These approaches sacrifice optimality for speed and scalability.
+
+---
+
+### Optimality vs Efficiency Comparison
+
+| Criterion       | Optimal Solutions | Approximate Solutions |
+|----------------|------------------|-----------------------|
+| Solution quality | Highest | Good enough |
+| Computation time | High | Low |
+| Scalability | Poor | Good |
+| Real-world use | Rare | Common |
+
+---
+
+### Decision Trade-off Visualization
+
+```mermaid
+quadrantChart
+    title Optimality vs Efficiency
+    x-axis Low Efficiency --> High Efficiency
+    y-axis Low Optimality --> High Optimality
+    Quadrant1: Optimal but Slow
+    Quadrant2: Optimal and Fast
+    Quadrant3: Fast but Suboptimal
+    Quadrant4: Slow and Suboptimal
+```
 
 ---
 
 ## Summary
 
-Agentic behavior emerges from a combination of interdependent principles. **Autonomy** enables independent decision-making, while **goals** provide direction and purpose. **Planning, acting, and monitoring loops** allow agents to operate continuously in dynamic environments. **Learning and adaptation** ensure improvement over time, and **robustness** allows agents to survive and recover from failure.
+This chapter explored the foundations of agentic AI decision-making. We began with goals, utilities, and preferences, showing how agents formalize what they want. We compared deterministic and probabilistic decision models, highlighting the importance of uncertainty. We examined planning and action selection as mechanisms for goal-directed behavior, and we analyzed how real-world constraints force trade-offs between optimality and efficiency.
 
-Together, these principles form the conceptual backbone of agentic AI. Understanding them is essential for analyzing existing systems and designing new ones that balance flexibility, control, and reliability.
+Together, these concepts form a coherent framework for understanding how intelligent agents act in complex, uncertain environments.
 
 ---
 
 ## Reflection Questions
 
-1. Where should autonomy be limited in safety-critical systems, and why?  
-2. How do goal hierarchies help manage conflicting objectives in real-world agents?  
-3. What trade-offs arise when designing learning mechanisms for adaptive agents?  
-4. How can robustness mechanisms increase user trust in autonomous systems?  
-5. Can an agent be considered truly agentic if it cannot recover from failure? Why or why not?
+1. How would you design a utility function for an AI assistant that balances helpfulness and privacy?  
+2. In what situations might deterministic decision-making still be preferable to probabilistic models?  
+3. How does partial observability change the way an agent should plan?  
+4. When is it acceptable to sacrifice optimality for efficiency in real-world systems?

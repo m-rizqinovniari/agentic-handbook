@@ -1,260 +1,384 @@
 ---
-title: Learning Mechanisms in Agentic AI
+title: Human-Agent Interaction
 sidebar_position: 7
 part: 2
 part_title: Designing and Building Agentic Systems
 ---
-# Designing and Building Agentic Systems: Learning Mechanisms in Agentic AI
+# Designing and Building Agentic Systems: Human-Agent Interaction
 
 ## Learning Objectives
 
-- Apply learning techniques to improve agent performance
-- Design memory and feedback systems for agents
-- Assess risks associated with autonomous learning
+- Distinguish levels of human involvement in agent systems
+- Design agent behaviors that improve user trust
+- Apply explainability principles to agentic decisions
+- Evaluate effectiveness of human-agent collaboration
 
 ---
 
 ## Introduction
 
-This chapter focuses on how agents learn from experience and improve over time, integrating reinforcement learning, memory, and feedback mechanisms.
+This chapter focuses on how humans interact with agentic systems, emphasizing trust, transparency, and usability.
+
+---
+
+# Designing and Building Agentic Systems: Human–Agent Interaction
 
 ---
 
 
+As agentic systems move from research labs into everyday products—virtual assistants, autonomous vehicles, clinical decision-support tools, and enterprise copilots—the quality of **human–agent interaction** becomes just as important as the intelligence of the agent itself. An agent that can reason, plan, and act autonomously is only truly useful if humans can **understand it, trust it, and work with it effectively**. Poor interaction design can lead to misuse, disuse, overreliance, or even dangerous outcomes, regardless of how advanced the underlying algorithms are.
 
-Agentic systems are designed to act autonomously in dynamic environments, making decisions, taking actions, and adapting their behavior over time. Unlike static software systems that follow predefined rules, agentic AI systems are expected to *learn from experience*, improve their performance, and handle uncertainty in the real world. This capability is what allows an AI agent to become more helpful, efficient, and aligned with its goals as it operates.
+Historically, human–computer interaction (HCI) focused on deterministic software: buttons, menus, and predictable workflows. Agentic systems fundamentally change this relationship. They exhibit autonomy, adapt over time, make probabilistic decisions, and sometimes surprise their users. This shift introduces new challenges: How much control should humans have? How do we explain decisions that emerge from complex reasoning or learned behavior? How do users form accurate mental models of what an agent can and cannot do?
 
-Learning mechanisms are therefore at the heart of agentic AI. Whether it is a customer support agent learning which responses lead to higher user satisfaction, a robotic agent learning to navigate safely, or a planning agent learning how to allocate resources more efficiently, learning enables agents to evolve. However, enabling learning also introduces complexity and risk: agents may learn the wrong behaviors, forget important knowledge, or act unsafely if not properly constrained.
-
-This chapter explores how learning is designed and implemented in agentic systems. We focus on reinforcement learning, memory and state tracking, feedback loops, and the challenges of continual learning. By the end, you should understand not only *how* agents learn, but *why* different learning mechanisms are chosen and *when* they should be applied.
+This chapter explores these questions through the lens of **trust, transparency, and usability**. We will move progressively from foundational concepts—such as levels of human involvement—to advanced design and evaluation practices for human–agent collaboration. Along the way, we will ground theory in real-world examples, detailed case studies, visual diagrams, and practical design guidance.
 
 ---
 
 
 By the end of this chapter, you will be able to:
 
-- Apply reinforcement learning concepts to improve agent decision-making
-- Design memory and state-tracking systems that support long-term learning
-- Compare online and offline learning approaches for agentic systems
-- Balance exploration and exploitation while maintaining safety
-- Assess risks and design strategies for continual and lifelong learning
+- Distinguish different levels of human involvement in agentic systems and understand when each is appropriate  
+- Design agent behaviors and interactions that support appropriate user trust  
+- Apply principles of explainability and transparency to agentic decision-making  
+- Design effective interfaces tailored to autonomous and semi-autonomous agents  
+- Evaluate the effectiveness of human–agent collaboration using qualitative and quantitative methods  
 
 ---
 
-## Reinforcement Learning for Agents
+## Human-in-the-Loop vs Human-on-the-Loop
 
-Reinforcement Learning (RL) is one of the most influential learning paradigms in agentic AI. At its core, RL is about learning through interaction: an agent takes actions in an environment, receives feedback in the form of rewards or penalties, and updates its behavior to maximize long-term reward. This mirrors how humans and animals learn many skills—by trying, observing outcomes, and adjusting behavior.
+Human involvement in agentic systems exists on a spectrum rather than a binary choice. Two foundational concepts—**Human-in-the-Loop (HITL)** and **Human-on-the-Loop (HOTL)**—emerged from early work in automation, aviation, and safety-critical systems. Understanding their differences is essential for designing interactions that balance autonomy with accountability.
 
-An RL-based agent operates within a feedback loop. The agent observes the current state of the environment, chooses an action based on its policy, and then receives a reward signal along with a new state. Over time, the agent learns which actions tend to produce better outcomes. This is especially powerful for agentic systems because it does not require explicit programming of every behavior; instead, the agent discovers effective strategies through experience.
+### Understanding the Core Concepts
 
-In agentic systems, reinforcement learning is often combined with planning, reasoning, and symbolic logic. For example, an AI assistant may use RL to decide *how* to ask clarifying questions, while using a symbolic planner to decide *what* task it is trying to accomplish. This hybrid approach allows agents to be both adaptive and interpretable.
+In **Human-in-the-Loop** systems, the agent cannot complete critical actions without explicit human input or approval. The human is an active participant in the decision-making loop. This approach traces its roots to early expert systems and decision-support tools in medicine and finance, where human judgment was considered indispensable due to ethical, legal, and contextual complexity.
 
-### Core Components of Reinforcement Learning
+By contrast, **Human-on-the-Loop** systems allow the agent to act autonomously while a human supervises the process and can intervene if necessary. This model became prominent with the rise of autonomous vehicles, industrial robotics, and large-scale monitoring systems, where constant human input would be impractical but oversight remains crucial.
 
-| Component | Description | Role in Agentic Systems |
-|---------|-------------|-------------------------|
-| Agent | The decision-making entity | Chooses actions autonomously |
-| Environment | The external system the agent interacts with | Provides feedback and constraints |
-| State | Representation of the current situation | Basis for decision-making |
-| Action | Possible choices the agent can take | Determines behavior |
-| Reward | Scalar feedback signal | Guides learning objectives |
+An everyday analogy helps clarify the distinction:
 
-### Reinforcement Learning Feedback Loop
+- HITL is like a **GPS that asks you to confirm every turn** before proceeding.
+- HOTL is like **cruise control**: the system operates on its own, but you are ready to brake or steer if conditions change.
 
-```mermaid
-flowchart LR
-    S[State] --> A[Agent Policy]
-    A -->|Action| E[Environment]
-    E -->|Reward + New State| S
-```
+### Why the Distinction Matters
 
-### Practical Example: Customer Support Agent
+The choice between HITL and HOTL has profound implications for:
 
-Consider an AI customer support agent that learns to respond more effectively over time:
+- **Safety**: HITL reduces risk in uncertain or high-stakes environments, while HOTL scales better in fast or complex systems.
+- **Cognitive load**: HITL can overwhelm users with constant decisions; HOTL risks disengagement and complacency.
+- **Responsibility and accountability**: Clear role definition is essential to avoid ambiguity when errors occur.
 
-- **State**: Current conversation context, user sentiment
-- **Action**: Choosing a response strategy (empathetic, technical, concise)
-- **Reward**: User satisfaction score or conversation resolution
+A common mistake in agent design is assuming that more autonomy is always better. In reality, **misaligned autonomy**—too much or too little—often leads to worse outcomes than a carefully calibrated approach.
 
-Over thousands of interactions, the agent learns which responses lead to better outcomes, even if it was not explicitly programmed with those rules.
+### How These Models Work in Practice
 
-### Common Reinforcement Learning Approaches
-
-| Approach | Key Idea | Typical Use Case |
-|--------|----------|------------------|
-| Q-Learning | Learn value of state-action pairs | Discrete action spaces |
-| Policy Gradients | Directly optimize policy | Complex or continuous actions |
-| Actor-Critic | Combine value and policy learning | Stable learning in large systems |
-
----
-
-## Memory, State Tracking, and Knowledge Accumulation
-
-Learning is only useful if an agent can *remember* what it has learned. Memory in agentic systems provides continuity across time, allowing agents to accumulate knowledge, track context, and adapt behavior based on past experiences. Without memory, an agent would behave like a goldfish—reacting only to the present moment.
-
-Memory can be short-term or long-term. Short-term memory tracks the current context, such as recent actions or conversation history. Long-term memory stores learned knowledge, patterns, and preferences that persist across sessions. Effective agentic systems carefully design both types and define how information moves between them.
-
-State tracking is closely related to memory. A “state” is the agent’s internal representation of the world at a given moment. As the environment changes, the agent updates its state. Good state representations capture what is relevant and ignore unnecessary details, enabling more efficient learning.
-
-### Types of Memory in Agentic Systems
-
-| Memory Type | Time Scale | Example |
-|------------|-----------|---------|
-| Short-term memory | Seconds to minutes | Current task context |
-| Episodic memory | Single experiences | Past conversations |
-| Semantic memory | Long-term knowledge | Facts, rules, skills |
-| Procedural memory | Skills and behaviors | Learned policies |
-
-### Memory Flow in an Agent
+In HITL systems, interaction typically follows a step-by-step loop:
 
 ```mermaid
 flowchart TD
-    Input[Environment Input] --> STM[Short-Term Memory]
-    STM --> Decision[Decision Module]
-    STM -->|Important| LTM[Long-Term Memory]
-    LTM --> Decision
+    A[Agent Proposes Action] --> B[Human Reviews]
+    B -->|Approve| C[Agent Executes]
+    B -->|Reject/Modify| D[Agent Revises Proposal]
+    D --> A
 ```
 
-### Case Study: Personal Productivity Agent
-
-A productivity agent that schedules meetings and reminders benefits greatly from memory:
-
-- It remembers user preferences (e.g., no meetings on Fridays).
-- It tracks past scheduling conflicts.
-- It learns which reminders users tend to ignore.
-
-By accumulating this knowledge, the agent becomes more helpful and personalized over time.
-
-### Challenges in Memory Design
-
-- Deciding **what to store** and **what to forget**
-- Preventing outdated or incorrect knowledge from dominating decisions
-- Balancing memory size with computational efficiency
-
----
-
-## Online vs Offline Learning
-
-Agentic systems can learn in different modes depending on when and how data is collected and used. The two most common approaches are **offline learning** and **online learning**, each with distinct trade-offs.
-
-Offline learning involves training the agent on a fixed dataset before deployment. This is common when safety, predictability, or regulatory compliance is critical. The agent does not update its behavior in real time but relies on pre-learned knowledge.
-
-Online learning, in contrast, allows agents to update their models continuously while interacting with the environment. This enables rapid adaptation but also introduces risks, such as learning undesirable behaviors from noisy or malicious feedback.
-
-### Comparison of Learning Modes
-
-| Aspect | Offline Learning | Online Learning |
-|------|-----------------|----------------|
-| Adaptability | Low after deployment | High and continuous |
-| Safety | Easier to control | Requires safeguards |
-| Data Source | Historical datasets | Live interaction data |
-| Use Case | Medical AI, finance | Recommendation systems |
-
-### Hybrid Learning Pipeline
-
-```mermaid
-flowchart LR
-    Data[Historical Data] --> Offline[Offline Training]
-    Offline --> Deploy[Deployed Agent]
-    Deploy --> LiveData[Live Interaction]
-    LiveData --> Online[Online Updates]
-    Online --> Deploy
-```
-
-### Real-World Example
-
-A navigation agent for autonomous delivery vehicles may:
-
-- Train offline using simulated traffic data.
-- Fine-tune online to adapt to new routes or construction.
-
-This hybrid approach balances safety and adaptability.
-
----
-
-## Exploration, Exploitation, and Safety
-
-One of the central dilemmas in learning agents is the **exploration–exploitation trade-off**. Exploration involves trying new actions to discover potentially better strategies. Exploitation involves using known strategies that already work well. Too much exploration can be dangerous; too much exploitation can lead to stagnation.
-
-In agentic systems, this trade-off has real-world consequences. A recommendation agent that explores too aggressively may show irrelevant content, while one that exploits too much may reinforce narrow user preferences. Safety-aware design ensures that exploration does not violate constraints or cause harm.
-
-### Exploration Strategies
-
-| Strategy | Description | Risk Level |
-|--------|-------------|------------|
-| ε-greedy | Random actions with small probability | Moderate |
-| Softmax | Probabilistic action selection | Lower |
-| Safe exploration | Constrained exploration | Lowest |
-
-### Exploration with Safety Constraints
+HOTL systems shift the loop:
 
 ```mermaid
 flowchart TD
-    State --> Policy
-    Policy --> Check[Safety Check]
-    Check -->|Safe| Action
-    Check -->|Unsafe| Fallback[Safe Action]
+    A[Agent Monitors & Acts] --> B[System State Changes]
+    B --> C[Human Monitors Dashboard]
+    C -->|Intervene| D[Override or Adjust Agent]
+    C -->|No Action| A
 ```
 
-### Practical Example: Healthcare Triage Agent
+These diagrams highlight a critical design insight: **interaction frequency and timing** differ dramatically between the two models.
 
-A healthcare triage agent must explore carefully:
+### Comparative Overview
 
-- It can experiment with phrasing questions differently.
-- It must never explore actions that could risk patient safety.
+| Dimension | Human-in-the-Loop | Human-on-the-Loop |
+|---------|------------------|------------------|
+| Human role | Active decision-maker | Supervisor/intervenor |
+| Agent autonomy | Limited | High |
+| Typical domains | Medicine, law, finance | Robotics, logistics, monitoring |
+| Risk tolerance | Low | Medium to high |
+| Scalability | Low to medium | High |
 
-This is achieved by combining exploration policies with strict safety filters.
+### Practical Examples
+
+- **Medical diagnosis tools** often use HITL: an AI suggests diagnoses, but clinicians make final decisions.
+- **Content moderation at scale** often uses HOTL: agents flag content and act automatically, with human reviewers auditing edge cases.
+- **Autonomous drones** may combine both: HOTL during routine flight, HITL for mission-critical decisions.
+
+### Limitations and Trade-offs
+
+Neither model is universally superior. HITL systems can slow down workflows and frustrate users, while HOTL systems risk **automation bias**, where humans over-trust the agent and fail to intervene when necessary. Modern agentic systems increasingly adopt **adaptive autonomy**, dynamically shifting between HITL and HOTL based on context, confidence, and risk.
 
 ---
 
-## Continual and Lifelong Learning
+## Explainability and Transparency in Agents
 
-Continual learning refers to an agent’s ability to learn new tasks without forgetting old ones. Lifelong learning extends this idea across the entire operational life of the agent. This is particularly important for long-lived agentic systems such as personal assistants or enterprise automation agents.
+As agentic systems become more autonomous, users increasingly ask a simple but powerful question: **“Why did it do that?”** Explainability and transparency address this need, forming the backbone of accountable and trustworthy human–agent interaction.
 
-A major challenge in continual learning is **catastrophic forgetting**, where learning new information degrades previously learned knowledge. Agentic systems must therefore use techniques like memory replay, modular architectures, or regularization to preserve past skills.
+### Defining Explainability and Transparency
 
-### Lifelong Learning Techniques
+**Explainability** refers to the agent’s ability to provide understandable reasons for its actions or recommendations. **Transparency** is broader, encompassing visibility into the agent’s goals, limitations, data sources, and decision boundaries. While related, they are not identical: a system can be transparent about its processes without being easily explainable to non-experts.
 
-| Technique | Purpose | Example |
-|---------|---------|---------|
-| Experience replay | Retain past knowledge | Storing old interactions |
-| Modular learning | Isolate skills | Task-specific modules |
-| Regularization | Prevent forgetting | Weight constraints |
+Historically, early rule-based systems were inherently explainable because decisions followed explicit rules. Modern learning-based agents, especially those using deep learning or large language models, reintroduced opacity—often described as the “black box” problem.
 
-### Continual Learning Lifecycle
+### Why Explainability Matters
+
+Explainability is not merely a technical feature; it is a **social and cognitive bridge** between humans and agents. It supports:
+
+- **Trust calibration**: Users adjust reliance based on understanding.
+- **Error detection**: Explanations help users catch mistakes.
+- **Learning and adoption**: Users learn how to work with the agent effectively.
+- **Ethical and legal compliance**: Many domains require justifications for decisions.
+
+Without explanations, users may either blindly trust the agent or reject it entirely—both undesirable outcomes.
+
+### Types of Explanations
+
+Explanations can be delivered at different levels and times:
+
+| Explanation Type | Description | Example |
+|------------------|-------------|---------|
+| Global | How the agent works in general | “This agent prioritizes safety over speed.” |
+| Local | Why a specific decision was made | “I rerouted due to heavy traffic ahead.” |
+| Process-based | Steps taken during reasoning | “I evaluated three options, then chose the lowest risk.” |
+| Outcome-based | Focus on results, not reasoning | “This option reduces cost by 12%.” |
+
+A critical design principle is **audience alignment**: explanations should match the user’s expertise and goals.
+
+### How to Design Effective Explanations
+
+Effective explanations are:
+
+- **Selective**: Not every detail is useful.
+- **Contextual**: Triggered when users need them.
+- **Actionable**: Help users decide what to do next.
+- **Honest**: Acknowledge uncertainty and limitations.
+
+An analogy helps: good explanations are like a skilled teacher, not a raw data dump.
+
+### Visualizing Explainability Layers
 
 ```mermaid
-flowchart LR
-    Task1 --> Learn1
-    Learn1 --> Task2
-    Task2 --> Learn2
-    Learn2 --> Memory
-    Memory --> Learn1
+graph TD
+    A[Agent Decision] --> B[Internal Reasoning]
+    B --> C[Explanation Layer]
+    C --> D[User Interface]
 ```
 
-### Long-Term Agent Example
+This layered view emphasizes that explainability is often an **interface and interaction problem**, not just a model problem.
 
-A virtual assistant that operates for years must:
+### Common Pitfalls
 
-- Learn new user preferences.
-- Adapt to new tools and APIs.
-- Retain core communication skills.
+- Over-explaining and overwhelming users  
+- Providing post-hoc rationalizations that don’t reflect real reasoning  
+- Using technical jargon instead of user-centered language  
 
-Designing for lifelong learning ensures the agent remains useful rather than obsolete.
+---
+
+## Trust Calibration and User Mental Models
+
+Trust in agentic systems is not about maximizing trust—it is about **calibrating trust appropriately**. Users should rely on agents when they are competent and remain cautious when they are not.
+
+### What Is Trust Calibration?
+
+Trust calibration refers to the alignment between an agent’s actual capabilities and the user’s perceived capabilities of that agent. Miscalibration occurs in two forms:
+
+- **Overtrust**: Users rely on the agent beyond its competence.
+- **Undertrust**: Users ignore or override a capable agent.
+
+Both lead to suboptimal outcomes.
+
+### Mental Models: How Users Understand Agents
+
+A **mental model** is the internal representation users form about how a system works. These models are shaped by:
+
+- Past experiences with similar systems  
+- Interface cues and metaphors  
+- Explanations and feedback from the agent  
+
+For example, if an agent speaks confidently and never expresses uncertainty, users may assume it is always correct.
+
+### Why Mental Models Matter
+
+Accurate mental models enable users to:
+
+- Predict agent behavior  
+- Detect anomalies  
+- Decide when to intervene  
+
+Inaccurate models, by contrast, lead to frustration, misuse, or blind trust.
+
+### Designing for Proper Trust Calibration
+
+Effective strategies include:
+
+- **Communicating uncertainty** (“I’m 60% confident in this result.”)
+- **Progressive disclosure** of capabilities and limits
+- **Consistent behavior** across similar situations
+- **Feedback loops** that show consequences of actions
+
+### Trust Dynamics Over Time
+
+Trust is not static; it evolves through interaction. Early failures are particularly damaging, while transparent recovery from errors can actually strengthen trust.
+
+```mermaid
+stateDiagram-v2
+    [*] --> InitialTrust
+    InitialTrust --> IncreasedTrust: Successful Interaction
+    InitialTrust --> DecreasedTrust: Failure
+    IncreasedTrust --> Overtrust: No Transparency
+    DecreasedTrust --> RepairedTrust: Honest Explanation
+```
+
+### Everyday Analogies
+
+- A new colleague: trust builds through reliable collaboration.
+- A weather app: users learn when to rely on it and when to double-check.
+
+---
+
+## Interface Design for Agentic Systems
+
+Interfaces are the **primary touchpoint** between humans and agents. Designing them requires rethinking traditional UI principles to accommodate autonomy, uncertainty, and dialogue.
+
+### How Agent Interfaces Differ from Traditional UIs
+
+Traditional interfaces assume:
+
+- Predictable system behavior  
+- User-driven actions  
+- Static workflows  
+
+Agentic interfaces must support:
+
+- Proactive behavior  
+- Mixed initiative (both human and agent can start actions)  
+- Ongoing conversations  
+
+### Core Design Principles
+
+Key principles for agentic interfaces include:
+
+- **Visibility of agent intent**: What is the agent trying to do?
+- **Interruptibility**: Users must be able to pause or override.
+- **Progress awareness**: Show what the agent is doing now and next.
+- **Graceful failure handling**: Errors should be understandable and recoverable.
+
+### Interaction Modalities
+
+Agentic systems often combine multiple modalities:
+
+| Modality | Strengths | Challenges |
+|--------|-----------|------------|
+| Text | Precise, searchable | Slower, cognitive load |
+| Voice | Natural, hands-free | Ambiguity, privacy |
+| Visual dashboards | Overview, monitoring | Complexity |
+| Embodied agents | Social cues | Uncanny valley |
+
+### Designing for Different User Roles
+
+An engineer monitoring an agent needs different information than an end user. Role-based interfaces help manage complexity and prevent overload.
+
+### Example Interface Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    User->>Agent: Set goal
+    Agent->>User: Clarify constraints
+    Agent->>Agent: Plan & act
+    Agent->>User: Status update
+    User->>Agent: Adjust or approve
+```
+
+---
+
+## Evaluating Human–Agent Collaboration
+
+Evaluation closes the design loop. Without rigorous assessment, teams cannot know whether an agent truly improves human performance.
+
+### Why Evaluation Is Hard
+
+Human–agent collaboration involves:
+
+- Subjective perceptions (trust, satisfaction)
+- Objective performance (speed, accuracy)
+- Long-term adaptation and learning
+
+Single metrics are insufficient.
+
+### Key Evaluation Dimensions
+
+| Dimension | Example Metrics |
+|---------|----------------|
+| Task performance | Time, error rate |
+| Trust | Survey scales, reliance behavior |
+| Usability | SUS, task success |
+| Collaboration quality | Intervention frequency, coordination |
+
+### Methods and Approaches
+
+Common approaches include:
+
+- **Controlled experiments** comparing agent vs non-agent workflows  
+- **Longitudinal studies** observing trust over time  
+- **Simulation-based testing** for rare or dangerous scenarios  
+
+### Interpreting Results Thoughtfully
+
+High automation may improve speed but reduce situational awareness. Evaluation must consider trade-offs and unintended consequences.
+
+---
+
+## Case Study: Human–Agent Collaboration in Clinical Decision Support
+
+### Context
+
+In a large urban hospital network, clinicians faced increasing diagnostic complexity due to rising patient volumes and multimorbidity. Leadership introduced an AI-driven clinical decision-support agent designed to assist physicians during patient intake and diagnosis.
+
+The agent analyzed patient records, lab results, and medical literature in real time, proposing potential diagnoses and treatment options. The system was deployed across emergency departments, where speed and accuracy were critical.
+
+### Problem
+
+Early pilots revealed mixed results. While the agent improved diagnostic coverage, clinicians reported discomfort and skepticism. Some followed recommendations blindly; others ignored them entirely. Errors occurred when the agent’s confidence masked uncertainty.
+
+The core issue was not algorithmic accuracy but **human–agent interaction breakdown**. Clinicians lacked clear explanations and struggled to understand when the agent was reliable.
+
+### Solution
+
+The design team restructured the system around HITL principles for high-risk decisions and HOTL for routine cases. They added layered explanations, uncertainty indicators, and a redesigned interface emphasizing collaboration.
+
+Training sessions focused on building accurate mental models, using real cases to demonstrate strengths and limitations.
+
+### Results
+
+Within six months, diagnostic accuracy improved by 18%, and clinician-reported trust stabilized at appropriate levels. Intervention rates aligned with risk profiles, indicating better calibration.
+
+Importantly, clinicians reported feeling “supported rather than replaced.”
+
+### Lessons Learned
+
+- Interaction design mattered more than raw intelligence  
+- Transparent uncertainty improved trust more than confident assertions  
+- Trust is earned through consistent, honest collaboration  
 
 ---
 
 ## Summary
 
-Learning mechanisms transform agentic systems from static tools into adaptive, intelligent collaborators. Reinforcement learning provides a foundation for decision-making through feedback, while memory and state tracking enable continuity and personalization. Online and offline learning offer different trade-offs between safety and adaptability, and exploration strategies must be carefully balanced to avoid harm. Finally, continual and lifelong learning ensure that agents remain effective over long periods without forgetting essential knowledge.
-
-Together, these mechanisms define how agentic AI systems grow, adapt, and improve—making learning not just a feature, but a defining characteristic of intelligent agents.
+Human–agent interaction is the linchpin of effective agentic systems. By understanding levels of human involvement, designing for explainability and trust calibration, crafting thoughtful interfaces, and rigorously evaluating collaboration, designers can ensure agents enhance rather than hinder human capabilities. The goal is not autonomy for its own sake, but **productive partnership**.
 
 ---
 
 ## Reflection Questions
 
-1. When would you prefer offline learning over online learning for an agentic system, and why?
-2. How might poor memory design negatively impact an autonomous agent?
-3. What safeguards would you introduce to ensure safe exploration in high-risk domains?
-4. How can continual learning be balanced with the need for system stability?
+1. When might a system benefit from dynamically shifting between HITL and HOTL?  
+2. How can explanations be tailored to different user expertise levels?  
+3. What signals might indicate overtrust or undertrust in an agent?  
+4. How would you evaluate long-term trust in an agentic system you design?
