@@ -6,8 +6,9 @@ from pathlib import Path
 from typing import Optional, Callable
 
 from utils.input_handler import InputHandler
-from agents.orchestrator import Orchestrator
+from agents.course_orchestrator import CourseOrchestrator
 from converters.docusaurus_converter import DocusaurusConverter
+import json
 
 
 def progress_callback(message: str) -> None:
@@ -18,7 +19,12 @@ def progress_callback(message: str) -> None:
 def main():
     """Main function to run the pipeline."""
     parser = argparse.ArgumentParser(
-        description="Generate learning materials using AI agents and STORM"
+        description="Generate comprehensive course using AI agents and STORM"
+    )
+    parser.add_argument(
+        "--skip-questionnaire",
+        action="store_true",
+        help="Skip interactive questionnaire and use default requirements"
     )
     parser.add_argument(
         "--input",
@@ -71,30 +77,35 @@ def main():
         if callback:
             callback(f"Input validated: Topic='{topic}', Language='{language}', Audience='{audience}'")
         
-        # Step 2: Initialize orchestrator
+        # Step 2: Initialize course orchestrator
         if callback:
-            callback("Initializing orchestrator...")
+            callback("Initializing course orchestrator...")
         
-        orchestrator = Orchestrator(
+        orchestrator = CourseOrchestrator(
             language=language,
             retriever=args.retriever,
             output_dir=args.output
         )
         
-        # Step 3: Run pipeline
+        # Step 3: Run course pipeline
         if callback:
-            callback("Starting pipeline execution...")
+            callback("Starting course generation pipeline...")
         
-        result = orchestrator.run_pipeline(
+        result = orchestrator.run_course_pipeline(
             topic=topic,
             audience=audience,
-            progress_callback=callback
+            progress_callback=callback,
+            skip_questionnaire=args.skip_questionnaire
         )
         
         if callback:
-            callback("Pipeline execution completed!")
+            callback("Course pipeline execution completed!")
         
-        # Step 4: Convert to Docusaurus
+        # Step 4: Load roadmap and requirements for Docusaurus
+        roadmap = result.get("roadmap")
+        course_requirements = result.get("course_requirements")
+        
+        # Step 5: Convert to Docusaurus
         if callback:
             callback("Converting to Docusaurus format...")
         
@@ -105,6 +116,8 @@ def main():
         
         conversion_result = converter.convert(
             outline=result["outline"],
+            roadmap=roadmap,
+            course_requirements=course_requirements,
             language=language
         )
         
@@ -115,7 +128,7 @@ def main():
         if callback:
             callback("Docusaurus conversion completed!")
         
-        # Step 5: Save summary
+        # Step 6: Save summary
         summary_file = orchestrator.save_summary()
         
         if callback:
@@ -123,21 +136,51 @@ def main():
         
         # Print final summary
         print("\n" + "="*60)
-        print("PIPELINE COMPLETED SUCCESSFULLY")
+        print("COURSE GENERATION COMPLETED SUCCESSFULLY")
         print("="*60)
+        course_title = roadmap.get("course_title", topic) if roadmap else topic
+        print(f"Course: {course_title}")
         print(f"Topic: {topic}")
         print(f"Language: {language}")
         print(f"Audience: {audience}")
-        print(f"\nGenerated:")
-        print(f"  - Parts: {len(result['outline'].get('parts', []))}")
-        total_chapters = sum(
-            len(part.get("chapters", []))
-            for part in result['outline'].get('parts', [])
-        )
-        print(f"  - Chapters: {total_chapters}")
+        
+        # Count modules/chapters
+        modules = result['outline'].get('modules', [])
+        parts = result['outline'].get('parts', [])
+        
+        if modules:
+            print(f"\nGenerated:")
+            print(f"  - Modules: {len(modules)}")
+            total_chapters = sum(
+                len(module.get("chapters", []))
+                for module in modules
+            )
+            print(f"  - Chapters: {total_chapters}")
+        else:
+            print(f"\nGenerated:")
+            print(f"  - Parts: {len(parts)}")
+            total_chapters = sum(
+                len(part.get("chapters", []))
+                for part in parts
+            )
+            print(f"  - Chapters: {total_chapters}")
+        
+        if roadmap:
+            learning_path = roadmap.get("learning_path", [])
+            total_phases = len(learning_path)
+            total_roadmap_modules = sum(
+                len(phase.get("modules", []))
+                for phase in learning_path
+            )
+            print(f"  - Roadmap Phases: {total_phases}")
+            print(f"  - Roadmap Modules: {total_roadmap_modules}")
+        
         print(f"  - Content files: {len(conversion_result['converted_files'])}")
         print(f"\nOutput locations:")
-        print(f"  - Outline: {result['outline_file']}")
+        if roadmap:
+            print(f"  - Requirements: {result.get('requirements_file', 'N/A')}")
+            print(f"  - Roadmap: {result.get('roadmap_file', 'N/A')}")
+        print(f"  - Outline: {result.get('outline_file', 'N/A')}")
         print(f"  - Content: {result['content_dir']}")
         print(f"  - Docusaurus docs: {conversion_result['docs_dir']}")
         print(f"  - Summary: {summary_file}")

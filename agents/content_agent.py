@@ -44,9 +44,10 @@ class ContentAgent:
     ) -> Dict[str, str]:
         """
         Generate content for all chapters in the outline.
+        Supports both "modules" and "parts" structure for backward compatibility.
         
         Args:
-            outline: Outline structure from Structure Agent
+            outline: Outline structure from Structure Agent or Module Agent
             progress_callback: Optional callback for progress updates
             
         Returns:
@@ -54,47 +55,101 @@ class ContentAgent:
         """
         self.generated_content = {}
         
+        # Check if outline uses "modules" or "parts" structure
+        modules = outline.get("modules", [])
         parts = outline.get("parts", [])
-        total_chapters = sum(len(part.get("chapters", [])) for part in parts)
-        current_chapter = 0
         
-        for part in parts:
-            part_num = part.get("part_number", 1)
-            part_title = part.get("title", f"Part {part_num}")
-            chapters = part.get("chapters", [])
+        # Determine which structure to use
+        use_modules = len(modules) > 0
+        
+        if use_modules:
+            # Process modules structure
+            total_chapters = sum(len(module.get("chapters", [])) for module in modules)
+            current_chapter = 0
             
-            if progress_callback:
-                progress_callback(f"Processing {part_title}...")
-            
-            for chapter in chapters:
-                current_chapter += 1
-                chapter_num = chapter.get("chapter_number", 1)
-                chapter_title = chapter.get("title", f"Chapter {chapter_num}")
+            for module in modules:
+                module_num = module.get("module_number", 1)
+                module_name = module.get("module_name", f"Module {module_num}")
+                module_slug = module.get("module_slug", f"module-{module_num}")
+                chapters = module.get("chapters", [])
                 
                 if progress_callback:
-                    progress_callback(
-                        f"Generating content for {chapter_title} "
-                        f"({current_chapter}/{total_chapters})..."
+                    progress_callback(f"Processing {module_name}...")
+                
+                for chapter in chapters:
+                    current_chapter += 1
+                    chapter_num = chapter.get("chapter_number", 1)
+                    chapter_title = chapter.get("title", f"Chapter {chapter_num}")
+                    
+                    if progress_callback:
+                        progress_callback(
+                            f"Generating content for {chapter_title} "
+                            f"({current_chapter}/{total_chapters})..."
+                        )
+                    
+                    # Generate content for this chapter
+                    content = self._generate_chapter_content(
+                        chapter,
+                        module_name,
+                        progress_callback
                     )
+                    
+                    # Store content with path (use module_slug for path)
+                    chapter_path = f"{module_slug}/chapter-{chapter_num}"
+                    self.generated_content[chapter_path] = content
+                    
+                    # Save to file
+                    self._save_chapter_content(
+                        module_num=module_num,
+                        chapter_num=chapter_num,
+                        chapter_title=chapter_title,
+                        content=content,
+                        use_modules=True,
+                        module_slug=module_slug
+                    )
+        else:
+            # Process parts structure (legacy/backward compatibility)
+            total_chapters = sum(len(part.get("chapters", [])) for part in parts)
+            current_chapter = 0
+            
+            for part in parts:
+                part_num = part.get("part_number", 1)
+                part_title = part.get("title", f"Part {part_num}")
+                chapters = part.get("chapters", [])
                 
-                # Generate content for this chapter
-                content = self._generate_chapter_content(
-                    chapter,
-                    part_title,
-                    progress_callback
-                )
+                if progress_callback:
+                    progress_callback(f"Processing {part_title}...")
                 
-                # Store content with path
-                chapter_path = f"part-{part_num}/chapter-{chapter_num}"
-                self.generated_content[chapter_path] = content
-                
-                # Save to file
-                self._save_chapter_content(
-                    part_num,
-                    chapter_num,
-                    chapter_title,
-                    content
-                )
+                for chapter in chapters:
+                    current_chapter += 1
+                    chapter_num = chapter.get("chapter_number", 1)
+                    chapter_title = chapter.get("title", f"Chapter {chapter_num}")
+                    
+                    if progress_callback:
+                        progress_callback(
+                            f"Generating content for {chapter_title} "
+                            f"({current_chapter}/{total_chapters})..."
+                        )
+                    
+                    # Generate content for this chapter
+                    content = self._generate_chapter_content(
+                        chapter,
+                        part_title,
+                        progress_callback
+                    )
+                    
+                    # Store content with path
+                    chapter_path = f"part-{part_num}/chapter-{chapter_num}"
+                    self.generated_content[chapter_path] = content
+                    
+                    # Save to file
+                    self._save_chapter_content(
+                        part_num=part_num,
+                        chapter_num=chapter_num,
+                        chapter_title=chapter_title,
+                        content=content,
+                        use_modules=False
+                    )
         
         if progress_callback:
             progress_callback("All content generation completed!")
@@ -151,52 +206,100 @@ class ContentAgent:
     
     def _save_chapter_content(
         self,
-        part_num: int,
-        chapter_num: int,
-        chapter_title: str,
-        content: str
+        part_num: Optional[int] = None,
+        module_num: Optional[int] = None,
+        chapter_num: int = 1,
+        chapter_title: str = "",
+        content: str = "",
+        use_modules: bool = False,
+        module_slug: Optional[str] = None
     ) -> None:
         """
         Save chapter content to file.
+        Supports both modules and parts structure.
         
         Args:
-            part_num: Part number
+            part_num: Part number (for parts structure)
+            module_num: Module number (for modules structure)
             chapter_num: Chapter number
             chapter_title: Chapter title
             content: Generated content
+            use_modules: If True, use modules structure; if False, use parts structure
+            module_slug: Module slug for directory name (for modules structure)
         """
-        # Create part directory
-        part_dir = self.output_dir / f"part-{part_num}"
-        part_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Save chapter file
-        chapter_file = part_dir / f"chapter-{chapter_num}.md"
-        with open(chapter_file, 'w', encoding='utf-8') as f:
-            f.write(content)
-        
-        # Also save metadata
-        metadata_file = part_dir / f"chapter-{chapter_num}.meta.json"
-        metadata = {
-            "part_number": part_num,
-            "chapter_number": chapter_num,
-            "title": chapter_title,
-            "file": f"chapter-{chapter_num}.md"
-        }
-        with open(metadata_file, 'w', encoding='utf-8') as f:
-            json.dump(metadata, f, indent=2, ensure_ascii=False)
+        if use_modules:
+            # Use modules structure
+            if module_slug:
+                module_dir = self.output_dir / module_slug
+            else:
+                module_dir = self.output_dir / f"module-{module_num}"
+            module_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Save chapter file
+            chapter_file = module_dir / f"chapter-{chapter_num}.md"
+            with open(chapter_file, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            # Also save metadata
+            metadata_file = module_dir / f"chapter-{chapter_num}.meta.json"
+            metadata = {
+                "module_number": module_num,
+                "module_slug": module_slug or f"module-{module_num}",
+                "chapter_number": chapter_num,
+                "title": chapter_title,
+                "file": f"chapter-{chapter_num}.md"
+            }
+            with open(metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
+        else:
+            # Use parts structure (legacy)
+            part_dir = self.output_dir / f"part-{part_num}"
+            part_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Save chapter file
+            chapter_file = part_dir / f"chapter-{chapter_num}.md"
+            with open(chapter_file, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            # Also save metadata
+            metadata_file = part_dir / f"chapter-{chapter_num}.meta.json"
+            metadata = {
+                "part_number": part_num,
+                "chapter_number": chapter_num,
+                "title": chapter_title,
+                "file": f"chapter-{chapter_num}.md"
+            }
+            with open(metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
     
-    def get_content_path(self, part_num: int, chapter_num: int) -> Optional[Path]:
+    def get_content_path(
+        self,
+        part_num: Optional[int] = None,
+        module_slug: Optional[str] = None,
+        chapter_num: int = 1,
+        use_modules: bool = False
+    ) -> Optional[Path]:
         """
         Get file path for a specific chapter's content.
+        Supports both modules and parts structure.
         
         Args:
-            part_num: Part number
+            part_num: Part number (for parts structure)
+            module_slug: Module slug (for modules structure)
             chapter_num: Chapter number
+            use_modules: If True, use modules structure; if False, use parts structure
             
         Returns:
             Path to chapter file, or None if not found
         """
-        chapter_file = self.output_dir / f"part-{part_num}" / f"chapter-{chapter_num}.md"
+        if use_modules:
+            if module_slug:
+                chapter_file = self.output_dir / module_slug / f"chapter-{chapter_num}.md"
+            else:
+                chapter_file = self.output_dir / f"module-{part_num}" / f"chapter-{chapter_num}.md"
+        else:
+            chapter_file = self.output_dir / f"part-{part_num}" / f"chapter-{chapter_num}.md"
+        
         if chapter_file.exists():
             return chapter_file
         return None

@@ -41,56 +41,113 @@ class DocusaurusConverter:
     def convert(
         self,
         outline: Dict[str, Any],
+        roadmap: Optional[Dict[str, Any]] = None,
+        course_requirements: Optional[Dict[str, Any]] = None,
         language: str = "id"
     ) -> Dict[str, Any]:
         """
         Convert generated content to Docusaurus structure.
         
         Args:
-            outline: Outline structure from Structure Agent
+            outline: Outline structure from Structure Agent or Module Agent
+            roadmap: Optional course roadmap from RoadmapAgent
+            course_requirements: Optional questionnaire results
             language: Language code
             
         Returns:
             Dictionary with conversion results
         """
+        # Create course index page with roadmap and outline
+        if roadmap:
+            self.create_course_index_page(
+                roadmap=roadmap,
+                outline=outline,
+                course_requirements=course_requirements,
+                language=language
+            )
+        
+        # Check if outline uses "modules" or "parts" structure
+        modules = outline.get("modules", [])
         parts = outline.get("parts", [])
+        use_modules = len(modules) > 0
+        
         converted_files = []
         
-        # Process each part
-        for part in parts:
-            part_num = part.get("part_number", 1)
-            part_title = part.get("title", f"Part {part_num}")
-            chapters = part.get("chapters", [])
-            
-            # Create part directory
-            part_dir = self.docs_dir / f"part-{part_num}"
-            part_dir.mkdir(parents=True, exist_ok=True)
-            
-            # Create category file for part
-            self._create_category_file(part_dir, part_title, language)
-            
-            # Process each chapter
-            for chapter in chapters:
-                chapter_num = chapter.get("chapter_number", 1)
-                chapter_title = chapter.get("title", f"Chapter {chapter_num}")
+        if use_modules:
+            # Process modules structure
+            for module in modules:
+                module_num = module.get("module_number", 1)
+                module_name = module.get("module_name", f"Module {module_num}")
+                module_slug = module.get("module_slug", f"module-{module_num}")
+                chapters = module.get("chapters", [])
                 
-                # Copy chapter file
-                source_file = self.content_dir / f"part-{part_num}" / f"chapter-{chapter_num}.md"
-                if source_file.exists():
-                    dest_file = part_dir / f"chapter-{chapter_num}.md"
-                    shutil.copy2(source_file, dest_file)
+                # Create module directory
+                module_dir = self.docs_dir / module_slug
+                module_dir.mkdir(parents=True, exist_ok=True)
+                
+                # Create category file for module
+                self._create_category_file(module_dir, module_name, language)
+                
+                # Process each chapter
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", 1)
+                    chapter_title = chapter.get("title", f"Chapter {chapter_num}")
                     
-                    # Add frontmatter
-                    self._add_frontmatter(
-                        dest_file,
-                        chapter_title,
-                        part_title,
-                        part_num,
-                        chapter_num,
-                        language
-                    )
+                    # Copy chapter file
+                    source_file = self.content_dir / module_slug / f"chapter-{chapter_num}.md"
+                    if source_file.exists():
+                        dest_file = module_dir / f"chapter-{chapter_num}.md"
+                        shutil.copy2(source_file, dest_file)
+                        
+                        # Add frontmatter
+                        self._add_frontmatter(
+                            dest_file,
+                            chapter_title,
+                            module_name,
+                            module_num,
+                            chapter_num,
+                            language,
+                            is_module=True
+                        )
+                        
+                        converted_files.append(str(dest_file.relative_to(self.docs_dir)))
+        else:
+            # Process parts structure (legacy)
+            for part in parts:
+                part_num = part.get("part_number", 1)
+                part_title = part.get("title", f"Part {part_num}")
+                chapters = part.get("chapters", [])
+                
+                # Create part directory
+                part_dir = self.docs_dir / f"part-{part_num}"
+                part_dir.mkdir(parents=True, exist_ok=True)
+                
+                # Create category file for part
+                self._create_category_file(part_dir, part_title, language)
+                
+                # Process each chapter
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", 1)
+                    chapter_title = chapter.get("title", f"Chapter {chapter_num}")
                     
-                    converted_files.append(str(dest_file.relative_to(self.docs_dir)))
+                    # Copy chapter file
+                    source_file = self.content_dir / f"part-{part_num}" / f"chapter-{chapter_num}.md"
+                    if source_file.exists():
+                        dest_file = part_dir / f"chapter-{chapter_num}.md"
+                        shutil.copy2(source_file, dest_file)
+                        
+                        # Add frontmatter
+                        self._add_frontmatter(
+                            dest_file,
+                            chapter_title,
+                            part_title,
+                            part_num,
+                            chapter_num,
+                            language,
+                            is_module=False
+                        )
+                        
+                        converted_files.append(str(dest_file.relative_to(self.docs_dir)))
         
         # Create sidebar configuration
         sidebar_config = self._create_sidebar_config(outline, language)
@@ -126,7 +183,8 @@ class DocusaurusConverter:
         part_title: str,
         part_num: int,
         chapter_num: int,
-        language: str
+        language: str,
+        is_module: bool = False
     ) -> None:
         """Add Docusaurus frontmatter to markdown file."""
         # Read existing content
@@ -211,6 +269,7 @@ class DocusaurusConverter:
     ) -> Dict[str, Any]:
         """
         Create sidebar configuration for Docusaurus.
+        Supports both modules and parts structure.
         
         Args:
             outline: Outline structure
@@ -220,28 +279,55 @@ class DocusaurusConverter:
             Sidebar configuration dictionary
         """
         sidebar_items = []
-        parts = outline.get("parts", [])
         
-        for part in parts:
-            part_num = part.get("part_number", 1)
-            part_title = part.get("title", f"Part {part_num}")
-            chapters = part.get("chapters", [])
-            
-            part_item = {
-                "type": "category",
-                "label": part_title,
-                "items": []
-            }
-            
-            for chapter in chapters:
-                chapter_num = chapter.get("chapter_number", 1)
-                chapter_title = chapter.get("title", f"Chapter {chapter_num}")
+        # Check if outline uses modules or parts
+        modules = outline.get("modules", [])
+        parts = outline.get("parts", [])
+        use_modules = len(modules) > 0
+        
+        if use_modules:
+            # Process modules structure
+            for module in modules:
+                module_num = module.get("module_number", 1)
+                module_name = module.get("module_name", f"Module {module_num}")
+                module_slug = module.get("module_slug", f"module-{module_num}")
+                chapters = module.get("chapters", [])
                 
-                part_item["items"].append(
-                    f"part-{part_num}/chapter-{chapter_num}"
-                )
-            
-            sidebar_items.append(part_item)
+                module_item = {
+                    "type": "category",
+                    "label": module_name,
+                    "items": []
+                }
+                
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", 1)
+                    
+                    module_item["items"].append(
+                        f"{module_slug}/chapter-{chapter_num}"
+                    )
+                
+                sidebar_items.append(module_item)
+        else:
+            # Process parts structure (legacy)
+            for part in parts:
+                part_num = part.get("part_number", 1)
+                part_title = part.get("title", f"Part {part_num}")
+                chapters = part.get("chapters", [])
+                
+                part_item = {
+                    "type": "category",
+                    "label": part_title,
+                    "items": []
+                }
+                
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", 1)
+                    
+                    part_item["items"].append(
+                        f"part-{part_num}/chapter-{chapter_num}"
+                    )
+                
+                sidebar_items.append(part_item)
         
         return {
             "docs": sidebar_items
@@ -300,4 +386,397 @@ class DocusaurusConverter:
             result.append(escaped_line)
         
         return '\n'.join(result)
+    
+    def create_course_index_page(
+        self,
+        roadmap: Dict[str, Any],
+        outline: Dict[str, Any],
+        course_requirements: Optional[Dict[str, Any]] = None,
+        language: str = "id"
+    ) -> Path:
+        """
+        Create comprehensive course index page with roadmap and outline.
+        
+        Args:
+            roadmap: Course roadmap from RoadmapAgent
+            outline: Course outline (modules/chapters structure)
+            course_requirements: Optional questionnaire results
+            language: Language code
+            
+        Returns:
+            Path to created index.md file
+        """
+        index_file = self.docs_dir / "index.md"
+        
+        # Generate markdown content
+        content = self._build_index_content(
+            roadmap=roadmap,
+            outline=outline,
+            course_requirements=course_requirements,
+            language=language
+        )
+        
+        # Write to file
+        with open(index_file, 'w', encoding='utf-8') as f:
+            f.write(content)
+        
+        return index_file
+    
+    def _build_index_content(
+        self,
+        roadmap: Dict[str, Any],
+        outline: Dict[str, Any],
+        course_requirements: Optional[Dict[str, Any]],
+        language: str
+    ) -> str:
+        """Build markdown content for index page."""
+        
+        course_title = roadmap.get("course_title", outline.get("topic", "Course"))
+        course_description = roadmap.get("course_description", "")
+        estimated_duration = roadmap.get("estimated_duration", "")
+        
+        # Frontmatter - use YAML safe_dump to properly quote title
+        frontmatter_data = {
+            "title": course_title,
+            "sidebar_position": 0
+        }
+        frontmatter_yaml = yaml.safe_dump(
+            frontmatter_data,
+            allow_unicode=True,
+            default_flow_style=False,
+            sort_keys=False
+        )
+        # Remove trailing newline and ensure proper format
+        frontmatter_yaml = frontmatter_yaml.rstrip()
+        frontmatter = f"---\n{frontmatter_yaml}\n---"
+        
+        # Header section
+        header = f"""
+# {course_title}
+
+{course_description}
+
+"""
+        
+        # Course Overview Section
+        overview = self._build_course_overview(
+            roadmap, course_requirements, language
+        )
+        
+        # Learning Path Visualization
+        path_viz = self._build_learning_path_viz(roadmap, outline, language)
+        
+        # Roadmap Section
+        roadmap_section = self._build_roadmap_section(roadmap, language)
+        
+        # Outline Section (Modules & Chapters)
+        outline_section = self._build_outline_section(outline, language)
+        
+        # Combine all sections
+        content = f"""{frontmatter}
+{header}
+{overview}
+{path_viz}
+{roadmap_section}
+{outline_section}
+"""
+        
+        return content
+    
+    def _build_course_overview(
+        self,
+        roadmap: Dict[str, Any],
+        course_requirements: Optional[Dict[str, Any]],
+        language: str
+    ) -> str:
+        """Build course overview section."""
+        
+        if language == "id":
+            section_title = "## 📋 Ringkasan Course"
+            duration_label = "**Durasi Estimasi:**"
+            level_label = "**Level:**"
+            focus_label = "**Fokus Pembelajaran:**"
+        else:
+            section_title = "## 📋 Course Overview"
+            duration_label = "**Estimated Duration:**"
+            level_label = "**Level:**"
+            focus_label = "**Learning Focus:**"
+        
+        overview = f"""{section_title}
+
+"""
+        
+        # Course metadata
+        if roadmap.get("estimated_duration"):
+            overview += f"{duration_label} {roadmap.get('estimated_duration')}\n\n"
+        
+        if roadmap.get("level"):
+            overview += f"{level_label} {roadmap.get('level')}\n\n"
+        
+        if course_requirements and course_requirements.get("learning_focus"):
+            focus_map = {
+                "1": "Teori mendalam" if language == "id" else "In-depth theory",
+                "2": "Praktik dan implementasi" if language == "id" else "Practice and implementation",
+                "3": "Kombinasi teori dan praktik" if language == "id" else "Combination of theory and practice",
+                "4": "Studi kasus dan aplikasi real-world" if language == "id" else "Case studies and real-world applications"
+            }
+            focus_text = focus_map.get(course_requirements.get("learning_focus"), "")
+            if focus_text:
+                overview += f"{focus_label} {focus_text}\n\n"
+        
+        # Course objectives
+        if roadmap.get("course_objectives"):
+            if language == "id":
+                overview += "**Tujuan Pembelajaran:**\n\n"
+            else:
+                overview += "**Learning Objectives:**\n\n"
+            
+            for obj in roadmap.get("course_objectives", []):
+                overview += f"- {obj}\n"
+            overview += "\n"
+        
+        return overview
+    
+    def _build_roadmap_section(
+        self,
+        roadmap: Dict[str, Any],
+        language: str
+    ) -> str:
+        """Build roadmap visualization section."""
+        
+        if language == "id":
+            section_title = "## 🗺️ Roadmap Pembelajaran"
+            phase_label = "Fase"
+            module_label = "Modul"
+            time_label = "Waktu"
+        else:
+            section_title = "## 🗺️ Learning Roadmap"
+            phase_label = "Phase"
+            module_label = "Module"
+            time_label = "Time"
+        
+        roadmap_content = f"""{section_title}
+
+"""
+        
+        if language == "id":
+            roadmap_content += "Roadmap ini menunjukkan alur pembelajaran dari dasar hingga tingkat lanjut.\n\n"
+        else:
+            roadmap_content += "This roadmap shows the learning path from basics to advanced level.\n\n"
+        
+        learning_path = roadmap.get("learning_path", [])
+        
+        for phase_idx, phase in enumerate(learning_path, 1):
+            phase_name = phase.get("phase", f"Phase {phase_idx}")
+            phase_desc = phase.get("description", "")
+            modules = phase.get("modules", [])
+            
+            roadmap_content += f"""### {phase_name}
+
+{phase_desc}
+
+"""
+            
+            # Create table for modules in this phase
+            roadmap_content += f"| {module_label} | Deskripsi | {time_label} |\n"
+            roadmap_content += "|------|------------|-------|\n"
+            
+            for module in modules:
+                module_name = module.get("module_name", "")
+                module_desc = module.get("description", "")
+                module_time = module.get("estimated_time", "")
+                
+                # Truncate description if too long
+                if len(module_desc) > 100:
+                    module_desc = module_desc[:97] + "..."
+                
+                roadmap_content += f"| {module_name} | {module_desc} | {module_time} |\n"
+            
+            roadmap_content += "\n"
+        
+        return roadmap_content
+    
+    def _build_outline_section(
+        self,
+        outline: Dict[str, Any],
+        language: str
+    ) -> str:
+        """Build detailed outline section with modules and chapters."""
+        
+        if language == "id":
+            section_title = "## 📚 Struktur Course Lengkap"
+            part_label = "Bagian"
+            chapter_label = "Bab"
+            description_label = "Deskripsi"
+        else:
+            section_title = "## 📚 Complete Course Structure"
+            part_label = "Part"
+            chapter_label = "Chapter"
+            description_label = "Description"
+        
+        outline_content = f"""{section_title}
+
+"""
+        
+        if language == "id":
+            outline_content += "Struktur lengkap course dengan semua modul dan chapter.\n\n"
+        else:
+            outline_content += "Complete course structure with all modules and chapters.\n\n"
+        
+        # Check if outline uses modules or parts
+        if "modules" in outline:
+            # New structure: modules -> chapters
+            modules = outline.get("modules", [])
+            
+            for module in modules:
+                module_name = module.get("module_name", module.get("title", ""))
+                module_desc = module.get("description", "")
+                chapters = module.get("chapters", [])
+                module_slug = module.get("module_slug", f"module-{module.get('module_number', 1)}")
+                
+                outline_content += f"""### {module_name}
+
+{module_desc}
+
+"""
+                
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", "")
+                    chapter_title = chapter.get("title", "")
+                    chapter_desc = chapter.get("description", "")
+                    
+                    # Create link to chapter
+                    chapter_link = f"{module_slug}/chapter-{chapter_num}"
+                    
+                    outline_content += f"""#### [{chapter_num}. {chapter_title}]({chapter_link})
+
+{chapter_desc}
+
+"""
+                    
+                    if language == "id":
+                        outline_content += "**Tujuan Pembelajaran:**\n"
+                    else:
+                        outline_content += "**Learning Objectives:**\n"
+                    
+                    # Learning objectives
+                    for obj in chapter.get("learning_objectives", []):
+                        outline_content += f"- {obj}\n"
+                    
+                    outline_content += "\n"
+        
+        else:
+            # Legacy structure: parts -> chapters
+            parts = outline.get("parts", [])
+            
+            for part in parts:
+                part_num = part.get("part_number", "")
+                part_title = part.get("title", "")
+                part_desc = part.get("description", "")
+                chapters = part.get("chapters", [])
+                
+                outline_content += f"""### {part_label} {part_num}: {part_title}
+
+{part_desc}
+
+"""
+                
+                for chapter in chapters:
+                    chapter_num = chapter.get("chapter_number", "")
+                    chapter_title = chapter.get("title", "")
+                    chapter_desc = chapter.get("description", "")
+                    
+                    # Create link to chapter
+                    chapter_link = f"part-{part_num}/chapter-{chapter_num}"
+                    
+                    outline_content += f"""#### [{chapter_num}. {chapter_title}]({chapter_link})
+
+{chapter_desc}
+
+"""
+                    
+                    if language == "id":
+                        outline_content += "**Tujuan Pembelajaran:**\n"
+                    else:
+                        outline_content += "**Learning Objectives:**\n"
+                    
+                    # Learning objectives
+                    for obj in chapter.get("learning_objectives", []):
+                        outline_content += f"- {obj}\n"
+                    
+                    outline_content += "\n"
+        
+        return outline_content
+    
+    def _build_learning_path_viz(
+        self,
+        roadmap: Dict[str, Any],
+        outline: Dict[str, Any],
+        language: str
+    ) -> str:
+        """Build Mermaid diagram for learning path visualization."""
+        
+        if language == "id":
+            section_title = "## 🎯 Alur Pembelajaran"
+        else:
+            section_title = "## 🎯 Learning Path"
+        
+        # Create Mermaid flowchart showing learning progression
+        mermaid_diagram = """```mermaid
+graph TD
+"""
+        
+        learning_path = roadmap.get("learning_path", [])
+        
+        # Build nodes and connections
+        prev_node = None
+        for phase_idx, phase in enumerate(learning_path, 1):
+            phase_name = phase.get("phase", f"Phase {phase_idx}")
+            phase_node = f"P{phase_idx}"
+            
+            # Escape special characters for Mermaid
+            phase_name_clean = phase_name.replace('"', "'")
+            
+            mermaid_diagram += f'    {phase_node}["{phase_name_clean}"]\n'
+            
+            if prev_node:
+                mermaid_diagram += f"    {prev_node} --> {phase_node}\n"
+            
+            prev_node = phase_node
+            
+            # Add modules as sub-nodes
+            modules = phase.get("modules", [])
+            for mod_idx, module in enumerate(modules, 1):
+                mod_node = f"M{phase_idx}_{mod_idx}"
+                mod_name = module.get("module_name", f"Module {mod_idx}")
+                mod_name_clean = mod_name.replace('"', "'")
+                
+                # Truncate if too long
+                if len(mod_name_clean) > 30:
+                    mod_name_clean = mod_name_clean[:27] + "..."
+                
+                mermaid_diagram += f'    {mod_node}["{mod_name_clean}"]\n'
+                mermaid_diagram += f"    {phase_node} --> {mod_node}\n"
+        
+        mermaid_diagram += """```
+"""
+        
+        if language == "id":
+            viz_content = f"""{section_title}
+
+Diagram berikut menunjukkan alur pembelajaran course ini:
+
+{mermaid_diagram}
+
+"""
+        else:
+            viz_content = f"""{section_title}
+
+The following diagram shows the learning path of this course:
+
+{mermaid_diagram}
+
+"""
+        
+        return viz_content
 
