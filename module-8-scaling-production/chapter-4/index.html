@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="id" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-module-8-scaling-production/chapter-4" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Deployment Patterns and Infrastructure | Learning Materials</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="http://localhost:3000/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="http://localhost:3000/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="http://localhost:3000/module-8-scaling-production/chapter-4"><meta data-rh="true" property="og:locale" content="id"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="id"><meta data-rh="true" name="docsearch:language" content="id"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Deployment Patterns and Infrastructure | Learning Materials"><meta data-rh="true" name="description" content="Learning Objectives"><meta data-rh="true" property="og:description" content="Learning Objectives"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="http://localhost:3000/module-8-scaling-production/chapter-4"><link data-rh="true" rel="alternate" href="http://localhost:3000/module-8-scaling-production/chapter-4" hreflang="id"><link data-rh="true" rel="alternate" href="http://localhost:3000/en/module-8-scaling-production/chapter-4" hreflang="en"><link data-rh="true" rel="alternate" href="http://localhost:3000/module-8-scaling-production/chapter-4" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Deployment Patterns and Infrastructure","item":"http://localhost:3000/module-8-scaling-production/chapter-4"}]}</script><link rel="stylesheet" href="/assets/css/styles.b3bb77c0.css">
+<script src="/assets/js/runtime~main.ea5f7858.js" defer="defer"></script>
+<script src="/assets/js/main.e790a99d.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"light"),document.documentElement.setAttribute("data-theme-choice",t||"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Lewati ke konten utama"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Lewati ke konten utama</a></div><nav aria-label="Utama" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Alihkan bilah sisi" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo.svg" alt="Learning Materials Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="Learning Materials Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Learning Materials</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>Bahasa Indonesia</a><ul class="dropdown__menu"><li><a href="/module-8-scaling-production/chapter-4" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="id">Bahasa Indonesia</a></li><li><a href="/en/module-8-scaling-production/chapter-4" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="en">English</a></li></ul></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Ubah antara modus gelap dan modus terang (saat ini system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Gulir kembali ke atas" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Bilah sisi dokumentasi" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/"><span title="Deep Dive into Agentic AI: Design, Implementation, and Production Systems" class="linkLabel_WmDU">Deep Dive into Agentic AI: Design, Implementation, and Production Systems</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-1-introduction-agentic-ai/chapter-1"><span title="Introduction to Agentic AI and Autonomous Systems" class="categoryLinkLabel_W154">Introduction to Agentic AI and Autonomous Systems</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-2-core-components/chapter-1"><span title="Core Components of an AI Agent" class="categoryLinkLabel_W154">Core Components of an AI Agent</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-3-architectures-patterns/chapter-1"><span title="Agent Architectures and Design Patterns" class="categoryLinkLabel_W154">Agent Architectures and Design Patterns</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-4-agent-frameworks/chapter-1"><span title="Building Agents with Modern Frameworks" class="categoryLinkLabel_W154">Building Agents with Modern Frameworks</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-5-planning-memory-decision/chapter-1"><span title="Planning, Memory, and Decision-Making" class="categoryLinkLabel_W154">Planning, Memory, and Decision-Making</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-6-multi-agent/chapter-1"><span title="Multi-Agent Systems and Collaboration" class="categoryLinkLabel_W154">Multi-Agent Systems and Collaboration</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-7-evaluation-safety/chapter-1"><span title="Evaluation, Safety, and Alignment" class="categoryLinkLabel_W154">Evaluation, Safety, and Alignment</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/module-8-scaling-production/chapter-1"><span title="Scaling, Optimization, and Production Deployment" class="categoryLinkLabel_W154">Scaling, Optimization, and Production Deployment</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/module-8-scaling-production/chapter-1"><span title="Latency and Cost Optimization" class="linkLabel_WmDU">Latency and Cost Optimization</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/module-8-scaling-production/chapter-2"><span title="Caching, Parallelization, and Throughput" class="linkLabel_WmDU">Caching, Parallelization, and Throughput</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/module-8-scaling-production/chapter-3"><span title="Monitoring, Logging, and Observability" class="linkLabel_WmDU">Monitoring, Logging, and Observability</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/module-8-scaling-production/chapter-4"><span title="Deployment Patterns and Infrastructure" class="linkLabel_WmDU">Deployment Patterns and Infrastructure</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/module-9-capstone/chapter-1"><span title="Capstone Project: Build an End-to-End Agentic AI System" class="categoryLinkLabel_W154">Capstone Project: Build an End-to-End Agentic AI System</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Runut navigasi"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Halaman utama" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Scaling, Optimization, and Production Deployment</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Deployment Patterns and Infrastructure</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">Pada halaman ini</button></div><div class="theme-doc-markdown markdown"><header><h1>Scaling, Optimization, and Production Deployment: Deployment Patterns and Infrastructure</h1></header>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="learning-objectives">Learning Objectives<a href="#learning-objectives" class="hash-link" aria-label="Taut langsung ke Learning Objectives" title="Taut langsung ke Learning Objectives" translate="no">​</a></h2>
+<ul>
+<li class="">Design deployment architectures</li>
+<li class="">Implement CI/CD pipelines</li>
+<li class="">Manage versions safely</li>
+<li class="">Secure production systems</li>
+<li class="">Scale agent deployments</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="introduction">Introduction<a href="#introduction" class="hash-link" aria-label="Taut langsung ke Introduction" title="Taut langsung ke Introduction" translate="no">​</a></h2>
+<p>This chapter covers infrastructure and deployment strategies.</p>
+<hr>
+<hr>
+<p>As systems evolve from prototypes into mission-critical production platforms, deployment and infrastructure decisions become just as important as the code itself. Many promising systems fail not because their logic is flawed, but because they cannot scale, cannot be updated safely, or cannot be secured properly once exposed to real users and real-world workloads. This is especially true for <strong>agent-based systems</strong> and modern distributed applications, where multiple services, models, and integrations must work together reliably under changing conditions.</p>
+<p>This chapter focuses on <strong>how software systems—particularly intelligent agent systems—are deployed, scaled, optimized, and operated in production environments</strong>. We move beyond development-time concerns and explore how systems live, grow, and adapt in the real world. You will learn how deployment architectures are designed, how infrastructure choices affect cost and performance, how CI/CD pipelines enable safe and frequent updates, how versioning and rollback protect users from failures, how security is enforced in production, and how scaling strategies keep systems responsive under load.</p>
+<p>The goal is not only to explain <em>what</em> these concepts are, but <em>why</em> they exist, <em>how</em> they work in practice, and <em>when</em> to apply each approach. By the end of this chapter, you should be able to reason confidently about deployment trade-offs and design robust production-ready systems.</p>
+<hr>
+<p>By the end of this chapter, you will be able to:</p>
+<ul>
+<li class="">Design and evaluate different deployment architectures for production systems</li>
+<li class="">Compare cloud-based and on-premise infrastructure strategies</li>
+<li class="">Implement CI/CD pipelines suitable for agent-based systems</li>
+<li class="">Manage versioning and rollback strategies safely in production</li>
+<li class="">Apply security and access control principles to deployed systems</li>
+<li class="">Scale agent deployments effectively while maintaining reliability and performance</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="deployment-architectures">Deployment Architectures<a href="#deployment-architectures" class="hash-link" aria-label="Taut langsung ke Deployment Architectures" title="Taut langsung ke Deployment Architectures" translate="no">​</a></h2>
+<p>Deployment architecture describes <strong>how software components are packaged, hosted, and connected in a production environment</strong>. It is the structural blueprint that determines how requests flow through the system, how failures are isolated, and how scaling occurs. Historically, deployment architectures evolved alongside hardware and networking capabilities, moving from single machines to globally distributed systems.</p>
+<p>In the early days of software, applications were often deployed as <strong>monoliths</strong>—a single executable or service running on one server. This approach was simple and easy to reason about, but it tightly coupled all functionality. As systems grew more complex, teams began separating concerns into multiple deployable units, leading to <strong>service-oriented architectures (SOA)</strong> and later <strong>microservices</strong>. Agent systems further extend this idea by introducing autonomous components that may scale and evolve independently.</p>
+<p>At a conceptual level, deployment architecture answers several key questions:</p>
+<ul>
+<li class="">Where does each component run?</li>
+<li class="">How do components communicate?</li>
+<li class="">How are failures handled and isolated?</li>
+<li class="">How does the system scale under increased demand?</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="common-deployment-architecture-patterns">Common Deployment Architecture Patterns<a href="#common-deployment-architecture-patterns" class="hash-link" aria-label="Taut langsung ke Common Deployment Architecture Patterns" title="Taut langsung ke Common Deployment Architecture Patterns" translate="no">​</a></h3>
+<p>Different architectural patterns exist to address different needs. There is no universally “best” architecture—only trade-offs.</p>
+<table><thead><tr><th>Architecture Pattern</th><th>Description</th><th>Advantages</th><th>Limitations</th></tr></thead><tbody><tr><td>Monolithic Deployment</td><td>Entire application deployed as one unit</td><td>Simple, low overhead, easy debugging</td><td>Poor scalability, high blast radius</td></tr><tr><td>Modular Monolith</td><td>Single deployment with well-defined internal modules</td><td>Better structure, easier refactoring</td><td>Still scales as a whole</td></tr><tr><td>Microservices</td><td>Independent services deployed separately</td><td>Independent scaling, fault isolation</td><td>Operational complexity</td></tr><tr><td>Agent-Oriented Architecture</td><td>Autonomous agents deployed as services</td><td>Flexible, adaptive, scalable</td><td>Coordination and observability challenges</td></tr></tbody></table>
+<p>In <strong>agent-oriented deployments</strong>, each agent may represent a distinct responsibility—such as planning, retrieval, reasoning, or interaction with external tools. These agents can be deployed as:</p>
+<ul>
+<li class="">Independent services</li>
+<li class="">Containers within a shared cluster</li>
+<li class="">Serverless functions triggered by events</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-deployment-architecture-impacts-system-behavior">How Deployment Architecture Impacts System Behavior<a href="#how-deployment-architecture-impacts-system-behavior" class="hash-link" aria-label="Taut langsung ke How Deployment Architecture Impacts System Behavior" title="Taut langsung ke How Deployment Architecture Impacts System Behavior" translate="no">​</a></h3>
+<p>The choice of deployment architecture has deep implications:</p>
+<ul>
+<li class=""><strong>Performance</strong>: Network calls between services introduce latency.</li>
+<li class=""><strong>Reliability</strong>: Failure in one service may or may not affect others.</li>
+<li class=""><strong>Scalability</strong>: Independent components can scale horizontally.</li>
+<li class=""><strong>Development Velocity</strong>: Smaller deployable units enable faster iteration.</li>
+</ul>
+<p>An analogy is urban planning. A monolithic system is like a single large building where everyone works; efficient at small scale, but crowded and fragile. A microservice or agent-based architecture is like a city of specialized buildings connected by roads—more complex, but far more scalable and resilient.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-from-monolith-to-agent-based-deployment">Example: From Monolith to Agent-Based Deployment<a href="#example-from-monolith-to-agent-based-deployment" class="hash-link" aria-label="Taut langsung ke Example: From Monolith to Agent-Based Deployment" title="Taut langsung ke Example: From Monolith to Agent-Based Deployment" translate="no">​</a></h3>
+<p>Imagine a customer support AI system initially built as a single service handling chat, retrieval, reasoning, and logging. As usage grows, response times degrade and updates become risky. The team restructures deployment so that:</p>
+<ul>
+<li class="">A <strong>conversation agent</strong> handles dialogue</li>
+<li class="">A <strong>retrieval agent</strong> queries knowledge bases</li>
+<li class="">A <strong>reasoning agent</strong> synthesizes answers</li>
+<li class="">A <strong>logging agent</strong> handles observability</li>
+</ul>
+<p>Each agent is deployed independently, allowing targeted scaling and safer updates.</p>
+<!-- -->
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cloud-and-on-premise-considerations">Cloud and On-Premise Considerations<a href="#cloud-and-on-premise-considerations" class="hash-link" aria-label="Taut langsung ke Cloud and On-Premise Considerations" title="Taut langsung ke Cloud and On-Premise Considerations" translate="no">​</a></h2>
+<p>One of the most important infrastructure decisions is <strong>where your system runs</strong>. Cloud and on-premise environments represent different philosophies of ownership, control, and responsibility. Understanding their trade-offs is essential for designing sustainable deployment strategies.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="understanding-cloud-infrastructure">Understanding Cloud Infrastructure<a href="#understanding-cloud-infrastructure" class="hash-link" aria-label="Taut langsung ke Understanding Cloud Infrastructure" title="Taut langsung ke Understanding Cloud Infrastructure" translate="no">​</a></h3>
+<p>Cloud computing emerged to solve the inefficiencies of owning and maintaining physical servers. Providers such as AWS, Azure, and Google Cloud offer <strong>on-demand access to compute, storage, and networking resources</strong>. Instead of buying servers upfront, teams rent capacity and scale it dynamically.</p>
+<p>Cloud environments are particularly well-suited for agent systems because:</p>
+<ul>
+<li class="">Workloads are often variable and bursty</li>
+<li class="">Scaling needs can change rapidly</li>
+<li class="">Managed services reduce operational burden</li>
+</ul>
+<p>Common cloud service models include:</p>
+<ul>
+<li class=""><strong>IaaS</strong> (Infrastructure as a Service): Virtual machines and networks</li>
+<li class=""><strong>PaaS</strong> (Platform as a Service): Managed runtimes and databases</li>
+<li class=""><strong>Serverless</strong>: Event-driven execution with no server management</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="understanding-on-premise-infrastructure">Understanding On-Premise Infrastructure<a href="#understanding-on-premise-infrastructure" class="hash-link" aria-label="Taut langsung ke Understanding On-Premise Infrastructure" title="Taut langsung ke Understanding On-Premise Infrastructure" translate="no">​</a></h3>
+<p>On-premise deployment means running systems on hardware owned and managed by the organization. This approach predates the cloud and remains relevant in industries with strict regulatory, latency, or data sovereignty requirements.</p>
+<p>Advantages of on-premise environments include:</p>
+<ul>
+<li class="">Full control over hardware and network</li>
+<li class="">Predictable long-term costs</li>
+<li class="">Compliance with strict regulations</li>
+</ul>
+<p>However, on-premise systems require:</p>
+<ul>
+<li class="">Dedicated operations teams</li>
+<li class="">Capacity planning and procurement</li>
+<li class="">Manual scaling and upgrades</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="hybrid-and-multi-cloud-approaches">Hybrid and Multi-Cloud Approaches<a href="#hybrid-and-multi-cloud-approaches" class="hash-link" aria-label="Taut langsung ke Hybrid and Multi-Cloud Approaches" title="Taut langsung ke Hybrid and Multi-Cloud Approaches" translate="no">​</a></h3>
+<p>Many modern systems adopt <strong>hybrid architectures</strong>, combining cloud and on-premise resources. For example:</p>
+<ul>
+<li class="">Sensitive data stored on-premise</li>
+<li class="">Compute-intensive agents running in the cloud</li>
+</ul>
+<table><thead><tr><th>Deployment Model</th><th>Best For</th><th>Key Trade-Off</th></tr></thead><tbody><tr><td>Cloud</td><td>Rapid scaling, experimentation</td><td>Vendor lock-in</td></tr><tr><td>On-Premise</td><td>Compliance, control</td><td>High maintenance</td></tr><tr><td>Hybrid</td><td>Flexibility</td><td>Architectural complexity</td></tr></tbody></table>
+<!-- -->
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cicd-for-agent-systems">CI/CD for Agent Systems<a href="#cicd-for-agent-systems" class="hash-link" aria-label="Taut langsung ke CI/CD for Agent Systems" title="Taut langsung ke CI/CD for Agent Systems" translate="no">​</a></h2>
+<p>Continuous Integration and Continuous Deployment (CI/CD) pipelines automate the process of <strong>building, testing, and deploying software changes</strong>. In agent systems, CI/CD is especially critical because frequent updates to models, prompts, or agent logic can introduce subtle failures.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-cicd-matters-in-production">Why CI/CD Matters in Production<a href="#why-cicd-matters-in-production" class="hash-link" aria-label="Taut langsung ke Why CI/CD Matters in Production" title="Taut langsung ke Why CI/CD Matters in Production" translate="no">​</a></h3>
+<p>Before CI/CD, deployments were manual, infrequent, and risky. Errors were often discovered only after users were affected. CI/CD addresses this by:</p>
+<ul>
+<li class="">Catching errors early through automated testing</li>
+<li class="">Enabling small, incremental changes</li>
+<li class="">Reducing human error in deployments</li>
+</ul>
+<p>For agent systems, CI/CD must handle:</p>
+<ul>
+<li class="">Code changes</li>
+<li class="">Configuration updates</li>
+<li class="">Prompt and policy modifications</li>
+<li class="">Model version updates</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="cicd-pipeline-stages">CI/CD Pipeline Stages<a href="#cicd-pipeline-stages" class="hash-link" aria-label="Taut langsung ke CI/CD Pipeline Stages" title="Taut langsung ke CI/CD Pipeline Stages" translate="no">​</a></h3>
+<p>A typical CI/CD pipeline includes:</p>
+<ul>
+<li class=""><strong>Source</strong>: Code committed to version control</li>
+<li class=""><strong>Build</strong>: Packaging agents into deployable artifacts</li>
+<li class=""><strong>Test</strong>: Unit, integration, and simulation tests</li>
+<li class=""><strong>Deploy</strong>: Automated rollout to environments</li>
+</ul>
+<!-- -->
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="special-considerations-for-agent-systems">Special Considerations for Agent Systems<a href="#special-considerations-for-agent-systems" class="hash-link" aria-label="Taut langsung ke Special Considerations for Agent Systems" title="Taut langsung ke Special Considerations for Agent Systems" translate="no">​</a></h3>
+<p>Agent systems introduce unique CI/CD challenges:</p>
+<ul>
+<li class="">Non-deterministic behavior</li>
+<li class="">Dependence on external APIs or models</li>
+<li class="">Prompt changes that alter behavior without code changes</li>
+</ul>
+<p>Best practices include:</p>
+<ul>
+<li class="">Scenario-based testing</li>
+<li class="">Canary deployments for new agent versions</li>
+<li class="">Monitoring agent decisions post-deployment</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="versioning-and-rollback-strategies">Versioning and Rollback Strategies<a href="#versioning-and-rollback-strategies" class="hash-link" aria-label="Taut langsung ke Versioning and Rollback Strategies" title="Taut langsung ke Versioning and Rollback Strategies" translate="no">​</a></h2>
+<p>Versioning is the practice of <strong>tracking changes to software artifacts over time</strong>, while rollback strategies ensure systems can recover quickly from faulty deployments. Together, they form the safety net of production operations.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-versioning-is-critical">Why Versioning Is Critical<a href="#why-versioning-is-critical" class="hash-link" aria-label="Taut langsung ke Why Versioning Is Critical" title="Taut langsung ke Why Versioning Is Critical" translate="no">​</a></h3>
+<p>Without proper versioning:</p>
+<ul>
+<li class="">It is difficult to reproduce bugs</li>
+<li class="">Rollbacks become guesswork</li>
+<li class="">Multiple environments drift out of sync</li>
+</ul>
+<p>Semantic versioning (MAJOR.MINOR.PATCH) is commonly used to communicate the impact of changes.</p>
+<table><thead><tr><th>Version Change</th><th>Meaning</th><th>Risk Level</th></tr></thead><tbody><tr><td>Patch</td><td>Bug fixes</td><td>Low</td></tr><tr><td>Minor</td><td>New features</td><td>Medium</td></tr><tr><td>Major</td><td>Breaking changes</td><td>High</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="rollback-mechanisms">Rollback Mechanisms<a href="#rollback-mechanisms" class="hash-link" aria-label="Taut langsung ke Rollback Mechanisms" title="Taut langsung ke Rollback Mechanisms" translate="no">​</a></h3>
+<p>Rollback strategies include:</p>
+<ul>
+<li class=""><strong>Blue-Green Deployments</strong>: Switch traffic between two environments</li>
+<li class=""><strong>Canary Releases</strong>: Gradually expose new versions</li>
+<li class=""><strong>Feature Flags</strong>: Disable features without redeploying</li>
+</ul>
+<!-- -->
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="security-and-access-control">Security and Access Control<a href="#security-and-access-control" class="hash-link" aria-label="Taut langsung ke Security and Access Control" title="Taut langsung ke Security and Access Control" translate="no">​</a></h2>
+<p>Security in production is not an add-on; it is a foundational requirement. Deployment decisions directly affect how systems are protected from misuse, data leaks, and attacks.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="core-security-principles">Core Security Principles<a href="#core-security-principles" class="hash-link" aria-label="Taut langsung ke Core Security Principles" title="Taut langsung ke Core Security Principles" translate="no">​</a></h3>
+<p>Key principles include:</p>
+<ul>
+<li class=""><strong>Least Privilege</strong>: Grant minimal access</li>
+<li class=""><strong>Defense in Depth</strong>: Multiple security layers</li>
+<li class=""><strong>Zero Trust</strong>: Never assume trust based on location</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="access-control-mechanisms">Access Control Mechanisms<a href="#access-control-mechanisms" class="hash-link" aria-label="Taut langsung ke Access Control Mechanisms" title="Taut langsung ke Access Control Mechanisms" translate="no">​</a></h3>
+<p>Common mechanisms include:</p>
+<ul>
+<li class="">API keys and tokens</li>
+<li class="">Role-Based Access Control (RBAC)</li>
+<li class="">Network segmentation</li>
+</ul>
+<table><thead><tr><th>Mechanism</th><th>Use Case</th><th>Risk if Misused</th></tr></thead><tbody><tr><td>API Keys</td><td>Service authentication</td><td>Key leakage</td></tr><tr><td>RBAC</td><td>User permissions</td><td>Over-privileged roles</td></tr><tr><td>Network ACLs</td><td>Traffic control</td><td>Misconfiguration</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="scaling-in-production">Scaling in Production<a href="#scaling-in-production" class="hash-link" aria-label="Taut langsung ke Scaling in Production" title="Taut langsung ke Scaling in Production" translate="no">​</a></h2>
+<p>Scaling is the ability of a system to <strong>handle increased load without degrading performance</strong>. In production, scaling must be predictable, cost-effective, and safe.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="types-of-scaling">Types of Scaling<a href="#types-of-scaling" class="hash-link" aria-label="Taut langsung ke Types of Scaling" title="Taut langsung ke Types of Scaling" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Vertical Scaling</strong>: Adding more resources to a single instance</li>
+<li class=""><strong>Horizontal Scaling</strong>: Adding more instances</li>
+<li class=""><strong>Auto-Scaling</strong>: Dynamic adjustment based on metrics</li>
+</ul>
+<!-- -->
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="scaling-agent-systems">Scaling Agent Systems<a href="#scaling-agent-systems" class="hash-link" aria-label="Taut langsung ke Scaling Agent Systems" title="Taut langsung ke Scaling Agent Systems" translate="no">​</a></h3>
+<p>Agent systems scale well horizontally because agents are often stateless or loosely coupled. However, shared resources such as memory stores or rate-limited APIs can become bottlenecks.</p>
+<p>Best practices include:</p>
+<ul>
+<li class="">Load balancing across agents</li>
+<li class="">Caching shared results</li>
+<li class="">Isolating critical agents</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="case-study-scaling-an-intelligent-customer-support-platform">Case Study: Scaling an Intelligent Customer Support Platform<a href="#case-study-scaling-an-intelligent-customer-support-platform" class="hash-link" aria-label="Taut langsung ke Case Study: Scaling an Intelligent Customer Support Platform" title="Taut langsung ke Case Study: Scaling an Intelligent Customer Support Platform" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="context">Context<a href="#context" class="hash-link" aria-label="Taut langsung ke Context" title="Taut langsung ke Context" translate="no">​</a></h3>
+<p>In 2022, a mid-sized e-commerce company launched an AI-powered customer support platform to reduce response times and support costs. The system initially served a limited user base and was deployed as a single cloud service. The team consisted of eight engineers and operated in a fast-moving startup environment where speed to market was prioritized over long-term scalability.</p>
+<p>As marketing campaigns succeeded, daily support requests tripled within six months. Customers from multiple regions began using the platform simultaneously, and the system transitioned from a convenience tool to a mission-critical service. This shift exposed weaknesses in deployment, scaling, and operational practices.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="problem">Problem<a href="#problem" class="hash-link" aria-label="Taut langsung ke Problem" title="Taut langsung ke Problem" translate="no">​</a></h3>
+<p>The monolithic deployment struggled under increased load. Response times became inconsistent, and outages during peak hours eroded customer trust. Deployments required full system restarts, leading to downtime. Security audits revealed overly permissive access policies, increasing risk.</p>
+<p>Traditional fixes—adding more compute resources—only delayed failures. The team realized that architectural and operational changes were necessary to sustain growth.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="solution">Solution<a href="#solution" class="hash-link" aria-label="Taut langsung ke Solution" title="Taut langsung ke Solution" translate="no">​</a></h3>
+<p>The team redesigned the system using an agent-based deployment architecture. Conversation handling, retrieval, reasoning, and analytics were separated into independent services. Each agent was containerized and deployed on a managed Kubernetes cluster in the cloud.</p>
+<p>A CI/CD pipeline was introduced to automate testing and deployment. Canary releases allowed new agent versions to be tested on a subset of traffic. Versioning policies were formalized, and blue-green deployments enabled instant rollbacks.</p>
+<p>Security was strengthened through RBAC, network segmentation, and secret management. Auto-scaling policies were configured based on request latency and queue depth.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="results">Results<a href="#results" class="hash-link" aria-label="Taut langsung ke Results" title="Taut langsung ke Results" translate="no">​</a></h3>
+<p>Within three months, system reliability improved dramatically. Average response time dropped by 40%, and outages were eliminated during peak periods. Deployment frequency increased from once per week to multiple times per day without incidents.</p>
+<p>Operational visibility improved through centralized logging and metrics. The platform successfully handled a seasonal traffic spike that was five times higher than previous peaks.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="lessons-learned">Lessons Learned<a href="#lessons-learned" class="hash-link" aria-label="Taut langsung ke Lessons Learned" title="Taut langsung ke Lessons Learned" translate="no">​</a></h3>
+<p>The team learned that deployment architecture is a strategic decision, not an implementation detail. Early investment in CI/CD and security pays dividends as systems scale. They also discovered that agent-based architectures require strong observability and disciplined versioning to manage complexity.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary">Summary<a href="#summary" class="hash-link" aria-label="Taut langsung ke Summary" title="Taut langsung ke Summary" translate="no">​</a></h2>
+<p>In this chapter, we explored how production systems are deployed, scaled, and secured. We examined deployment architectures, infrastructure choices, CI/CD pipelines, versioning strategies, security principles, and scaling techniques. Together, these elements form the backbone of reliable, production-ready systems.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reflection-questions">Reflection Questions<a href="#reflection-questions" class="hash-link" aria-label="Taut langsung ke Reflection Questions" title="Taut langsung ke Reflection Questions" translate="no">​</a></h2>
+<ol>
+<li class="">How would you choose between monolithic and agent-based deployment for a new system?</li>
+<li class="">What factors would push you toward cloud, on-premise, or hybrid infrastructure?</li>
+<li class="">How can CI/CD pipelines be adapted for non-deterministic agent behavior?</li>
+<li class="">What rollback strategy would you trust most in a high-risk deployment?</li>
+<li class="">Which scaling bottlenecks are most likely in agent-based systems, and why?</li>
+</ol></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Halaman dokumentasi"><a class="pagination-nav__link pagination-nav__link--prev" href="/module-8-scaling-production/chapter-3"><div class="pagination-nav__sublabel">Sebelum</div><div class="pagination-nav__label">Monitoring, Logging, and Observability</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/module-9-capstone/chapter-1"><div class="pagination-nav__sublabel">Berikut</div><div class="pagination-nav__label">Problem Definition and System Design</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#learning-objectives" class="table-of-contents__link toc-highlight">Learning Objectives</a></li><li><a href="#introduction" class="table-of-contents__link toc-highlight">Introduction</a></li><li><a href="#deployment-architectures" class="table-of-contents__link toc-highlight">Deployment Architectures</a><ul><li><a href="#common-deployment-architecture-patterns" class="table-of-contents__link toc-highlight">Common Deployment Architecture Patterns</a></li><li><a href="#how-deployment-architecture-impacts-system-behavior" class="table-of-contents__link toc-highlight">How Deployment Architecture Impacts System Behavior</a></li><li><a href="#example-from-monolith-to-agent-based-deployment" class="table-of-contents__link toc-highlight">Example: From Monolith to Agent-Based Deployment</a></li></ul></li><li><a href="#cloud-and-on-premise-considerations" class="table-of-contents__link toc-highlight">Cloud and On-Premise Considerations</a><ul><li><a href="#understanding-cloud-infrastructure" class="table-of-contents__link toc-highlight">Understanding Cloud Infrastructure</a></li><li><a href="#understanding-on-premise-infrastructure" class="table-of-contents__link toc-highlight">Understanding On-Premise Infrastructure</a></li><li><a href="#hybrid-and-multi-cloud-approaches" class="table-of-contents__link toc-highlight">Hybrid and Multi-Cloud Approaches</a></li></ul></li><li><a href="#cicd-for-agent-systems" class="table-of-contents__link toc-highlight">CI/CD for Agent Systems</a><ul><li><a href="#why-cicd-matters-in-production" class="table-of-contents__link toc-highlight">Why CI/CD Matters in Production</a></li><li><a href="#cicd-pipeline-stages" class="table-of-contents__link toc-highlight">CI/CD Pipeline Stages</a></li><li><a href="#special-considerations-for-agent-systems" class="table-of-contents__link toc-highlight">Special Considerations for Agent Systems</a></li></ul></li><li><a href="#versioning-and-rollback-strategies" class="table-of-contents__link toc-highlight">Versioning and Rollback Strategies</a><ul><li><a href="#why-versioning-is-critical" class="table-of-contents__link toc-highlight">Why Versioning Is Critical</a></li><li><a href="#rollback-mechanisms" class="table-of-contents__link toc-highlight">Rollback Mechanisms</a></li></ul></li><li><a href="#security-and-access-control" class="table-of-contents__link toc-highlight">Security and Access Control</a><ul><li><a href="#core-security-principles" class="table-of-contents__link toc-highlight">Core Security Principles</a></li><li><a href="#access-control-mechanisms" class="table-of-contents__link toc-highlight">Access Control Mechanisms</a></li></ul></li><li><a href="#scaling-in-production" class="table-of-contents__link toc-highlight">Scaling in Production</a><ul><li><a href="#types-of-scaling" class="table-of-contents__link toc-highlight">Types of Scaling</a></li><li><a href="#scaling-agent-systems" class="table-of-contents__link toc-highlight">Scaling Agent Systems</a></li></ul></li><li><a href="#case-study-scaling-an-intelligent-customer-support-platform" class="table-of-contents__link toc-highlight">Case Study: Scaling an Intelligent Customer Support Platform</a><ul><li><a href="#context" class="table-of-contents__link toc-highlight">Context</a></li><li><a href="#problem" class="table-of-contents__link toc-highlight">Problem</a></li><li><a href="#solution" class="table-of-contents__link toc-highlight">Solution</a></li><li><a href="#results" class="table-of-contents__link toc-highlight">Results</a></li><li><a href="#lessons-learned" class="table-of-contents__link toc-highlight">Lessons Learned</a></li></ul></li><li><a href="#summary" class="table-of-contents__link toc-highlight">Summary</a></li><li><a href="#reflection-questions" class="table-of-contents__link toc-highlight">Reflection Questions</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Learning Materials. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
