@@ -1,8 +1,0 @@
-knowledge-storm>=1.1.0
-openai>=1.0.0
-python-dotenv>=1.0.0
-pyyaml>=6.0
-markdown>=3.4.0
-azure-identity>=1.15.0
-duckduckgo_search>=6.0.0
-
