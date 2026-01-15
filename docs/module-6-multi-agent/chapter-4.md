@@ -4,27 +4,7 @@ sidebar_position: 4
 part: 6
 part_title: Multi-Agent Systems and Collaboration
 ---
-# Multi-Agent Systems and Collaboration: Failure Modes in Multi-Agent Systems
-
-## Learning Objectives
-
-- Identify common multi-agent failures
-- Analyze cascading error scenarios
-- Design fault-tolerant systems
-- Prevent deadlocks
-- Test multi-agent robustness
-
----
-
-## Introduction
-
-This chapter examines common failure scenarios and mitigation strategies.
-
----
-
-
----
-
+# Failure Modes in Multi-Agent Systems
 
 Multi-agent systems (MAS) are increasingly used to solve complex problems that are too large, too dynamic, or too distributed for a single intelligent agent. From fleets of autonomous vehicles and distributed sensor networks to collaborative AI assistants and financial trading bots, multi-agent systems promise scalability, resilience, and emergent intelligence through collaboration. However, these benefits come with a cost: **new and often subtle failure modes** that do not exist—or are far less severe—in single-agent systems.
 
@@ -33,9 +13,6 @@ In a multi-agent environment, agents must communicate, coordinate, trust one ano
 This chapter focuses on **failure modes in multi-agent systems**, with a strong emphasis on understanding *why* they occur, *how* they manifest in real-world systems, and *what* designers and engineers can do to mitigate them. Rather than treating failures as rare edge cases, we treat them as an expected part of multi-agent collaboration that must be actively designed for, tested, and managed.
 
 By the end of this chapter, you will not only recognize common failure patterns, but also develop the analytical tools and practical strategies needed to build **robust, fault-tolerant, and trustworthy multi-agent systems**.
-
----
-
 
 By completing this chapter, you will be able to:
 
@@ -175,8 +152,6 @@ graph TD
 In supply chain management systems, one forecasting agent may underestimate demand. Procurement agents then order fewer materials, logistics agents schedule fewer deliveries, and retail agents run out of stock. Each agent is “doing its job,” yet the system fails.
 
 In collaborative AI writing systems, one agent may misinterpret a requirement. Other agents build on that misunderstanding, resulting in a final output that is coherent but fundamentally wrong.
-
-### Case Study: Cascading Failures in an Autonomous Warehouse
 
 ## Case Study: When One Robot’s Error Stopped an Entire Warehouse
 
@@ -326,18 +301,22 @@ Fault-tolerant MAS are built on:
 - Recovery and learning
 
 ```mermaid
-architecture
-    AgentCluster {
-        Agent1
-        Agent2
-        Agent3
-    }
-    Monitor
-    Recovery
-
-    AgentCluster --> Monitor
+graph TB
+    subgraph Cluster["Agent Cluster"]
+        Agent1["🤖 Agent 1"]
+        Agent2["🤖 Agent 2"]
+        Agent3["🤖 Agent 3"]
+    end
+    Monitor["📊 Monitor"]
+    Recovery["🔄 Recovery"]
+    
+    Cluster --> Monitor
     Monitor --> Recovery
-    Recovery --> AgentCluster
+    Recovery --> Cluster
+    
+    style Cluster fill:#e1f5ff
+    style Monitor fill:#fff4e1
+    style Recovery fill:#ffe1f5
 ```
 
 ### Practical Techniques

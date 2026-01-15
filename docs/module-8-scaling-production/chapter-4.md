@@ -4,36 +4,13 @@ sidebar_position: 4
 part: 8
 part_title: Scaling, Optimization, and Production Deployment
 ---
-# Scaling, Optimization, and Production Deployment: Deployment Patterns and Infrastructure
-
-## Learning Objectives
-
-- Design deployment architectures
-- Implement CI/CD pipelines
-- Manage versions safely
-- Secure production systems
-- Scale agent deployments
-
----
-
-## Introduction
-
-This chapter covers infrastructure and deployment strategies.
-
----
-
-
----
-
+# Deployment Patterns and Infrastructure
 
 As systems evolve from prototypes into mission-critical production platforms, deployment and infrastructure decisions become just as important as the code itself. Many promising systems fail not because their logic is flawed, but because they cannot scale, cannot be updated safely, or cannot be secured properly once exposed to real users and real-world workloads. This is especially true for **agent-based systems** and modern distributed applications, where multiple services, models, and integrations must work together reliably under changing conditions.
 
 This chapter focuses on **how software systems—particularly intelligent agent systems—are deployed, scaled, optimized, and operated in production environments**. We move beyond development-time concerns and explore how systems live, grow, and adapt in the real world. You will learn how deployment architectures are designed, how infrastructure choices affect cost and performance, how CI/CD pipelines enable safe and frequent updates, how versioning and rollback protect users from failures, how security is enforced in production, and how scaling strategies keep systems responsive under load.
 
 The goal is not only to explain *what* these concepts are, but *why* they exist, *how* they work in practice, and *when* to apply each approach. By the end of this chapter, you should be able to reason confidently about deployment trade-offs and design robust production-ready systems.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -150,10 +127,17 @@ Many modern systems adopt **hybrid architectures**, combining cloud and on-premi
 | Hybrid | Flexibility | Architectural complexity |
 
 ```mermaid
-architecture
-    cloud[Cloud Environment]
-    onprem[On-Premise Data Center]
-    cloud -- Secure Tunnel --> onprem
+graph TB
+    Orchestrator["🎯 Agent Orchestrator"] --> Planner["📋 Planner"]
+    Orchestrator --> Executor["⚙️ Executor"]
+    Executor --> Tools["🔧 Tools"]
+    Planner --> Memory["💾 Memory"]
+    
+    style Orchestrator fill:#fff4e1
+    style Planner fill:#e1f5ff
+    style Executor fill:#ffe1f5
+    style Tools fill:#e1ffe1
+    style Memory fill:#f5e1ff
 ```
 
 ---

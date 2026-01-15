@@ -4,27 +4,7 @@ sidebar_position: 4
 part: 7
 part_title: Evaluation, Safety, and Alignment
 ---
-# Evaluation, Safety, and Alignment: Ethical and Responsible Agentic AI
-
-## Learning Objectives
-
-- Identify ethical risks
-- Mitigate bias in agent systems
-- Design transparent agents
-- Ensure accountability
-- Apply responsible AI frameworks
-
----
-
-## Introduction
-
-This chapter addresses ethical considerations and responsible deployment.
-
----
-
-
----
-
+# Ethical and Responsible Agentic AI
 
 As artificial intelligence systems evolve from passive tools into **autonomous, goal-driven agents**, the ethical stakes rise dramatically. Unlike traditional software, agentic AI systems can make decisions, plan actions, interact with humans and other systems, and adapt their behavior over time. These capabilities unlock enormous value—improving efficiency, scalability, and problem-solving—but they also introduce **new forms of risk** that are more complex, subtle, and far-reaching than earlier generations of AI.
 
@@ -33,9 +13,6 @@ This chapter focuses on **evaluation, safety, and alignment**—the pillars of e
 Historically, ethical AI discussions focused on narrow models: classification bias, privacy leakage, or explainability of predictions. Agentic AI expands the scope. Now, systems can **act**, not just predict. They can initiate actions, chain tools, negotiate with humans, and operate continuously. This shift demands a deeper and more systemic approach to ethics—one that combines technical design, organizational governance, regulatory awareness, and ongoing monitoring.
 
 In this chapter, you will progress from foundational ethical risks to advanced deployment frameworks. You will explore real-world case studies, practical design strategies, and visual models that show how responsible agentic AI is evaluated, governed, and sustained over time.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -184,11 +161,17 @@ Another important concept is **organizational accountability**. Even if no indiv
 ### Audit Trail Architecture
 
 ```mermaid
-architecture
-    Agent --> Logs
-    Logs --> AuditSystem
-    AuditSystem --> ComplianceTeam
-    AuditSystem --> Regulators
+graph TB
+    Agent["🤖 Agent"] --> Logs["📝 Logs"]
+    Logs --> AuditSystem["🔍 Audit System"]
+    AuditSystem --> ComplianceTeam["👥 Compliance Team"]
+    AuditSystem --> Regulators["📋 Regulators"]
+    
+    style Agent fill:#fff4e1
+    style Logs fill:#e1f5ff
+    style AuditSystem fill:#ffe1f5
+    style ComplianceTeam fill:#e1ffe1
+    style Regulators fill:#f5e1ff
 ```
 
 Accountability and auditability transform ethics from abstract principles into **operational practices**. They ensure that when things go wrong—as they inevitably will—there is a clear path to understanding, remediation, and learning.

@@ -4,36 +4,13 @@ sidebar_position: 4
 part: 3
 part_title: Agent Architectures and Design Patterns
 ---
-# Agent Architectures and Design Patterns: Design Trade-offs and Constraints
-
-## Learning Objectives
-
-- Identify key constraints in agent design
-- Analyze cost and latency trade-offs
-- Incorporate security into architecture decisions
-- Evaluate UX implications of design choices
-- Apply decision frameworks to architecture selection
-
----
-
-## Introduction
-
-This chapter focuses on practical constraints that influence agent architecture decisions.
-
----
-
-
----
-
+# Design Trade-offs and Constraints
 
 Designing intelligent agents is not only about choosing the most powerful model or the most elegant architecture. In real-world systems, agent design is shaped—and often constrained—by practical realities such as cost, latency, reliability, infrastructure, security, and user experience expectations. Many promising agent prototypes fail to reach production not because the core idea is flawed, but because the architecture does not respect these constraints.
 
 This chapter focuses on **practical constraints that influence agent architecture decisions**. Instead of treating agent architectures as abstract diagrams, we examine them as living systems deployed in production environments, used by real people, operating under financial, technical, organizational, and regulatory limits. You will learn how these constraints arise, why they matter, and how they directly shape architectural design patterns such as single-agent vs. multi-agent systems, tool-augmented agents, retrieval-augmented generation (RAG), and orchestrated workflows.
 
 By the end of this chapter, you should be able to reason clearly about *trade-offs*. Rather than asking “What is the best architecture?”, you will learn to ask the more useful question: **“What is the best architecture under these constraints?”**
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -195,11 +172,29 @@ Different deployment models impose different constraints:
 As agent systems grow, orchestration becomes complex. Multi-agent systems may span multiple services, each with its own failure modes. Designing clear boundaries and failure domains is critical.
 
 ```mermaid
-architecture
-    AgentOrchestrator --> Planner
-    AgentOrchestrator --> Executor
+graph TB
+    subgraph Orchestration["Orchestration Layer"]
+        Orchestrator["🎯 Agent Orchestrator"]
+    end
+    
+    subgraph Agents["Agent Components"]
+        Planner["📋 Planner"]
+        Executor["⚙️ Executor"]
+    end
+    
+    subgraph Infrastructure["Infrastructure"]
+        Tools["🔧 Tools"]
+        Memory["💾 Memory"]
+    end
+    
+    Orchestrator --> Planner
+    Orchestrator --> Executor
     Executor --> Tools
     Planner --> Memory
+    
+    style Orchestration fill:#fff4e1,stroke:#333,stroke-width:2px
+    style Agents fill:#e1f5ff,stroke:#333,stroke-width:2px
+    style Infrastructure fill:#ffe1f5,stroke:#333,stroke-width:2px
 ```
 
 This architecture highlights how failures in one component should not collapse the entire system.
