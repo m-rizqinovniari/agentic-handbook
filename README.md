@@ -7,15 +7,15 @@
 
 ## 🌐 View Online
 
-**📖 [Access the Course Online →](https://m-rizqinovniari.github.io/agentic-handbook/)**
+**📖 [Access the Learning Online →](https://m-rizqinovniari.github.io/agentic-handbook/)**
 
-The complete course is available online via GitHub Pages. You can read all modules and chapters directly in your browser without any setup required.
+The complete learning is available online via GitHub Pages. You can read all modules and chapters directly in your browser without any setup required.
 
 ---
 
-## 📚 Course Overview
+## 📚 Learning Overview
 
-This course focuses on how to design, build, and evaluate autonomous and semi-autonomous AI agents capable of reasoning, planning, acting, and collaborating in real-world environments. By the end of the course, learners will be able to architect and implement robust agentic systems using modern frameworks, tools, and best practices.
+This learning focuses on how to design, build, and evaluate autonomous and semi-autonomous AI agents capable of reasoning, planning, acting, and collaborating in real-world environments. By the end of the course, learners will be able to architect and implement robust agentic systems using modern frameworks, tools, and best practices.
 
 ### Learning Objectives
 
@@ -25,9 +25,9 @@ This course focuses on how to design, build, and evaluate autonomous and semi-au
 
 ---
 
-## 🗺️ Course Structure
+## 🗺️ Learning Structure
 
-The course is organized into **9 modules** with **36 chapters** total, progressing from foundational concepts to advanced production deployment.
+The learning is organized into **9 modules** with **36 chapters** total, progressing from foundational concepts to advanced production deployment.
 
 ### 📖 Module 1: Introduction to Agentic AI and Autonomous Systems
 **Duration: 6 hours | 4 Chapters**
@@ -125,7 +125,7 @@ Final module integrating all course concepts into a comprehensive, real-world ca
 
 ### View Online (Recommended)
 
-Simply visit: **[https://m-rizqinovniari.github.io/agentic-handbook/](https://m-rizqinovniari.github.io/agentic-handbook/)**
+Simply visit: **[Click Here](https://m-rizqinovniari.github.io/agentic-handbook/)**
 
 No installation or setup required!
 
@@ -201,38 +201,9 @@ Contributions, suggestions, and feedback are welcome! Please feel free to open a
 
 This course material is available under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
-
-## 👤 Author
-
-**M. Rizqinovniari**
-
-- 📧 Email: m.rizqinovniari@bukitmakmur.com
-- 🌐 GitHub: [@m-rizqinovniari](https://github.com/m-rizqinovniari)
-
----
-
-## 🙏 Acknowledgments
-
-Built with [Docusaurus](https://docusaurus.io/), a modern static website generator.
-
----
-
-## 📊 Course Statistics
-
-- **Total Modules:** 9
-- **Total Chapters:** 36
-- **Estimated Duration:** 67 hours
-- **Level:** Advanced
-- **Prerequisites:** Basic understanding of AI and Large Language Models
-
----
-
 <div align="center">
 
 **[🚀 Start Learning Now →](https://m-rizqinovniari.github.io/agentic-handbook/)**
-
-Made with ❤️ for the AI community
 
 </div>
 
