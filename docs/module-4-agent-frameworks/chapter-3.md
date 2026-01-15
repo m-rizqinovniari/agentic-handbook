@@ -4,36 +4,13 @@ sidebar_position: 3
 part: 4
 part_title: Building Agents with Modern Frameworks
 ---
-# Building Agents with Modern Frameworks: State Management and Control Flow
-
-## Learning Objectives
-
-- Explain state management approaches
-- Implement control flow logic
-- Handle agent recovery scenarios
-- Debug state-related issues
-- Design resilient agent workflows
-
----
-
-## Introduction
-
-This chapter explores how agent frameworks manage state and execution flow.
-
----
-
-
----
-
+# State Management and Control Flow
 
 As artificial intelligence systems evolve from simple prompt–response tools into autonomous or semi-autonomous agents, a fundamental challenge emerges: **how do we manage what the agent knows, remembers, and decides over time?** Modern agent frameworks—such as LangGraph, AutoGen, CrewAI, and similar orchestration tools—exist largely to answer this question. At the heart of these frameworks lie two deeply interconnected ideas: **state management** and **control flow**.
 
 In early AI applications, models were often stateless. Each request was independent, and the system had no built-in memory of what happened before. While this approach is simple and scalable, it breaks down quickly when we want agents that can plan, reason across multiple steps, recover from errors, or collaborate with other agents over long periods. Real-world agent use cases—customer support bots, autonomous research assistants, workflow automation systems—require agents that can **persist information**, **make decisions based on prior steps**, and **resume execution after interruptions**.
 
 This chapter explores how modern agent frameworks address these needs. We will move progressively from foundational ideas (stateless vs. stateful agents) to more advanced execution models (graph-based control flows, branching logic), and finally to operational concerns such as checkpointing, long-running execution, and debugging. Throughout the chapter, we will connect theory with practice, using concrete examples, detailed case studies, tables for comparison, and visual diagrams to make abstract ideas tangible.
-
----
-
 
 By the end of this chapter, you will be able to:
 

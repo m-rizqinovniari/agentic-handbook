@@ -4,36 +4,13 @@ sidebar_position: 3
 part: 6
 part_title: Multi-Agent Systems and Collaboration
 ---
-# Multi-Agent Systems and Collaboration: Task Allocation and Orchestration
-
-## Learning Objectives
-
-- Allocate tasks across agents
-- Design orchestration mechanisms
-- Balance agent workloads
-- Monitor collaborative progress
-- Recover from allocation failures
-
----
-
-## Introduction
-
-This chapter focuses on distributing work among agents.
-
----
-
-
----
-
+# Task Allocation and Orchestration
 
 Modern intelligent systems rarely operate as a single, monolithic entity. Instead, they are increasingly built as **multi-agent systems (MAS)**—collections of autonomous or semi-autonomous agents that collaborate to achieve shared goals. These agents may be software services, robots, AI models, microservices, or even human-in-the-loop components. What makes multi-agent systems powerful is not just the intelligence of individual agents, but **how work is distributed, coordinated, monitored, and recovered when things go wrong**.
 
 Imagine a busy airport. Air traffic controllers, baggage handlers, pilots, ground crew, and automated systems all work together. No single actor can manage everything. Tasks must be assigned to the right parties, workloads must be balanced, progress must be tracked, and contingency plans must exist for delays or failures. Multi-agent systems face the same challenges—just in digital or robotic form.
 
 This chapter focuses on the **core collaboration problem** in multi-agent systems: **task allocation and orchestration**. We explore how tasks are distributed among agents, how coordination is designed, how workloads are balanced, and how systems adapt when assumptions break. Rather than treating these as isolated techniques, we will see them as interconnected design decisions that shape system performance, robustness, and scalability.
-
----
-
 
 By the end of this chapter, you will be able to:
 

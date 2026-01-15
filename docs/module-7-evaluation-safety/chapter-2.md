@@ -4,36 +4,13 @@ sidebar_position: 2
 part: 7
 part_title: Evaluation, Safety, and Alignment
 ---
-# Evaluation, Safety, and Alignment: Hallucination and Error Handling
-
-## Learning Objectives
-
-- Identify hallucination types
-- Detect agent errors
-- Implement mitigation strategies
-- Design fallback mechanisms
-- Analyze error trends
-
----
-
-## Introduction
-
-This chapter focuses on identifying and mitigating agent errors.
-
----
-
-
----
-
+# Hallucination and Error Handling
 
 As AI agents become more capable and autonomous, they are increasingly trusted with tasks that affect real people, real businesses, and real decisions. From customer support bots and data analysis agents to coding assistants and autonomous research systems, these agents are now embedded deeply into workflows where correctness, reliability, and safety matter. However, alongside this growing capability comes a persistent and sometimes subtle problem: **agent errors**, especially **hallucinations**—confident but incorrect outputs that can mislead users and systems alike.
 
 This chapter focuses on **evaluation, safety, and alignment**, with a particular emphasis on **hallucination and error handling**. Rather than treating errors as rare edge cases, we approach them as an inevitable part of intelligent systems that must be **actively detected, mitigated, logged, and learned from**. A well-designed agent is not one that never makes mistakes, but one that recognizes uncertainty, fails gracefully, and improves continuously.
 
 We will move progressively from understanding the **types of hallucinations**, to learning **how to detect errors**, to implementing **confidence-based mitigation**, **retry and fallback strategies**, and **robust logging and postmortems**. Finally, we will explore **continuous improvement loops** that turn errors into long-term system learning. Throughout the chapter, you will find concrete examples, detailed case studies, tables, and visual diagrams that make abstract safety concepts tangible and practical.
-
----
-
 
 By the end of this chapter, you will be able to:
 

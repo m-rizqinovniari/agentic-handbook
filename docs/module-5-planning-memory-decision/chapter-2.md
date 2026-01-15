@@ -4,27 +4,7 @@ sidebar_position: 2
 part: 5
 part_title: Planning, Memory, and Decision-Making
 ---
-# Planning, Memory, and Decision-Making: Vector Databases and Long-Term Memory
-
-## Learning Objectives
-
-- Explain how vector databases store memory
-- Implement semantic retrieval concepts
-- Design scalable memory architectures
-- Manage memory decay strategies
-- Evaluate memory retrieval quality
-
----
-
-## Introduction
-
-This chapter covers persistent memory using vector databases.
-
----
-
-
----
-
+# Vector Databases and Long-Term Memory
 
 Modern intelligent systems—such as AI assistants, recommendation engines, autonomous agents, and decision-support tools—are no longer expected to operate only in the moment. They are increasingly required to **remember past interactions**, **learn from experience**, and **use prior knowledge to plan and make better decisions over time**. This need for persistent, long-term memory is one of the most important shifts in the design of AI-driven systems.
 
@@ -33,9 +13,6 @@ Traditional software memory models, such as relational databases or key–value 
 Vector databases enable systems to store information as numerical representations of meaning—called **embeddings**—and retrieve memories based on **semantic similarity** rather than exact matches. This approach is foundational for long-term memory in AI systems, especially those powered by large language models (LLMs). It allows systems to plan using past experiences, adapt behavior over time, and make decisions that feel coherent and context-aware.
 
 In this chapter, we will explore how vector databases support planning, memory, and decision-making. We will move progressively from core concepts like embeddings, through architectural and scaling concerns, to advanced topics such as memory decay and evaluation. By the end, you will understand not only *what* vector-based memory systems are, but *why* they work, *how* to design them, and *how* to evaluate their effectiveness in real-world applications.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -151,8 +128,6 @@ In distributed setups, designers must decide:
 - How to aggregate search results efficiently  
 
 These decisions have direct implications for memory reliability and retrieval latency.
-
-### Case Study: Building Long-Term Memory for an AI Assistant
 
 ## Case Study: Persistent Memory for a Customer Support AI
 

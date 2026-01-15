@@ -4,27 +4,7 @@ sidebar_position: 4
 part: 5
 part_title: Planning, Memory, and Decision-Making
 ---
-# Planning, Memory, and Decision-Making: Decision-Making Under Uncertainty
-
-## Learning Objectives
-
-- Identify uncertainty sources
-- Apply heuristic decision strategies
-- Estimate confidence in decisions
-- Design risk-aware actions
-- Evaluate decision quality
-
----
-
-## Introduction
-
-This chapter focuses on probabilistic and heuristic decision-making.
-
----
-
-
----
-
+# Decision-Making Under Uncertainty
 
 Decision-making under uncertainty lies at the heart of intelligent behavior—whether in humans, organizations, or artificial agents. Every day, people make choices without knowing all the facts: a doctor diagnoses with incomplete test results, a business invests without knowing future market conditions, and an autonomous vehicle navigates streets where pedestrians behave unpredictably. In artificial intelligence (AI) and agent systems, uncertainty is not an edge case—it is the default condition.
 
@@ -33,9 +13,6 @@ This chapter explores how intelligent agents plan, remember, and decide when the
 Historically, early AI systems struggled outside controlled environments because they relied on rigid rules and deterministic logic. As AI moved into real-world applications—finance, healthcare, robotics, and online platforms—it became clear that uncertainty must be explicitly modeled and managed. This realization led to the development of probabilistic models, heuristics inspired by human reasoning, and mechanisms for evaluating and improving decisions over time.
 
 By the end of this chapter, you will not only understand *what* uncertainty is, but *why it matters*, *how agents cope with it*, and *how decision quality can be evaluated and improved*. The concepts presented here form the foundation for robust, adaptive, and trustworthy intelligent systems.
-
----
-
 
 By completing this chapter, you will be able to:
 

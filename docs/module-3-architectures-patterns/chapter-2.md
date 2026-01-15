@@ -4,36 +4,13 @@ sidebar_position: 2
 part: 3
 part_title: Agent Architectures and Design Patterns
 ---
-# Agent Architectures and Design Patterns: Single-Agent vs Multi-Agent Systems
-
-## Learning Objectives
-
-- Compare single-agent and multi-agent systems
-- Explain coordination costs in multi-agent setups
-- Design memory strategies for multiple agents
-- Assess scalability trade-offs
-- Select appropriate system architectures
-
----
-
-## Introduction
-
-This chapter explores the architectural implications of single-agent and multi-agent designs.
-
----
-
-
----
-
+# Single-Agent vs Multi-Agent Systems
 
 As intelligent systems become increasingly embedded in software applications—ranging from recommendation engines and autonomous vehicles to enterprise automation and collaborative AI—the way we *structure* these systems becomes just as important as the algorithms they use. One of the most fundamental architectural decisions designers face is whether to build a **single-agent system** or a **multi-agent system**.
 
 At a high level, this decision may appear simple: use one intelligent agent if the problem is small, or many agents if the problem is large. In reality, the choice has deep implications for **system complexity, coordination costs, scalability, robustness, memory design, and long-term maintainability**. Poor architectural choices often lead to systems that are difficult to scale, fragile under load, or unnecessarily complex.
 
 This chapter explores agent architectures and design patterns with a strong focus on **single-agent versus multi-agent systems**. We will examine not only *what* these architectures are, but *why* they exist, *how* they work internally, *when* each approach is appropriate, and *what trade-offs* system designers must navigate. Throughout the chapter, you will encounter detailed explanations, real-world analogies, architectural diagrams, tables, and extended case studies designed to help you build strong intuition—not just theoretical knowledge.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -180,21 +157,21 @@ Communication overhead affects:
 
 A common mistake is underestimating coordination costs during design. Systems that work well with five agents may collapse with fifty.
 
-### Case Study: Distributed Delivery Drones
+## Case Study: Distributed Delivery Drones
 
-### # Context
+### Context
 In 2021, a logistics company piloted a drone-based delivery system across a large metropolitan area. The system initially used a centralized controller to assign routes. As demand increased, engineers transitioned to a multi-agent model where each drone acted autonomously.
 
-### # Problem
+### Problem
 As the number of drones grew, collisions and delivery delays increased. Each drone needed to know airspace conditions, weather updates, and the intentions of nearby drones. Communication bandwidth became saturated, and inconsistent data led to conflicting decisions.
 
-### # Solution
+### Solution
 Engineers introduced hierarchical coordination. Drones were grouped into zones, each with a local coordinator agent. Only summarized information flowed between zones, dramatically reducing communication load.
 
-### # Results
+### Results
 Delivery times improved by 35%, and collision incidents dropped significantly. However, system complexity increased, requiring careful monitoring and testing.
 
-### # Lessons Learned
+### Lessons Learned
 The team learned that coordination architecture matters as much as agent intelligence. Thoughtful communication design is essential for scalability.
 
 ---

@@ -4,36 +4,13 @@ sidebar_position: 1
 part: 3
 part_title: Agent Architectures and Design Patterns
 ---
-# Agent Architectures and Design Patterns: Reactive and Deliberative Agents
-
-## Learning Objectives
-
-- Differentiate reactive and deliberative agents
-- Analyze trade-offs between speed and reasoning depth
-- Identify use cases for each architecture
-- Design hybrid agent approaches
-- Evaluate architecture robustness
-
----
-
-## Introduction
-
-This chapter compares reactive and deliberative agent architectures and explores their strengths and weaknesses.
-
----
-
-
----
-
+# Reactive and Deliberative Agents
 
 As artificial intelligence systems move from isolated laboratory experiments into real-world environments—self-driving cars navigating busy streets, recommendation systems shaping user behavior, or autonomous robots collaborating with humans—the way these systems *think and act* becomes critically important. At the heart of this capability lies **agent architecture**: the internal design that determines how an intelligent agent perceives its environment, reasons about it, and decides what actions to take.
 
 Two foundational approaches dominate the design of intelligent agents: **reactive architectures** and **deliberative architectures**. These approaches represent fundamentally different philosophies of intelligence. Reactive agents emphasize speed, simplicity, and direct stimulus-response behavior, while deliberative agents prioritize reasoning, planning, and long-term goal optimization. Over time, researchers and practitioners have realized that neither approach alone is sufficient for all situations, leading to the emergence of **hybrid architectures** that attempt to combine the strengths of both.
 
 This chapter provides a deep, structured, and practical exploration of these architectures. We will not only explain *what* reactive and deliberative agents are, but also *why* they exist, *how* they work internally, *when* they succeed or fail, and *how* to choose or design the right architecture for a given problem. By grounding abstract concepts in concrete examples, real-world case studies, diagrams, and comparisons, this chapter aims to build a robust mental model that you can apply in both academic and industrial contexts.
-
----
-
 
 By the end of this chapter, you will be able to:
 

@@ -4,36 +4,13 @@ sidebar_position: 4
 part: 4
 part_title: Building Agents with Modern Frameworks
 ---
-# Building Agents with Modern Frameworks: Debugging and Observability for Agents
-
-## Learning Objectives
-
-- Implement logging for agent behavior
-- Trace and analyze reasoning steps
-- Identify common agent failures
-- Profile agent performance
-- Apply iterative debugging strategies
-
----
-
-## Introduction
-
-This chapter teaches techniques for monitoring, debugging, and improving agent behavior.
-
----
-
-
----
-
+# Debugging and Observability for Agents
 
 As AI agents become more capable and autonomous, they also become more complex, less predictable, and harder to debug. Unlike traditional software systems—where developers explicitly define logic paths—modern agents reason, plan, call tools, and adapt dynamically based on context. This flexibility is powerful, but it introduces a new challenge: **understanding why an agent behaved the way it did**.
 
 Debugging an agent is not just about finding bugs in code. It is about observing decision-making, interpreting reasoning traces, identifying recurring failure patterns, and systematically improving behavior over time. In other words, effective agent development requires **observability**, a concept borrowed from distributed systems engineering and adapted for intelligent, reasoning-driven systems.
 
 This chapter focuses on the practical techniques used to monitor, debug, and improve agent behavior in modern frameworks such as LangChain, AutoGen, CrewAI, and custom agent stacks. You will learn how to instrument agents with logs, traces, visualizations, and performance metrics—and how to turn those signals into meaningful improvements. By the end of this chapter, you should feel confident not only building agents, but also *understanding them*.
-
----
-
 
 By the end of this chapter, you will be able to:
 

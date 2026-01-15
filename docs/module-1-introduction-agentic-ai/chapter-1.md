@@ -4,27 +4,7 @@ sidebar_position: 1
 part: 1
 part_title: Introduction to Agentic AI and Autonomous Systems
 ---
-# Introduction to Agentic AI and Autonomous Systems: What Is Agentic AI?
-
-## Learning Objectives
-
-- Define Agentic AI using accepted academic and industry terminology
-- Identify at least five core characteristics of agentic systems
-- Differentiate agents from non-agent AI applications
-- Explain how goal-driven behavior influences agent design
-- Recognize real-world examples that qualify as agentic systems
-
----
-
-## Introduction
-
-This chapter introduces the formal definition of Agentic AI and explains the core characteristics that distinguish agents from conventional AI systems. It sets the conceptual baseline for the entire course.
-
----
-
-
----
-
+# What Is Agentic AI?
 
 Artificial Intelligence has evolved far beyond systems that simply respond to predefined inputs with predefined outputs. Today, we increasingly encounter AI systems that **act**, **decide**, **adapt**, and **pursue goals over time**—sometimes with minimal human intervention. These systems schedule meetings on our behalf, trade stocks autonomously, explore physical environments, manage cloud infrastructure, and even collaborate with other AI systems to solve complex problems.  
 
@@ -33,9 +13,6 @@ This chapter introduces **Agentic AI**, a paradigm that represents a fundamental
 Understanding Agentic AI is essential because it sets the conceptual foundation for modern autonomous systems, multi-agent architectures, AI copilots, and self-directed software systems. Without a clear mental model of what makes an AI system *agentic*, it becomes difficult to reason about responsibility, safety, scalability, evaluation, and long-term behavior.
 
 This chapter establishes that foundation. We begin by tracing the historical evolution from early rule-based systems to modern agentic systems. We then introduce formal definitions of agents, explore their defining characteristics, explain goal-driven behavior and environmental interaction, and examine real-world examples. Finally, we address common misconceptions that often confuse learners encountering Agentic AI for the first time.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -229,8 +206,6 @@ Agentic AI is not theoretical—it is already embedded in many modern systems. O
 Another example is **autonomous trading systems**. These agents continuously monitor markets, assess risk, execute trades, and adjust strategies based on performance and changing conditions. They operate persistently, adapt to new data, and pursue explicit financial goals.
 
 A third example is **robotic warehouse systems**. Each robot functions as an agent that navigates the environment, avoids obstacles, coordinates with other robots, and optimizes delivery routes. The system as a whole is a **multi-agent ecosystem**.
-
-### Case Study: Autonomous IT Operations Agent
 
 ## Case Study: Autonomous IT Operations in a Global SaaS Company
 

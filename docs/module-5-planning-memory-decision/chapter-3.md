@@ -4,27 +4,7 @@ sidebar_position: 3
 part: 5
 part_title: Planning, Memory, and Decision-Making
 ---
-# Planning, Memory, and Decision-Making: Context Management and Retrieval
-
-## Learning Objectives
-
-- Manage limited context windows
-- Apply retrieval-augmented techniques
-- Design context compression strategies
-- Prevent context drift
-- Measure context relevance
-
----
-
-## Introduction
-
-This chapter explains how agents manage limited context windows effectively.
-
----
-
-
----
-
+# Context Management and Retrieval
 
 Modern intelligent agents—such as large language model (LLM)-based systems, conversational assistants, and autonomous decision-making systems—operate under a fundamental constraint: **they can only “see” a limited amount of information at one time**. This limitation is commonly known as the **context window constraint**. Despite having access to massive external knowledge bases, tools, or long histories of interaction, an agent must decide *what information to bring into focus right now* in order to reason, plan, and act effectively.
 
@@ -181,23 +161,21 @@ RAG is particularly valuable when:
 
 Without RAG, agents rely on parametric memory (what they were trained on), which may be outdated or incomplete. With RAG, agents gain **situational awareness**, pulling in fresh and relevant data on demand.
 
-### Case Study: Enterprise Knowledge Assistant
-
 ## Case Study: Scaling Knowledge Access in a Global Consulting Firm
 
-**Context**  
+### Context  
 A global consulting firm with tens of thousands of employees maintained an internal knowledge base containing project reports, best practices, and industry analyses. Consultants frequently struggled to find relevant information quickly, especially under tight deadlines. Leadership decided to deploy an AI assistant to help consultants query this knowledge base conversationally.
 
-**Problem**  
+### Problem  
 Initial prototypes attempted to load large chunks of documentation into the model’s context. This quickly failed. Context windows overflowed, responses became inconsistent, and the assistant often cited irrelevant projects. The sheer volume of information made naive approaches unusable.
 
-**Solution**  
+### Solution  
 The team implemented a retrieval-augmented generation system. All documents were chunked and embedded into a vector database. When a consultant asked a question, the system retrieved the top relevant chunks and inserted them into the context. Careful prompt design ensured the model cited retrieved sources explicitly.
 
-**Results**  
+### Results
 Consultants reported dramatically faster access to relevant information. Average research time dropped from hours to minutes. Importantly, response accuracy improved because answers were grounded in specific, retrieved documents rather than vague generalizations.
 
-**Lessons Learned**  
+### Lessons Learned  
 The team learned that retrieval quality mattered as much as model quality. Poor chunking or embedding strategies led to irrelevant retrievals, undermining trust. RAG was not a silver bullet, but when carefully designed, it transformed how context limitations were handled.
 
 ---

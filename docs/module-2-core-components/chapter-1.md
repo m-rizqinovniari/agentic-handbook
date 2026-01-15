@@ -4,27 +4,7 @@ sidebar_position: 1
 part: 2
 part_title: Core Components of an AI Agent
 ---
-# Core Components of an AI Agent: The Agent Loop: Observe, Think, Act
-
-## Learning Objectives
-
-- Describe each phase of the agent loop in detail
-- Trace data flow through a complete agent cycle
-- Identify common breakdown points in the loop
-- Explain how feedback influences future actions
-- Evaluate agent loop designs for robustness
-
----
-
-## Introduction
-
-This chapter introduces the fundamental control loop that governs agent behavior and explains how observation, reasoning, and action are connected.
-
----
-
-# Core Components of an AI Agent: The Agent Loop — Observe, Think, Act
-
----
+# The Agent Loop: Observe, Think, Act
 
 
 At the heart of every intelligent agent—whether it is a simple thermostat, a chess-playing program, a self-driving car, or a conversational AI—lies a deceptively simple idea: **a continuous loop of observing the world, thinking about what those observations mean, and acting based on that reasoning**. This cycle, often called the **agent loop** or **perception–decision–action loop**, is the fundamental control structure that governs how agents behave over time.
@@ -34,9 +14,6 @@ Understanding this loop is essential because it explains *how* an AI agent turns
 Historically, the observe–think–act paradigm comes from multiple disciplines. In control theory, it appears as feedback control loops. In cognitive science, it mirrors human perception, cognition, and motor action. In robotics and artificial intelligence, it provides a unifying framework for building systems that can operate autonomously in dynamic environments. Even modern large language model (LLM)–based agents follow this loop, although their “observations” may be text inputs and their “actions” may be API calls or generated responses.
 
 In this chapter, we will explore the agent loop in depth. We will move from a high-level conceptual overview to detailed explanations of each phase, trace data flow through a complete cycle, analyze how feedback shapes future behavior, and examine common failure modes that cause agents to behave incorrectly or unsafely. By the end, you should not only understand *what* the agent loop is, but also *why* it matters and *how* to design it robustly.
-
----
-
 
 By the end of this chapter, you will be able to:
 

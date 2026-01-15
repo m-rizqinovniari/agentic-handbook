@@ -4,36 +4,13 @@ sidebar_position: 1
 part: 7
 part_title: Evaluation, Safety, and Alignment
 ---
-# Evaluation, Safety, and Alignment: Agent Evaluation Metrics and Methods
-
-## Learning Objectives
-
-- Define agent evaluation metrics
-- Measure task success effectively
-- Design long-horizon evaluations
-- Apply simulation testing
-- Build evaluation pipelines
-
----
-
-## Introduction
-
-This chapter introduces quantitative and qualitative evaluation techniques.
-
----
-
-
----
-
+# Agent Evaluation Metrics and Methods
 
 As intelligent agents move from controlled research environments into real-world applications—customer support bots, autonomous vehicles, medical decision aids, and long-running workflow agents—the question is no longer *“Can the agent perform a task?”* but rather *“How well, how safely, and how reliably does it perform over time?”* Evaluation is the discipline that helps us answer these questions in a systematic, repeatable, and trustworthy way.
 
 Historically, software systems were evaluated using relatively straightforward metrics: correctness, runtime, memory usage, and test coverage. However, modern AI agents—especially learning-based and autonomous agents—introduce new challenges. Their behavior can be probabilistic, adaptive, and context-dependent. They may interact with humans, other agents, and complex environments over long periods. As a result, evaluation must expand beyond simple pass/fail tests to include behavioral analysis, efficiency trade-offs, safety considerations, alignment with human values, and robustness under uncertainty.
 
 This chapter focuses on **quantitative and qualitative evaluation techniques** for agents, with an emphasis on safety and alignment. You will learn how to define meaningful metrics, measure success and efficiency, evaluate agents over long horizons, leverage simulations, incorporate human judgment, and build continuous evaluation pipelines that evolve alongside the agent. The goal is not just to measure performance, but to *understand behavior*, *anticipate failure modes*, and *build trust* in agentic systems.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -260,23 +237,21 @@ graph LR
     C --> A
 ```
 
-### Case Study: Simulated Safety Testing for an Autonomous Delivery Agent
-
 ## Case Study: Simulated Safety Testing for an Autonomous Delivery Agent
 
-**Context**  
+### Context  
 A logistics company developed an autonomous delivery agent responsible for routing drones in urban areas. The agent had to navigate weather changes, air traffic constraints, and battery limitations. Real-world testing was costly and risky, so simulation became central to evaluation.
 
-**Problem**  
+### Problem  
 Early real-world pilots revealed near-miss incidents that were not captured by standard success metrics. The team needed a way to systematically test rare but dangerous scenarios, such as sudden wind gusts or GPS interference, without endangering property.
 
-**Solution**  
+### Solution  
 Engineers built a high-fidelity simulator modeling urban geography, weather, and drone physics. They defined safety metrics such as minimum obstacle distance and emergency landing frequency. Thousands of simulated runs were executed with randomized conditions.
 
-**Results**  
+### Results  
 Simulation uncovered a previously unknown failure mode: under certain wind patterns, the agent prioritized speed over stability. Fixes reduced safety violations by 70% before redeployment.
 
-**Lessons Learned**  
+### Lessons Learned  
 Simulation is not just about scale, but about *imagination*. By explicitly modeling unlikely scenarios, teams can uncover risks invisible in real-world testing alone.
 
 ---

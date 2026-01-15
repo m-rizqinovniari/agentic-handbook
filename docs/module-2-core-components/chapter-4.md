@@ -4,36 +4,13 @@ sidebar_position: 4
 part: 2
 part_title: Core Components of an AI Agent
 ---
-# Core Components of an AI Agent: Tools, APIs, and Environment Interaction
-
-## Learning Objectives
-
-- Explain how agents use tools and APIs
-- Design safe tool interfaces for agents
-- Handle errors during environment interaction
-- Assess security risks of agent actions
-- Evaluate reliability of action execution
-
----
-
-## Introduction
-
-This chapter explains how agents interact with external systems, APIs, and environments to perform real-world actions.
-
----
-
-
----
-
+# Tools, APIs, and Environment Interaction
 
 Modern AI agents are no longer confined to answering questions or generating text. They are increasingly expected to **act** in the real world: booking flights, updating databases, controlling software systems, monitoring environments, or coordinating workflows across multiple platforms. To do this effectively, an AI agent must interact with external systems through **tools**, **APIs**, and **environment representations**. These components form the bridge between an agent’s internal reasoning and the outside world where real consequences occur.
 
 Understanding how this bridge works is critical. Poorly designed tool interfaces can lead to fragile systems. Unsafe API usage can expose sensitive data or cause unintended actions. Weak error handling can make agents unreliable, while ignoring security considerations can turn helpful agents into serious risks. Conversely, well-designed interaction layers enable agents to be powerful, safe, and trustworthy collaborators.
 
 This chapter focuses on the **core components that enable AI agents to interact with external environments**. We will explore how tools are abstracted, how APIs and functions are called, how environments are represented internally, how errors are handled, and how safety and security are designed into agent actions. Throughout the chapter, we will connect theory with practice using concrete examples, detailed case studies, tables, and diagrams.
-
----
-
 
 By the end of this chapter, you will be able to:
 

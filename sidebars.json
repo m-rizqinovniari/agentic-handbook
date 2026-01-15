@@ -1,12 +1,6 @@
 {
   "docs": [
-    {
-      "type": "category",
-      "label": "Introduction",
-      "items": [
-        "index"
-      ]
-    },
+    "index",
     {
       "type": "category",
       "label": "Introduction to Agentic AI and Autonomous Systems",

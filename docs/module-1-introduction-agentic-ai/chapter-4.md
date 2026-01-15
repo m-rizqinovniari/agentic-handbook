@@ -4,35 +4,13 @@ sidebar_position: 4
 part: 1
 part_title: Introduction to Agentic AI and Autonomous Systems
 ---
-# Introduction to Agentic AI and Autonomous Systems: Real-World Use Cases and Current Limitations
-
-## Learning Objectives
-
-- Identify at least three real-world applications of Agentic AI
-- Analyze strengths and weaknesses of deployed systems
-- Explain key technical limitations of current agents
-- Assess operational risks in real-world environments
-- Summarize open challenges in Agentic AI research
-
----
-
-## Introduction
-
-This chapter surveys real-world applications of Agentic AI while critically examining technical, operational, and ethical limitations.
-
----
-
-
----
-
+# Real-World Use Cases and Current Limitations
 
 Over the past decade, artificial intelligence has moved from being a largely passive tool—responding to user queries or executing predefined scripts—toward something far more dynamic and autonomous. This shift has given rise to **Agentic AI**: systems designed not only to generate outputs, but to *act*, *decide*, *plan*, and *adapt* toward achieving goals in complex, real-world environments. These systems are often described as **autonomous agents** because they operate with a degree of independence from direct human control.
 
 Agentic AI now appears in many familiar places: research assistants that design experiments, enterprise agents that coordinate workflows, and consumer tools that book travel, manage finances, or control smart homes. At the same time, these systems raise significant questions. Can we trust an agent to act reliably? What happens when it fails? How do latency, cost, and uncertainty limit real-world deployment? And how do humans feel about delegating meaningful decisions to machines?
 
 This chapter surveys **real-world applications of Agentic AI** while critically examining their **technical, operational, and ethical limitations**. Rather than focusing only on what is possible, we will explore what is *actually deployed today*, what works well, what breaks down, and why. By the end of this chapter, you should have a balanced, realistic understanding of Agentic AI—not as science fiction, but as an evolving technology with both promise and constraints.
-
----
 
 
 By the end of this chapter, you will be able to:

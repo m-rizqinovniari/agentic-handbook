@@ -4,36 +4,13 @@ sidebar_position: 1
 part: 6
 part_title: Multi-Agent Systems and Collaboration
 ---
-# Multi-Agent Systems and Collaboration: Agent Roles and Specialization
-
-## Learning Objectives
-
-- Design role-based agent systems
-- Assign responsibilities effectively
-- Implement dynamic role changes
-- Analyze role hierarchies
-- Evaluate collaboration efficiency
-
----
-
-## Introduction
-
-This chapter introduces role-based design in multi-agent systems.
-
----
-
-
----
-
+# Agent Roles and Specialization
 
 Modern intelligent systems are rarely built as a single, monolithic entity. Instead, they are increasingly composed of **multiple autonomous agents** that must cooperate, coordinate, and sometimes compete to achieve shared or individual goals. From robotic swarms and distributed sensor networks to enterprise AI assistants and large-scale simulations, **multi-agent systems (MAS)** have become a foundational paradigm for building scalable, resilient, and intelligent solutions.
 
 As these systems grow in size and complexity, a critical design question emerges: *How should responsibilities be divided among agents?* Treating all agents as identical and equally responsible may seem simple at first, but it quickly leads to inefficiencies, coordination failures, and brittle behavior. This is where **role-based design and agent specialization** become essential.
 
 This chapter focuses on **agent roles and specialization as a collaboration strategy** in multi-agent systems. You will learn why role specialization is necessary, how roles are defined and structured, how skills and tools are assigned, how hierarchies emerge, and how roles can dynamically change over time. We will explore not only *what* roles are, but *why* they matter, *how* they are implemented, and *when* they should adapt. Through detailed explanations, real-world analogies, visual diagrams, and an in-depth case study, this chapter aims to give you a deep, practical understanding of role-based multi-agent collaboration.
-
----
-
 
 By the end of this chapter, you will be able to:
 

@@ -4,36 +4,13 @@ sidebar_position: 2
 part: 2
 part_title: Core Components of an AI Agent
 ---
-# Core Components of an AI Agent: Prompting as Control Logic
-
-## Learning Objectives
-
-- Explain how prompts function as control logic
-- Design structured prompts for agent reasoning
-- Differentiate prompt types and their roles
-- Apply prompt chaining to complex tasks
-- Evaluate prompt quality using defined criteria
-
----
-
-## Introduction
-
-This chapter explores how prompts act as the primary control mechanism for LLM-based agents, shaping reasoning and behavior.
-
----
-
-
----
-
+# Prompting as Control Logic
 
 When people first encounter large language models (LLMs), prompts often look deceptively simple—just text instructions typed into a box. However, as LLM-based systems have evolved from single-turn chatbots into autonomous or semi-autonomous agents, prompts have taken on a much deeper and more powerful role. In modern AI agents, prompts are not merely inputs; they act as *control logic*, shaping how the agent reasons, plans, reacts to errors, and interacts with tools and users.
 
 This chapter explores a central idea: **prompts function as implicit programs** that govern the behavior of LLM-based agents. Unlike traditional software, where control flow is expressed through explicit code constructs like loops and conditionals, LLM agents rely on carefully designed prompt structures to guide reasoning, decision-making, and action. Understanding prompting as control logic is essential for anyone designing agents that must operate reliably, transparently, and safely in real-world environments.
 
 We will start with foundational concepts—what it means to think of prompts as programs—then gradually move toward more advanced techniques such as structured prompting, prompt chaining, failure handling, and evaluation. Throughout the chapter, you will find detailed explanations, real-world analogies, practical examples, visual diagrams, and a comprehensive case study that ties these ideas together. By the end, you should be able to design, analyze, and evaluate prompts not as ad-hoc instructions, but as first-class components of an intelligent system.
-
----
-
 
 By the end of this chapter, you will be able to:
 

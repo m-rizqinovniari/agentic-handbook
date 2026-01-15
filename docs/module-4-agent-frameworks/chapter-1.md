@@ -4,36 +4,13 @@ sidebar_position: 1
 part: 4
 part_title: Building Agents with Modern Frameworks
 ---
-# Building Agents with Modern Frameworks: Overview of Agentic AI Frameworks
-
-## Learning Objectives
-
-- Explain the purpose of agent frameworks
-- Compare LangGraph, AutoGen, and CrewAI
-- Identify strengths of each framework
-- Select frameworks based on use cases
-- Evaluate framework limitations
-
----
-
-## Introduction
-
-This chapter introduces popular agent frameworks and compares their design philosophies and capabilities.
-
----
-
-
----
-
+# Overview of Agentic AI Frameworks
 
 Over the past few years, artificial intelligence has moved beyond single-turn question answering and static machine learning models into a new paradigm: **agentic AI**. In this paradigm, AI systems are not just passive responders; they can **plan**, **reason**, **act**, **collaborate**, and **adapt over time** to achieve complex goals. These systems—commonly referred to as *AI agents*—are increasingly used in real-world applications such as autonomous research assistants, software development copilots, customer support automation, and multi-step business process orchestration.
 
 However, building such agents from scratch is extremely challenging. Developers must manage conversation state, memory, tool usage, decision logic, error handling, and often coordination between multiple agents. As agent behaviors grow more complex, ad-hoc code quickly becomes fragile, difficult to debug, and nearly impossible to scale. This challenge has led to the rise of **agentic AI frameworks**—specialized software frameworks designed to structure, orchestrate, and manage intelligent agents in a systematic way.
 
 This chapter introduces three of the most influential modern agent frameworks—**LangGraph**, **AutoGen**, and **CrewAI**—and explains their underlying design philosophies, architectural patterns, and practical trade-offs. Rather than focusing on syntax or API details, we will explore *why* these frameworks exist, *how* they think about agents, and *when* each framework is the right choice. By the end of this chapter, you should be able to reason critically about agent frameworks and select one that aligns with your technical constraints and business goals.
-
----
-
 
 By the end of this chapter, you will be able to:
 

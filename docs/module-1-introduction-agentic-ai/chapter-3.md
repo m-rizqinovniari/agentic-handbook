@@ -4,26 +4,8 @@ sidebar_position: 3
 part: 1
 part_title: Introduction to Agentic AI and Autonomous Systems
 ---
-# Introduction to Agentic AI and Autonomous Systems: Agentic AI vs Traditional AI and LLM Applications
+# Agentic AI vs Traditional AI and LLM Applications
 
-## Learning Objectives
-
-- Compare traditional AI pipelines with agentic architectures
-- Identify limitations of chat-based LLM applications
-- Explain why statefulness is critical for agentic systems
-- Analyze decision flow differences across system types
-- Select appropriate use cases for Agentic AI
-
----
-
-## Introduction
-
-This chapter compares agentic systems with classical AI pipelines and chat-based LLM applications, clarifying architectural and behavioral differences.
-
----
-
-
----
 
 
 Artificial Intelligence has evolved through several distinct paradigms over the past decades. Early AI systems focused on rigid rules and symbolic reasoning. Later, machine learning introduced data-driven models capable of recognizing patterns and making predictions. Most recently, large language models (LLMs) and agentic AI systems have pushed AI beyond static prediction into the realm of dynamic reasoning, planning, and autonomous action.
@@ -31,8 +13,6 @@ Artificial Intelligence has evolved through several distinct paradigms over the 
 This chapter is designed to help you **clearly distinguish agentic AI systems from traditional AI pipelines and chat-based LLM applications**. While all of these systems may appear similar on the surface—accepting inputs and producing outputs—their **architectural foundations, control flows, and behavioral capabilities** are fundamentally different. Understanding these differences is critical for designing effective AI solutions and avoiding inappropriate or over-engineered systems.
 
 We will start with the simplest paradigm—traditional task-specific AI pipelines—then progressively move toward chat-based LLM applications, and finally to fully agentic, stateful, autonomous systems. Along the way, we will explore why agentic AI is powerful, when it is unnecessary or harmful, and how to reason about the right approach for a given problem.
-
----
 
 
 By the end of this chapter, you will be able to:

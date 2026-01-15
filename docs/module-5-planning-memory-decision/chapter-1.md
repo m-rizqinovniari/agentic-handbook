@@ -4,36 +4,13 @@ sidebar_position: 1
 part: 5
 part_title: Planning, Memory, and Decision-Making
 ---
-# Planning, Memory, and Decision-Making: Task Decomposition and Planning Strategies
-
-## Learning Objectives
-
-- Decompose complex goals into tasks
-- Design hierarchical plans
-- Implement replanning strategies
-- Handle planning failures
-- Evaluate planning effectiveness
-
----
-
-## Introduction
-
-This chapter teaches agents to break down complex goals into executable steps.
-
----
-
-
----
-
+# Task Decomposition and Planning Strategies
 
 Modern intelligent agents—whether humans, software systems, robots, or organizations—rarely operate by reacting to the world one step at a time. Instead, they **plan**. Planning allows an agent to imagine a desired future, reason backward from that future, and organize present actions in a way that increases the likelihood of success. At the heart of planning lies a deceptively simple but powerful idea: **complex goals must be broken down into manageable, executable steps**.
 
 This chapter explores how agents plan effectively by decomposing tasks, managing memory, and making decisions under constraints and uncertainty. You will learn not only *what* planning strategies exist, but *why* they exist, *how* they work, and *when* each approach is appropriate. We will move from foundational concepts like goal formulation to advanced ideas such as dynamic replanning and plan evaluation, always grounding theory in concrete examples and real-world case studies.
 
 Planning is not just a technical skill—it is a cognitive and organizational one. Humans plan vacations, careers, and projects. AI agents plan navigation routes, customer interactions, and manufacturing schedules. Organizations plan product launches and disaster responses. Despite differences in scale and context, all planning systems face similar challenges: limited information, limited resources, changing environments, and the possibility of failure. Understanding planning deeply allows agents to act more intelligently, resiliently, and ethically.
-
----
-
 
 By the end of this chapter, you will be able to:
 

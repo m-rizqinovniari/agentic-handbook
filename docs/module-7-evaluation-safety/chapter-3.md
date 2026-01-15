@@ -4,36 +4,13 @@ sidebar_position: 3
 part: 7
 part_title: Evaluation, Safety, and Alignment
 ---
-# Evaluation, Safety, and Alignment: Safety, Guardrails, and Human-in-the-Loop
-
-## Learning Objectives
-
-- Identify safety risks
-- Design effective guardrails
-- Implement human-in-the-loop systems
-- Monitor unsafe actions
-- Balance autonomy with oversight
-
----
-
-## Introduction
-
-This chapter covers safety mechanisms and human oversight.
-
----
-
-
----
-
+# Safety, Guardrails, and Human-in-the-Loop
 
 As AI systems evolve from passive tools into **agentic systems**—systems that can plan, decide, and act autonomously—the question of safety becomes not just important, but foundational. Unlike traditional software that follows deterministic rules, agentic systems operate in open-ended environments, interpret ambiguous inputs, and make decisions that may have real-world consequences. This shift dramatically raises the stakes: errors are no longer just bugs, but potentially harmful actions.
 
 Safety, alignment, and oversight are therefore not optional add-ons. They are **core design requirements**. Modern AI systems must be evaluated continuously, constrained by guardrails, and supervised by humans in meaningful ways. This chapter focuses on how to design and implement such mechanisms in practice, combining technical controls with human judgment.
 
 We will move progressively from understanding **what can go wrong**, to **how guardrails are designed**, to **how humans remain in control**, and finally to the difficult but essential challenge of **balancing autonomy with oversight**. Throughout, we will ground abstract concepts in concrete examples, real-world case studies, diagrams, and practical design patterns.
-
----
-
 
 By the end of this chapter, you will be able to:
 

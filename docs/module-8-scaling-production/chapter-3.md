@@ -4,36 +4,13 @@ sidebar_position: 3
 part: 8
 part_title: Scaling, Optimization, and Production Deployment
 ---
-# Scaling, Optimization, and Production Deployment: Monitoring, Logging, and Observability
-
-## Learning Objectives
-
-- Monitor agent performance
-- Implement observability tools
-- Detect behavior drift
-- Respond to incidents
-- Improve systems continuously
-
----
-
-## Introduction
-
-This chapter teaches production monitoring practices.
-
----
-
-
----
-
+# Monitoring, Logging, and Observability
 
 When intelligent agent systems move from prototypes into real-world production environments, their success is no longer defined solely by how “smart” they are. Instead, reliability, stability, transparency, and adaptability become the dominant concerns. An agent that performs perfectly in a controlled development environment can fail dramatically under real-world load, unexpected inputs, or changing user behavior. This is why **monitoring, logging, and observability** are foundational pillars of production-grade systems.
 
 Historically, software systems were relatively simple and monolithic. Developers could debug issues by checking a single log file or restarting a server. Modern agent systems, however, are **distributed, adaptive, probabilistic, and continuously learning**. They interact with APIs, tools, databases, other agents, and users in real time. Failures are often subtle, emergent, and delayed. Without deep visibility into system behavior, teams are effectively “flying blind.”
 
 This chapter focuses on **production monitoring practices for agent systems**, with an emphasis on scaling, optimization, and continuous improvement. You will learn not just *what* to monitor, but *why*, *how*, and *what to do* when things go wrong. We will progressively build from basic metrics, to distributed tracing, structured logging, alerting, behavior drift detection, and finally to feedback loops that turn operational data into system improvements.
-
----
-
 
 By the end of this chapter, you will be able to:
 

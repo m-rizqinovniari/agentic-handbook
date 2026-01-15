@@ -1,20 +1,11 @@
 ---
-title: 'Deep Dive into Agentic AI: Design, Implementation, and Production Systems'
+title: 'Introduction'
 sidebar_position: 0
 ---
 
 # Deep Dive into Agentic AI: Design, Implementation, and Production Systems
 
 This advanced-level course provides an in-depth and hands-on exploration of Agentic AI systems. Designed for learners who already understand the basics of AI and large language models, the course focuses on how to design, build, and evaluate autonomous and semi-autonomous AI agents capable of reasoning, planning, acting, and collaborating in real-world environments. By the end of the course, learners will be able to architect and implement robust agentic systems using modern frameworks, tools, and best practices.
-
-
-## 📋 Course Overview
-
-**Estimated Duration:** 10 weeks (~60 hours)
-
-**Level:** advanced level with sufficient experience
-
-**Learning Focus:** Combination of theory and practice
 
 **Learning Objectives:**
 
@@ -55,8 +46,6 @@ graph TD
     M4_2["Capstone Project: Build an ..."]
     P4 --> M4_2
 ```
-
-
 
 ## 🗺️ Learning Roadmap
 

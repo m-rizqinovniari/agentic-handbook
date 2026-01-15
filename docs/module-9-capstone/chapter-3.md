@@ -4,32 +4,7 @@ sidebar_position: 3
 part: 9
 part_title: 'Capstone Project: Build an End-to-End Agentic AI System'
 ---
-# Capstone Project: Build an End-to-End Agentic AI System: Testing, Evaluation, and Iteration
-
-## Learning Objectives
-
-- Evaluate agent performance
-- Conduct systematic testing
-- Analyze and fix errors
-- Optimize system behavior
-- Validate final solutions
-
----
-
-## Introduction
-
-Learners evaluate and refine their systems.
-
----
-
-# Capstone Project: Build an End-to-End Agentic AI System  
-
----
-
-## Testing, Evaluation, and Iteration
-
----
-
+# Testing, Evaluation, and Iteration
 
 Building an end-to-end agentic AI system is a significant achievement—but completing the build is only the beginning. The true value of an intelligent agent emerges when it is **systematically evaluated, rigorously tested, carefully analyzed, and iteratively refined**. In real-world environments, agentic systems must operate under uncertainty, adapt to diverse user behaviors, handle unexpected inputs, and maintain reliability over time. Without structured testing and evaluation, even the most sophisticated architecture can fail silently or behave unpredictably.
 

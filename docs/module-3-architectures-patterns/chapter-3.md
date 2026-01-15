@@ -4,26 +4,7 @@ sidebar_position: 3
 part: 3
 part_title: Agent Architectures and Design Patterns
 ---
-# Agent Architectures and Design Patterns: ReAct, Plan-and-Execute, and Reflexion Patterns
-
-## Learning Objectives
-
-- Explain core agent design patterns
-- Apply ReAct and Plan-and-Execute concepts
-- Analyze Reflexion for self-correction
-- Combine patterns for complex tasks
-- Evaluate pattern effectiveness
-
----
-
-## Introduction
-
-This chapter examines widely used agent design patterns and their practical applications.
-
----
-
-
----
+# ReAct, Plan-and-Execute, and Reflexion Patterns
 
 
 As large language models (LLMs) and autonomous agents have moved from research labs into real-world products, a critical challenge has emerged: **how should we structure an agent’s reasoning and actions so that it behaves reliably, adaptively, and efficiently?** Early systems often relied on single-pass prompting—ask a question, get an answer—but this approach quickly breaks down for complex, multi-step, or uncertain tasks. Real-world problems require agents that can reason, act, observe outcomes, revise their plans, and learn from mistakes.
@@ -31,9 +12,6 @@ As large language models (LLMs) and autonomous agents have moved from research l
 This need gave rise to **agent architectures and design patterns**—reusable, well-tested ways of organizing how an agent thinks, decides, and interacts with tools and environments. Among the most influential patterns are **ReAct**, **Plan-and-Execute**, and **Reflexion**. These patterns are not just academic ideas; they are practical blueprints used in production systems for tasks like software debugging, data analysis, customer support automation, research assistance, and autonomous decision-making.
 
 In this chapter, we take a deep, structured journey through these patterns. We begin with foundational ideas and progressively build toward advanced concepts such as pattern composition, failure handling, and selection guidelines. Along the way, we will use detailed explanations, analogies, real-world examples, tables, diagrams, and narrative case studies to ensure not just familiarity—but true understanding.
-
----
-
 
 By the end of this chapter, you will be able to:
 

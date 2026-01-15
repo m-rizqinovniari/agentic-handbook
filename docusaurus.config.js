@@ -10,13 +10,13 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-site.com',
+  url: 'https://m-rizqinovniari.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/',
+  baseUrl: '/agentic-handbook/',
 
   // GitHub pages deployment config.
-  organizationName: 'your-org',
-  projectName: 'course-agentic',
+  organizationName: 'm-rizqinovniari',
+  projectName: 'agentic-handbook',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -28,8 +28,31 @@ const config = {
     locales: ['en', 'id'],
   },
 
-  // HAPUS plugins array, tidak diperlukan
-  // plugins: [...],
+  plugins: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // Options untuk search plugin
+        hashed: true,
+        // Hapus language option untuk menghindari error dengan lunr-languages
+        // Plugin akan otomatis mendeteksi dari i18n config
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+        // Enable indexing untuk development mode
+        indexDocs: true,
+        indexPages: false,
+        indexBlog: false,
+        docsRouteBasePath: '/',
+        // Opsi untuk menampilkan hasil pencarian yang lebih detail
+        searchResultLimits: 10,
+        // Panjang context yang lebih panjang untuk menampilkan lebih banyak preview
+        searchResultContextMaxLength: 150,
+        // Menampilkan path file di hasil pencarian
+        searchBarShortcut: true,
+        searchBarShortcutHint: true,
+      },
+    ],
+  ],
 
   markdown: {
     mermaid: true,
@@ -47,6 +70,7 @@ const config = {
           sidebarPath: './sidebars.json',
           // Please change this to your repo.
           editUrl: undefined,
+          routeBasePath: '/', 
         },
         blog: false,
         theme: {
@@ -62,24 +86,18 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Agentic AI Course',
-        logo: {
-          alt: 'Agentic AI Logo',
-          src: 'img/logo.svg',
-        },
+        title: 'Deep Dive into Agentic AI',
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'docs',
-            position: 'left',
-            label: 'Course',
+            type: 'search',
+            position: 'right',
           },
         ],
       },
       footer: {
         style: 'dark',
         links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} Agentic AI Course. Built with Docusaurus.`,
+        copyright: `Copyright © M. Rizqinovniari ${new Date().getFullYear()}. Built with Docusaurus.`,
       },
       prism: {
         theme: themes.github,

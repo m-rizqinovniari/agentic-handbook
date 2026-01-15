@@ -4,36 +4,13 @@ sidebar_position: 2
 part: 4
 part_title: Building Agents with Modern Frameworks
 ---
-# Building Agents with Modern Frameworks: Tool Calling and Function Execution
-
-## Learning Objectives
-
-- Implement tool calling in agent frameworks
-- Design robust function schemas
-- Handle tool execution errors
-- Secure agent-tool interactions
-- Test and validate tool behavior
-
----
-
-## Introduction
-
-This chapter focuses on implementing tool use within agent frameworks.
-
----
-
-
----
-
+# Tool Calling and Function Execution
 
 As modern AI agents evolve from passive text generators into **active problem solvers**, one capability has become absolutely central: **the ability to use tools**. Tool calling—sometimes referred to as *function calling*—allows an agent to go beyond language and interact with the real world: querying databases, calling APIs, running calculations, triggering workflows, or even controlling external systems.
 
 In early conversational systems, language models were isolated. They could *describe* how to do something, but they could not *do* it. Modern agent frameworks change this by introducing a structured bridge between reasoning and execution. The agent decides *what* needs to be done, selects the appropriate tool, provides structured inputs, executes the tool, and then incorporates the results back into its reasoning loop.
 
 This chapter focuses specifically on **implementing tool use within agent frameworks**, with a strong emphasis on practical design decisions, safety, reliability, and testing. Rather than treating tool calling as a magic feature, we will break it down into understandable, testable, and secure components that you can confidently apply in real-world systems.
-
----
-
 
 By the end of this chapter, you will be able to:
 

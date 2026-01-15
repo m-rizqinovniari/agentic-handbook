@@ -4,26 +4,7 @@ sidebar_position: 2
 part: 1
 part_title: Introduction to Agentic AI and Autonomous Systems
 ---
-# Introduction to Agentic AI and Autonomous Systems: Autonomy, Agency, and Goal-Oriented Behavior
-
-## Learning Objectives
-
-- Explain different levels of agent autonomy with examples
-- Distinguish agency from simple automation pipelines
-- Describe how goals are represented internally by agents
-- Analyze how feedback from the environment affects agent behavior
-- Evaluate autonomy trade-offs in practical system design
-
----
-
-## Introduction
-
-This chapter dives deeper into autonomy and agency, explaining how agents make decisions independently and pursue goals over time within dynamic environments.
-
----
-
-
----
+# Autonomy, Agency, and Goal-Oriented Behavior
 
 
 Artificial Intelligence has evolved from simple rule-based programs into systems that can **act independently, pursue objectives over time, and adapt to changing environments**. These systems are often described as *agentic AI* or *autonomous systems*. Unlike traditional software that executes predefined instructions, agentic AI systems can decide **what to do next**, **when to do it**, and sometimes even **why**—within the boundaries set by their designers.
@@ -31,8 +12,6 @@ Artificial Intelligence has evolved from simple rule-based programs into systems
 This chapter explores the foundational ideas behind agentic AI, focusing specifically on **autonomy**, **agency**, and **goal-oriented behavior**. These concepts are not just theoretical; they shape how self-driving cars navigate streets, how digital assistants manage tasks, how trading bots operate in financial markets, and how robotic systems collaborate with humans in factories and hospitals.
 
 Understanding these ideas is crucial because increasing autonomy brings both **power and responsibility**. Highly autonomous systems can improve efficiency, scalability, and responsiveness—but they also introduce challenges related to control, predictability, safety, and ethics. This chapter builds a deep conceptual framework that helps you reason about how autonomous agents are designed, how they behave, and what trade-offs engineers must navigate.
-
----
 
 
 By the end of this chapter, you will be able to:
@@ -220,19 +199,19 @@ Key considerations include:
 
 ## Case Study: Autonomous Warehouse Robots at Scale
 
-## Context
+### Context
 In the early 2010s, large e-commerce companies faced growing pressure to fulfill orders faster while managing massive warehouses. Human-operated systems struggled with scalability and error rates.
 
-## Problem
+### Problem
 Manual picking was slow and error-prone. Traditional automation lacked flexibility to adapt to changing inventory layouts and demand spikes.
 
-## Solution
+### Solution
 Companies deployed fleets of autonomous mobile robots with goal-oriented navigation. Each robot acted as an agent, optimizing routes while coordinating with others through shared goals and constraints.
 
-## Results
+### Results
 Order fulfillment times dropped dramatically, error rates decreased, and warehouse throughput increased. However, initial deployments faced challenges in coordination and safety tuning.
 
-## Lessons Learned
+### Lessons Learned
 - Moderate autonomy with strong constraints proved most effective  
 - Clear goal hierarchies improved coordination  
 - Human oversight remained essential for exception handling  

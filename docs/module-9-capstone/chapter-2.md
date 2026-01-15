@@ -4,32 +4,7 @@ sidebar_position: 2
 part: 9
 part_title: 'Capstone Project: Build an End-to-End Agentic AI System'
 ---
-# Capstone Project: Build an End-to-End Agentic AI System: Agent Implementation and Integration
-
-## Learning Objectives
-
-- Implement agent logic
-- Integrate planning and memory
-- Build multi-agent components
-- Apply safety mechanisms
-- Test integrated systems
-
----
-
-## Introduction
-
-This chapter focuses on building the designed system.
-
----
-
-# Capstone Project: Build an End-to-End Agentic AI System  
-
----
-
-## Agent Implementation and Integration
-
----
-
+# Agent Implementation and Integration
 
 Designing an agentic AI system is intellectually exciting, but **building it end-to-end** is where real learning happens. In this capstone chapter, we move from abstract designs and architectural blueprints into **hands-on system construction**. This is the stage where ideas are translated into executable agent logic, tools are wired together, memory and planning become operational, and safety mechanisms are no longer theoretical but enforced in code.
 
@@ -44,9 +19,6 @@ This chapter walks you through the **implementation phase** of your capstone pro
 - Test the system as a cohesive whole
 
 The emphasis is not just on *what to build*, but *why certain choices matter*, *how components interact*, and *what can go wrong in real-world deployments*.
-
----
-
 
 By the end of this chapter, you will be able to:
 
