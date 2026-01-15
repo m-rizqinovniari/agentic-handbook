@@ -4,41 +4,13 @@ sidebar_position: 4
 part: 9
 part_title: 'Capstone Project: Build an End-to-End Agentic AI System'
 ---
-# Capstone Project: Build an End-to-End Agentic AI System: Final Presentation and Documentation
-
-## Learning Objectives
-
-- Produce comprehensive documentation
-- Present system architecture clearly
-- Demonstrate system functionality
-- Justify design decisions
-- Propose future improvements
-
----
-
-## Introduction
-
-This chapter focuses on communicating results and documenting the system.
-
----
-
-# Capstone Project: Build an End-to-End Agentic AI System  
-
----
-
-## Final Presentation and Documentation
-
----
-
+# Final Presentation and Documentation
 
 By the time you reach the capstone stage of building an end-to-end **agentic AI system**, the technical work—designing agents, orchestrating tools, integrating models, and handling data—often feels like the hardest part. Surprisingly, in real-world settings, the **final presentation and documentation** can be just as important, if not more so. A system that works brilliantly but cannot be clearly explained, demonstrated, or justified is unlikely to be trusted, adopted, or maintained.
 
 This chapter focuses on the often-overlooked but critical skill of **communicating your system effectively**. You will learn how to transform your technical work into clear documentation, compelling architectural visuals, convincing demos, and thoughtful reflections. These are the artifacts that allow others—stakeholders, engineers, evaluators, or future maintainers—to understand *what you built, why you built it this way, how it works, and where it can go next*.
 
 Think of this chapter as the bridge between **building** and **being understood**. Much like an architect must present blueprints and models before a building is approved, an AI engineer must present documentation, diagrams, and reasoning to ensure their system can live beyond a single developer or classroom project.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -104,7 +76,7 @@ Historically, architecture diagrams emerged to help teams reason about increasin
 
 A strong architecture presentation typically moves from **high-level context** to **detailed components**, allowing the audience to progressively zoom in.
 
-### High-Level Context (C4 Context Diagram)
+### High-Level Context Diagram
 
 At the highest level, you want to answer:
 - Who uses the system?
@@ -112,16 +84,15 @@ At the highest level, you want to answer:
 - What problem boundary does it define?
 
 ```mermaid
-C4Context
-title Agentic AI System - Context Diagram
-Person(user, "End User", "Interacts with the AI system")
-System(agenticAI, "Agentic AI System", "Autonomous multi-agent system")
-System_Ext(api, "External APIs", "Search, tools, data")
-System_Ext(llm, "LLM Provider", "Reasoning and generation")
-
-user -> agenticAI : Requests & feedback
-agenticAI -> api : Tool calls
-agenticAI -> llm : Prompts & context
+graph TB
+  User["👤 End User<br/>Interacts with the AI system"] --> Agent["🤖 Agentic AI System<br/>Autonomous multi-agent system"]
+  Agent --> API["🔌 External APIs<br/>Search, tools, data"]
+  Agent --> LLM["🧠 LLM Provider<br/>Reasoning and generation"]
+  
+  style User fill:#e1f5ff
+  style Agent fill:#fff4e1
+  style API fill:#ffe1f5
+  style LLM fill:#e1ffe1
 ```
 
 This diagram is especially useful for non-technical stakeholders. It reassures them that the system boundary is well understood and controlled.
@@ -131,18 +102,17 @@ This diagram is especially useful for non-technical stakeholders. It reassures t
 Next, you explain *how the system is internally organized*.
 
 ```mermaid
-C4Container
-title Agentic AI System - Container Diagram
-Container(ui, "User Interface", "Web App", "Collects input and shows output")
-Container(orchestrator, "Agent Orchestrator", "Python Service", "Controls agents")
-Container(agent, "Agents", "LLM-based", "Reasoning and task execution")
-Container(memory, "Memory Store", "Vector DB", "Context and history")
-Container(tools, "Tool Layer", "APIs", "Search, actions")
-
-ui -> orchestrator
-orchestrator -> agent
-agent -> memory
-agent -> tools
+graph TB
+  UI["🖥️ User Interface<br/>Web App<br/>Collects input and shows output"] --> Orchestrator["🎯 Agent Orchestrator<br/>Python Service<br/>Controls agents"]
+  Orchestrator --> Agent["🤖 Agents<br/>LLM-based<br/>Reasoning and task execution"]
+  Agent --> Memory["💾 Memory Store<br/>Vector DB<br/>Context and history"]
+  Agent --> Tools["🔧 Tool Layer<br/>APIs<br/>Search, actions"]
+  
+  style UI fill:#e1f5ff
+  style Orchestrator fill:#fff4e1
+  style Agent fill:#ffe1f5
+  style Memory fill:#e1ffe1
+  style Tools fill:#f5e1ff
 ```
 
 ### Why Architecture Presentation Matters
@@ -311,7 +281,7 @@ The risk was clear: the project could be perceived as over-engineered or unclear
 
 ### Solution
 
-The team restructured documentation into a narrative flow, starting with a policy research problem and ending with system outputs. They introduced C4 diagrams to show architecture progressively and added a dedicated design decisions section.
+The team restructured documentation into a narrative flow, starting with a policy research problem and ending with system outputs. They introduced architecture diagrams to show system structure progressively and added a dedicated design decisions section.
 
 For the demo, they scripted a realistic research scenario and prepared fallback outputs. Limitations were explicitly discussed, including potential bias in source material.
 

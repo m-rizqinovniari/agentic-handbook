@@ -4,41 +4,13 @@ sidebar_position: 1
 part: 9
 part_title: 'Capstone Project: Build an End-to-End Agentic AI System'
 ---
-# Capstone Project: Build an End-to-End Agentic AI System: Problem Definition and System Design
-
-## Learning Objectives
-
-- Define a suitable problem
-- Analyze user requirements
-- Design an agent architecture
-- Identify risks and constraints
-- Produce clear design documentation
-
----
-
-## Introduction
-
-Learners define a real-world problem and design an agentic solution.
-
----
-
-# Capstone Project: Build an End-to-End Agentic AI System  
-
----
-
-## Problem Definition and System Design
-
----
-
+# Problem Definition and System Design
 
 A capstone project represents the culmination of learning, where theory meets practice in a meaningful and realistic way. In the context of **agentic AI systems**, a capstone project is not just about building something that works technically—it is about designing a system that solves a **real-world problem** through autonomous, goal-driven, and adaptive agents. This stage challenges learners to think holistically: understanding human needs, translating them into system requirements, architecting intelligent agents, anticipating risks, and documenting decisions clearly enough that others can understand, critique, and extend the design.
 
 Agentic AI systems differ from traditional software systems because they involve **autonomy, reasoning, planning, memory, and interaction**. These systems often operate in uncertain environments, make decisions with incomplete information, and collaborate with humans or other agents. As a result, the **design phase** becomes especially critical. Poor problem definition or weak system design can lead to agents that are misaligned with user needs, unsafe, unreliable, or impossible to maintain.
 
 This chapter guides you step by step through the **problem definition and system design phase** of your capstone project. You will learn how to choose the right problem, understand stakeholders deeply, define precise system requirements, design a robust agent architecture, analyze risks and constraints, and produce professional design documentation. By the end, you should be able to confidently move from a vague idea—“I want to build an AI agent”—to a **clear, structured, and defensible system design** that could realistically be implemented in the real world.
-
----
-
 
 By the end of this chapter, you will be able to:
 
@@ -281,15 +253,10 @@ graph TD
 | Deliberative | Planning and goals | Complex reasoning |
 | Hybrid | Mix of both | Most real-world systems |
 
-### C4 Context Diagram
-
 ```mermaid
-C4Context
-  Person(user, "User")
-  System(agent, "Agentic AI System")
-  System_Ext(tool, "External Tools")
-  user -> agent
-  agent -> tool
+graph LR
+  User["User"] -->|"Requests & feedback"| Agent["Agentic AI System"]
+  Agent -->|"Tool calls"| Tools["External Tools"]
 ```
 
 ---
